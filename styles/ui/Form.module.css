@@ -1,0 +1,85 @@
+.title {
+  font-size: var(--size-4);
+  font-weight: bold;
+  text-align: center;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 1rem;
+  padding: 20px;
+  min-width: 320px;
+  width: 500px;
+  margin: 3rem auto;
+  text-align: center;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  background-color: var(--secondary);
+  overflow: visible;
+}
+
+.form > input {
+  min-width: 100%;
+  margin: 1rem 0rem;
+  padding: 1rem;
+  border: none;
+  background-color: var(--secondary);
+  border-bottom: 1px solid var(--primary);
+}
+
+.invalidInput {
+  background-color: rgb(247, 186, 186) !important;
+}
+
+.invalidText {
+  color: red;
+}
+
+.form textarea {
+  width: 90%;
+  height: 10rem;
+}
+
+.form > button {
+  width: 70%;
+  border-radius: 2rem;
+  border-color: var(--primary);
+  padding: 1rem 1.5rem;
+  background-color: var(--primary);
+  color: var(--secondary);
+  margin: 1rem 0;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.form > button:hover {
+  background-color: var(--secondary);
+  color: var(--primary);
+}
+
+.form > button:disabled,
+.form > button:disabled:hover,
+.form > button:disabled:active {
+  background-color: rgb(148, 124, 124);
+  border-color: rgb(148, 124, 124);
+  color: var(--primary);
+  cursor: not-allowed;
+}
+
+.form > a {
+  margin: 0.4rem 0;
+  font-size: 0.8rem;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.form span {
+  margin: 1rem 0;
+}
+
+@media (max-width: 600px) {
+  .form {
+    width: 80%;
+  }
+}

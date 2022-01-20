@@ -1,0 +1,134 @@
+:root {
+  --primary: #303030;
+  --secondary: #f5f5f5;
+
+  --light: #eeeeee;
+
+  --size-1: 1rem;
+  --size-2: 1.3rem;
+  --size-3: 1.5rem;
+  --size-4: 2rem;
+  --size-5: 3rem;
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: "Times New Roman", Times, serif;
+  background-color: var(--light);
+  color: var(--primary);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/*SWIPER*/
+.swiper-button-next,
+.swiper-button-prev {
+  color: var(--primary) !important;
+}
+.swiper-pagination-bullet {
+  background-color: var(--primary) !important;
+}
+
+/*HEADER*/
+.header {
+  top: 0px;
+  z-index: 13;
+  background-color: var(--secondary);
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+@media (max-width: 768px) {
+  .header {
+    position: sticky;
+  }
+}
+
+/*WHATSAAP*/
+.whatsapp {
+  width: 3rem;
+  height: 3rem;
+  position: fixed;
+  bottom: 5%;
+  right: 0;
+  z-index: 4;
+  border-radius: 50%;
+  color: var(--secondary);
+  display: flex;
+  background-color: #4fce5d;
+  align-items: center;
+  justify-content: center;
+  margin-right: 1.3rem;
+  cursor: pointer;
+  transition: all 0.5s ease-in-out;
+}
+
+.whatsapp:hover {
+  transform: scale(1.15);
+}
+
+/*ANNOUNCEMENT*/
+.announcement {
+  height: 30px;
+  background-color: var(--primary);
+  color: var(--secondary);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1rem;
+}
+
+@media (max-width: 350px) {
+  .announcement {
+    font-size: 0.8rem;
+  }
+}
+
+/*LOGSIGN*/
+
+.containerLogSign {
+  align-items: center;
+  display: flex;
+}
+
+.auth {
+  display: inline-block;
+  text-transform: uppercase;
+  padding: 0.5rem 1.3rem;
+  font-size: 0.8rem;
+  border: 2px solid #303030;
+  border-radius: 2rem;
+  line-height: 1;
+  margin: 0.2rem;
+  transition: 0.3s;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.register,
+.login:hover {
+  background-color: #f5f5f5;
+  color: #303030;
+}
+
+.login,
+.register:hover {
+  background-color: #303030;
+  color: #f5f5f5;
+}
+
+/*INFOABOUT*/
+
+.title-info-about {
+  font-size: var(--size-4);
+  font-weight: 300;
+  text-align: center;
+}

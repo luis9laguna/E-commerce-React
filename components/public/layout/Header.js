@@ -1,28 +1,41 @@
-import styled from 'styled-components';
+import { useState } from 'react';
 import TopNav from './navbar/TopNav';
 import MiddleNav from './navbar/MiddleNav';
+import DownNav from './navbar/DownNav';
 import Announcement from './elements/Announcement';
-
-
-const Container = styled.div`
-    position: sticky;
-    top: 0px;
-    width: 100%;
-    z-index: 1000;
-    background-color: #f5f5f5;
-    color: #303030;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-`
-
+import ContactForm from './elements/ContactForm';
+import InfoAbout from './elements/InfoAbout';
 
 
 const Header = () => {
+
+    //USESTATE FOR NAVBAR
+    const [isOpen, setIsOpen] = useState(false);
+
+    //USESTATE FOR MODALS ABOUT US/CONTACT FORM
+    const [showAboutUs, setShowAboutUs] = useState(false);
+    const [showContactForm, setShowContactForm] = useState(false);
+
+
+    //SHOW OR HIDE MODAL ABOUT US
+    const hideAboutUsHandler = () => setShowAboutUs(false);
+    const showAboutUsHandler = () => setShowAboutUs(true);
+
+    //SHOW OR HIDE MODAL CONTACT FORM
+    const hideContactFormHandler = () => setShowContactForm(false);
+    const showContactFormHandler = () => setShowContactForm(true);
+
     return (
-        <Container>
-            <Announcement />
-            <TopNav />
-            <MiddleNav />
-        </Container>
+        <>
+            <div className='header'>
+                <Announcement />
+                <TopNav />
+                <MiddleNav open={(isOpen) => setIsOpen(isOpen)} statusOpen={isOpen} />
+                <DownNav statusOpen={isOpen} showContactForm={showContactFormHandler} showAboutUs={showAboutUsHandler} />
+            </div>
+            {showAboutUs && <InfoAbout onClose={hideAboutUsHandler} />}
+            {showContactForm && <ContactForm onClose={hideContactFormHandler} />}
+        </>
     )
 }
 

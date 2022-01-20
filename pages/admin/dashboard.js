@@ -1,6 +1,6 @@
-import Layout from "../components/public/layout/Layout";
+import Layout from "@/components/public/layout/Layout";
 
-export default function Home() {
+export default function DashBoard() {
     return (
         <div>
             <Layout>

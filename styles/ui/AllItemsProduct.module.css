@@ -1,0 +1,115 @@
+.container {
+  flex: 1;
+  margin: 5px;
+  min-width: 280px;
+  height: 350px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  cursor: pointer;
+  background-color: var(--secondary);
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  transition: all 0.2s ease-in-out;
+}
+
+.container:hover {
+  transform: scale(1.01);
+}
+
+.container:hover > .info {
+  opacity: 1;
+}
+
+.info {
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: 0.5s;
+}
+
+.circle {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background-color: var(--light);
+  position: absolute;
+}
+
+.image {
+  height: 75%;
+  object-fit: cover;
+  z-index: 2;
+}
+
+.title {
+  color: var(--secondary);
+  text-align: center;
+}
+
+.price {
+  color: var(--secondary);
+  font-weight: bold;
+  font-size: 2rem;
+}
+
+.allIcons {
+  display: flex;
+  align-items: center;
+}
+
+.allIcons > span {
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 50%;
+  background-color: var(--secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0.7rem;
+  transition: all 0.5s ease-in-out;
+}
+
+.allIcons > span:hover {
+  background-color: var(--primary);
+  color: var(--secondary);
+  transform: scale(1.1);
+}
+
+@media (max-width: 768px) {
+  .info {
+    justify-content: flex-end;
+    position: relative;
+    display: flex;
+    opacity: 1;
+    background-color: transparent;
+    justify-content: unset;
+  }
+
+  .container {
+    flex-direction: column;
+  }
+
+  .image {
+    height: 60%;
+    margin-top: 1rem;
+  }
+  .title {
+    color: var(--primary);
+  }
+  .price {
+    color: var(--primary);
+  }
+  .allIcons {
+    display: none;
+  }
+}

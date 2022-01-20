@@ -1,18 +1,19 @@
-import Layout from "../components/public/layout/Layout";
-import Slider from "../components/public/home/Slider";
-import Categories from "../components/public/home/categories";
-import Products from "../components/public/home/products";
-import Info from "../components/public/home/info";
+import Layout from "@/components/public/layout/Layout";
+import Slider from "@/components/public/home/Slider";
+import SliderCategory from "@/components/public/home/SliderCategory";
+import SliderProduct from "@/components/public/home/SliderProduct";
+import InfoHome from "@/components/public/home/InfoHome";
 
 
 export default function Home() {
+
   return (
     <div>
       <Layout>
         <Slider />
-        <Info />
-        <Categories />
-        <Products />
+        <InfoHome />
+        <SliderCategory />
+        <SliderProduct />
       </Layout>
     </div>
   )

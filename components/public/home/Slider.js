@@ -1,4 +1,3 @@
-import styled from "styled-components";
 import { sliderItems } from "../../../utils/data";
 import { Autoplay } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -6,9 +5,6 @@ import { Navigation, Pagination } from 'swiper';
 import 'swiper/css';
 import 'swiper/css/bundle';
 
-const Image = styled.img`
-width: 100%;
-`
 
 
 const Slider = () => {
@@ -23,7 +19,7 @@ const Slider = () => {
         >
             {sliderItems.map((item) => (
                 <SwiperSlide key={item.id}>
-                    <Image loading="lazy" src={item.img} />
+                    <img loading="lazy" src={item.img} style={{ width: '100%' }} />
                 </SwiperSlide>
             ))}
         </Swiper>

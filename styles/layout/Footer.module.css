@@ -1,0 +1,132 @@
+.container {
+  display: flex;
+  background-color: var(--primary);
+  color: var(--secondary);
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.left {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding: 1.3rem;
+  width: 25rem;
+}
+
+.logo {
+  font-size: 2rem;
+}
+
+.description {
+  margin-bottom: 1.3rem;
+}
+
+.socialContainer {
+  display: flex;
+}
+
+.socialContainer > svg {
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 50%;
+  padding: 8px;
+  color: var(--secondary);
+  display: flex;
+  margin: auto;
+  align-items: center;
+  justify-content: center;
+  margin-right: 1.3rem;
+  cursor: pointer;
+  transition: all 0.5s ease-in-out;
+}
+
+.socialContainer > svg:hover {
+  transform: scale(1.15);
+}
+
+.facebook {
+  background-color: #3b5999;
+}
+
+.twitter {
+  background-color: #55acee;
+}
+
+.instagram {
+  background-color: #e4405f;
+}
+
+.whatsapp {
+  background-color: #4fce5d;
+}
+
+.center {
+  flex: 1;
+  text-align: center;
+  padding: 1.3rem;
+  width: 25rem;
+}
+
+.title {
+  margin-bottom: 1.7rem;
+  font-size: 2rem;
+}
+
+.list {
+  margin: 0px;
+  padding: 0px;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.list > li {
+  width: 50%;
+  margin-bottom: 0.8rem;
+  cursor: pointer;
+  transition: all 0.5s ease-in-out;
+}
+
+.list > li:hover {
+  transform: scale(1.15);
+}
+
+.right {
+  flex: 1;
+  padding: 1.3rem;
+  text-align: center;
+  width: 25rem;
+}
+
+.right > span {
+  margin-bottom: 1.3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.payment {
+  width: 50%;
+}
+
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .left {
+    width: 100%;
+  }
+
+  .center {
+    display: none;
+  }
+
+  .right {
+    width: 100%;
+    background-color: var(--secondary);
+    color: var(--primary);
+  }
+}

@@ -1,0 +1,27 @@
+.container {
+  padding: 0px 40px;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #d3d3d3;
+}
+
+.social {
+  align-items: center;
+  display: flex;
+}
+
+.social > svg {
+  margin-right: 1.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.social > svg:hover {
+  transform: scale(1.1);
+}
+
+@media (max-width: 768px) {
+  .container {
+    display: none;
+  }
+}

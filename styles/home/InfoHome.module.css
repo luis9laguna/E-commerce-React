@@ -1,0 +1,37 @@
+.container {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  padding-top: 5rem;
+  flex-wrap: wrap;
+}
+
+.container > div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 25rem;
+  height: 10rem;
+  margin: 2rem;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  border-radius: 2rem;
+  transition: all 0.3s ease-in-out;
+  background-color: var(--secondary);
+}
+
+.container > div:hover {
+  transform: scale(1.05);
+}
+
+.container > div > span {
+  flex: 1;
+  font-size: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 400px;
+}
+
+.container > div > p {
+  flex: 2;
+}
