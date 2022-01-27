@@ -43,7 +43,21 @@
 }
 
 @media (max-width: 768px) {
-  .title {
+  .container {
+    flex-direction: column;
+  }
+
+  .list {
+    display: flex;
+  }
+
+  .list li {
+    border-bottom: none;
+    border-right: 1px solid var(--primary);
+  }
+
+  .list span,
+  .list span ~ svg {
     display: none;
   }
 }

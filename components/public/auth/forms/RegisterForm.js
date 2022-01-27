@@ -1,9 +1,13 @@
 import styles from '@/styles/ui/Form.module.css';
-import useInput from 'hooks/use-input';
-
+import useInput from 'hooks/useInput';
+import { useAuth } from 'context/auth/authContext';
 
 export default function RegisterForm() {
 
+    //CONTEXT
+    const { userRegister } = useAuth()
+
+    //REGEX
     const regexEmail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
     const regexPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/
 
@@ -79,13 +83,27 @@ export default function RegisterForm() {
         //CHECK
         if (!formIsValid) return;
 
-        console.log("IS VALID");
+        //VALUES
+        const name = e.target.name.value
+        const surname = e.target.surname.value
+        const email = e.target.email.value
+        const password = e.target.password.value
+
+        //SEND
+        userRegister({
+            name,
+            surname,
+            email,
+            password
+        })
+
         //RESET VALUES
         resetNameInput()
         resetSurNameInput()
         resetEmailInput()
         resetPasswordInput()
         resetPasswordConfirmInput()
+
     }
 
     return (

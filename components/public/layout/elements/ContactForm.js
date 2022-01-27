@@ -1,5 +1,5 @@
 import styles from '@/styles/ui/Form.module.css'
-import useInput from 'hooks/use-input'
+import useInput from 'hooks/useInput'
 import Modal from '../../ui/Modal'
 
 export default function ContactForm({ onClose }) {

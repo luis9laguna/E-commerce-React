@@ -24,7 +24,7 @@
 .info {
   opacity: 0;
   width: 100%;
-  height: 100%;
+  height: 100% !important;
   position: absolute;
   top: 0;
   left: 0;
@@ -37,9 +37,27 @@
   transition: 0.5s;
 }
 
+.info button {
+  height: 3rem;
+  width: 60%;
+  background-color: var(--primary);
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+    rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+  color: var(--secondary);
+  font-weight: bold;
+  transition: all 0.5s ease-in-out;
+  cursor: pointer;
+  display: none;
+}
+
+.info button:hover {
+  background-color: var(--secondary);
+  color: var(--primary);
+}
+
 .circle {
-  width: 200px;
-  height: 200px;
+  width: 70%;
+  height: 60%;
   border-radius: 50%;
   background-color: var(--light);
   position: absolute;
@@ -54,6 +72,7 @@
 .title {
   color: var(--secondary);
   text-align: center;
+  text-transform: capitalize !important;
 }
 
 .price {
@@ -67,7 +86,7 @@
   align-items: center;
 }
 
-.allIcons > span {
+.allIcons span {
   width: 2.4rem;
   height: 2.4rem;
   border-radius: 50%;
@@ -79,13 +98,21 @@
   transition: all 0.5s ease-in-out;
 }
 
-.allIcons > span:hover {
+.allIcons span:hover {
   background-color: var(--primary);
   color: var(--secondary);
   transform: scale(1.1);
 }
 
 @media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    flex: 1 1 33%;
+    min-width: initial;
+    width: 50%;
+    height: 400px;
+  }
+
   .info {
     justify-content: flex-end;
     position: relative;
@@ -93,14 +120,15 @@
     opacity: 1;
     background-color: transparent;
     justify-content: unset;
+    height: 100%;
   }
 
-  .container {
-    flex-direction: column;
+  .circle {
+    display: none;
   }
 
   .image {
-    height: 60%;
+    height: 50%;
     margin-top: 1rem;
   }
   .title {
@@ -111,5 +139,27 @@
   }
   .allIcons {
     display: none;
+  }
+  .info button {
+    display: initial;
+  }
+}
+
+@media (max-width: 500px) {
+  .container {
+    height: 250px;
+  }
+  .image {
+    height: 40%;
+  }
+  .title {
+    font-size: 1.3rem;
+  }
+  .price {
+    font-size: 1.5rem;
+  }
+  .info button {
+    height: 2rem;
+    font-size: 0.7rem;
   }
 }

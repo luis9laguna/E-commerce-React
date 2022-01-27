@@ -3,18 +3,32 @@ import Slider from "@/components/public/home/Slider";
 import SliderCategory from "@/components/public/home/SliderCategory";
 import SliderProduct from "@/components/public/home/SliderProduct";
 import InfoHome from "@/components/public/home/InfoHome";
+import { getAllCategories, getNewestProducts } from "helpers/api-util";
 
 
-export default function Home() {
+export default function Home({ categories, newestProducts }) {
 
   return (
-    <div>
+    <>
       <Layout>
         <Slider />
         <InfoHome />
-        <SliderCategory />
-        <SliderProduct />
+        <SliderCategory categories={categories} />
+        <SliderProduct newestProducts={newestProducts} />
       </Layout>
-    </div>
+    </>
   )
+}
+
+
+export async function getStaticProps() {
+  const categories = await getAllCategories()
+  const newestProducts = await getNewestProducts()
+  return {
+    props: {
+      categories,
+      newestProducts
+    },
+    revalidate: 10
+  }
 }

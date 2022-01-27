@@ -1,18 +1,18 @@
 import styles from "@/styles/ProductItem.module.css";
 import { Add, Remove } from "@material-ui/icons";
 
-export default function ProductItem() {
+export default function ProductItem({ product }) {
     return (
         <div className={styles.container}>
             <div className={styles.ImgContainer}>
-                <img className={styles.image} src="https://d3o2e4jr3mxnm3.cloudfront.net/Mens-Jake-Guitar-Vintage-Crusher-Tee_68382_1_lg.png" />
+                <img className={styles.image} src={product.image} />
             </div>
             <div className={styles.infoContainer}>
-                <h1 className={styles.title}>Denim Jumpsuit</h1>
+                <h1 className={styles.title}>{product.name}</h1>
                 <p className={styles.description}>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                    {product.description}
                 </p>
-                <span className={styles.price}>$ 20</span>
+                <span className={styles.price}>$ {product.price}</span>
                 <div className={styles.addContainer}>
                     <div className={styles.amountContainer}>
                         <Remove />

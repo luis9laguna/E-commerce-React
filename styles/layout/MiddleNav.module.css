@@ -4,6 +4,7 @@
   grid-template-areas: "logo search search search search cartfav";
   justify-content: space-between;
   align-items: center;
+  min-width: 320px;
 }
 
 .logo {
@@ -44,6 +45,13 @@
   outline: none;
 }
 
+.searchContainer > button {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
 .cartFavContainer {
   display: flex;
   grid-area: cartfav;
@@ -55,6 +63,8 @@
   cursor: pointer;
   margin: 0 1rem;
   transition: all 0.3s ease-in-out;
+  display: flex;
+  justify-content: center;
 }
 
 .cartFavContainer > div:hover {
@@ -62,7 +72,7 @@
 }
 
 .burguerContainer {
-  display: none;
+  display: none !important;
   grid-area: burguer;
   z-index: 15;
 }
@@ -111,7 +121,7 @@
   width: 2.5rem;
   height: 2.5rem;
   top: 3rem;
-  right: 0rem;
+  right: 0.8rem;
   opacity: 0;
   display: none;
   z-index: 20;
@@ -135,16 +145,19 @@
   .container {
     padding: 0;
     grid-template-areas:
-      "logo logo logo cartfav burguer"
-      "search search search search search";
+      "logo logo logo cartfav"
+      "search search search search";
   }
   .burguerContainer {
-    display: initial;
+    display: initial !important;
   }
   .check {
     display: block;
   }
   .searchContainer {
     margin-bottom: 1rem;
+  }
+  .cartFavContainer > div {
+    margin: 0 0.5rem !important;
   }
 }

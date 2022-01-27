@@ -1,15 +1,13 @@
-import Head from 'next/head';
 import Header from './Header';
 import Footer from './Footer';
+import Meta from '../ui/Meta';
 
 
 export default function Layout({ children }) {
 
     return (
         <>
-            <Head>
-                <title>Best E-commerce</title>
-            </Head>
+            <Meta />
             <Header />
             <main>
                 {children}

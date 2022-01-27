@@ -1,18 +1,28 @@
+import { useEffect } from 'react';
+import { useRouter } from 'next/router';
+import Link from 'next/link';
 import styles from '@/styles/UserLayout.module.css'
 import { AddLocationOutlined, ArrowForwardIosOutlined, LockOutlined, PersonOutlined, ShoppingBasketOutlined } from '@material-ui/icons';
-import Link from 'next/link';
+import { useAuth } from 'context/auth/authContext';
 
 
 export default function information({ children }) {
 
+    const { user } = useAuth()
+    const router = useRouter()
 
+    useEffect(() => {
+        if (user === '' || user === null) router.replace('/')
+    }, [user]);
+
+    if (user === '' || user === null) return <div></div>
 
     return (
         <div className={styles.container}>
             <div className={styles.pageContainer}>
                 <ul className={styles.list} >
                     <Link href='/user/userInformation'>
-                        <li >
+                        <li>
                             <PersonOutlined style={{ fontSize: "2.5rem" }} />
                             <span>User Information</span>
                             <ArrowForwardIosOutlined />

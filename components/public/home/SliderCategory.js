@@ -4,11 +4,14 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper';
 import 'swiper/css';
 import 'swiper/css/bundle';
-import useWindowDimensions from "hooks/use-window-dimensions";
+import useWindowDimensions from "hooks/useWindowDimensions";
+import { useEffect, useState } from "react";
 
 
 
-const SliderCategory = () => {
+const SliderCategory = ({ categories }) => {
+
+    const [swiperSlider, setSwiperSlider] = useState(null)
 
     const { width } = useWindowDimensions();
 
@@ -20,6 +23,20 @@ const SliderCategory = () => {
         slides = 1.3
     }
 
+
+    useEffect(() => {
+        const slide = categories.map((category) => {
+            return (
+                <SwiperSlide key={category._id}>
+                    <ItemCategory category={category} />
+                </SwiperSlide>
+            )
+        })
+
+        setSwiperSlider(slide)
+    }, [categories]);
+
+
     return (
 
         <Swiper
@@ -30,11 +47,7 @@ const SliderCategory = () => {
             loop={true}
             spaceBetween={50}
         >
-            {categories.map(item => (
-                <SwiperSlide key={item.id}>
-                    <ItemCategory key={item.id} item={item} />
-                </SwiperSlide>
-            ))}
+            {swiperSlider}
         </Swiper>
 
     )

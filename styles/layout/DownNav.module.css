@@ -92,22 +92,6 @@
   background-color: var(--primary);
 }
 
-.arrow {
-  position: absolute;
-  width: 11px;
-  height: 11px;
-  top: -5.5px;
-  left: 3.8rem;
-  background-color: var(--secondary);
-  transform: rotate(45deg);
-  cursor: pointer;
-  transition: all 0.3s ease-in-out;
-}
-
-.dropDown a:hover > .arrow {
-  background-color: var(--primary);
-}
-
 @media (max-width: 768px) {
   .containerNavDown {
     width: 100vw;

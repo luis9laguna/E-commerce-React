@@ -1,8 +1,11 @@
-import { useState } from "react";
-import useInput from 'hooks/use-input';
-import styles from '@/styles/ui/Form.module.css';
+import useInput from 'hooks/useInput';
+import styles from 'styles/ui/Form.module.css';
+import { useAuth } from 'context/auth/authContext';
 
 export default function Form({ showModal }) {
+
+    //CONTEXT
+    const { logIn } = useAuth()
 
     //REGEX
     const regexEmail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
@@ -42,14 +45,23 @@ export default function Form({ showModal }) {
         //CHECK
         if (!formIsValid) return;
 
-        console.log("IS VALID");
+        //VALUES
+        const email = e.target.email.value
+        const password = e.target.password.value
+
+        //SEND
+        logIn({
+            email,
+            password
+        })
         //RESET VALUES
         resetEmailInput()
         resetPasswordInput()
+
     }
 
     return (
-        <form className={styles.form} onSubmit={formSubmissionHandler}>
+        <form style={{ width: '100%' }} className={styles.form} onSubmit={formSubmissionHandler}>
             <input
                 placeholder="Email*"
                 type="email"

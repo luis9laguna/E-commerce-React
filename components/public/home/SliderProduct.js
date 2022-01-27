@@ -1,16 +1,32 @@
-import { popularProducts1, popularProducts2 } from "../../../utils/data";
-import AllItemsProduct from '@/components/public/ui/AllItemsProduct'
-import { Favorite, NewReleases } from "@material-ui/icons";
+import { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper';
 import 'swiper/css';
 import 'swiper/css/bundle';
-import useWindowDimensions from "hooks/use-window-dimensions";
+import AllItemsProduct from '@/components/public/ui/AllItemsProduct'
+import { Favorite, NewReleases } from "@material-ui/icons";
+import useWindowDimensions from "hooks/useWindowDimensions";
+import { popularProducts1, popularProducts2 } from "../../../utils/data";
 
-const SliderProduct = () => {
+const SliderProduct = ({ newestProducts }) => {
 
+    //SWIPER
+    const [slideNewest, setSlideNewest] = useState(null)
+
+    useEffect(() => {
+        const slide = newestProducts.map((product) => {
+            return (
+                <SwiperSlide key={product._id}>
+                    <AllItemsProduct product={product} />
+                </SwiperSlide>
+            )
+        })
+        setSlideNewest(slide)
+    }, [newestProducts]);
+
+
+    //WIDTH OF SCREEN
     const { width } = useWindowDimensions();
-
     let slides = 5.3
 
     if (width < 1440 && width > 800) {
@@ -22,7 +38,6 @@ const SliderProduct = () => {
     }
 
     const information = {
-
         alignItems: 'center',
         justifyContent: 'center',
         display: 'flex',
@@ -30,12 +45,12 @@ const SliderProduct = () => {
         fontSize: '2rem',
         color: '#303030',
         margin: '2.5rem 0'
-
     }
+
 
     return (
         <>
-            <span style={information}>
+            {/* <span style={information}>
                 <Favorite />Check The Favorite Products of our users<Favorite />
             </span>
 
@@ -49,28 +64,25 @@ const SliderProduct = () => {
 
                 {popularProducts1.map(item => (
                     <SwiperSlide key={item.id}>
-                        <AllItemsProduct key={item.id} item={item} />
+                        <AllItemsProduct key={item.id} product={item} />
                     </SwiperSlide>
                 ))}
-            </Swiper>
+            </Swiper> */}
 
-            <span style={information}>
-                <NewReleases />Take a look to our new Products<NewReleases />
-            </span>
-
-            <Swiper
-                modules={[Navigation]}
-                slidesPerView={slides}
-                navigation
-                loop={true}
-                spaceBetween={50}
-            >
-                {popularProducts2.map(item => (
-                    <SwiperSlide key={item.id}>
-                        <AllItemsProduct key={item.id} item={item} />
-                    </SwiperSlide>
-                ))}
-            </Swiper>
+            <>
+                <span style={information}>
+                    <NewReleases />Take a look to our new Products<NewReleases />
+                </span>
+                <Swiper
+                    modules={[Navigation]}
+                    slidesPerView={slides}
+                    navigation
+                    loop={true}
+                    spaceBetween={50}
+                >
+                    {slideNewest}
+                </Swiper>
+            </>
         </>
     )
 }

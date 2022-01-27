@@ -1,10 +1,11 @@
-import { FavoriteBorderOutlined, HistoryOutlined, ShopOutlined } from '@material-ui/icons';
 import { useState, useEffect } from 'react';
-import styles from '@/styles/Auth.module.css'
-import LoginForm from './forms/LoginForm'
-import RegisterForm from './forms/RegisterForm';
 import { useRouter } from 'next/router'
-import ForgetForm from './forms/ForgetForm';
+import { FavoriteBorderOutlined, HistoryOutlined, ShopOutlined } from '@material-ui/icons';
+import styles from '@/styles/Auth.module.css'
+import LoginForm from '@/components/public/auth/forms/LoginForm'
+import RegisterForm from '@/components/public/auth/forms/RegisterForm';
+import ForgetForm from '@/components/public/auth/forms/ForgetForm';
+import Meta from '@/components/public/ui/Meta'
 
 
 const Auth = () => {
@@ -31,6 +32,7 @@ const Auth = () => {
 
     return (
         <>
+            <Meta title='Auth' />
             <div className={styles.container}>
                 <div>
                     <h2>Sign in or create an account</h2>

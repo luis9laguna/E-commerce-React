@@ -1,8 +1,8 @@
-import React from 'react';
+import Link from 'next/link';
 import styles from '@/styles/home/ItemCategory.module.css'
 
 
-const ItemCategory = ({ item }) => {
+const ItemCategory = ({ category }) => {
 
     function titleCase(str) {
         var splitStr = str.toLowerCase().split(' ');
@@ -12,13 +12,15 @@ const ItemCategory = ({ item }) => {
         return splitStr.join(' ');
     }
 
-    const title = titleCase(item.title);
+    const title = titleCase(category.name);
 
     return (
-        <div className={styles.container}>
-            <img src={item.img} className={styles.image} />
-            <h1 className={styles.title}>{title}</h1>
-        </div>
+        <Link href={`/category/${category.slug}`}>
+            <div className={styles.container}>
+                <img src={category.image} className={styles.image} />
+                <h1 className={styles.title}>{title}</h1>
+            </div>
+        </Link>
     )
 }
 
