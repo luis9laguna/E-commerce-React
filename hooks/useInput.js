@@ -19,6 +19,9 @@ const useInput = (validateValue) => {
         setEnteredValue('');
         setIsTouched(false)
     }
+    const fillEdit = (data) => {
+        setEnteredValue(data)
+    }
 
     return {
         value: enteredValue,
@@ -26,6 +29,7 @@ const useInput = (validateValue) => {
         hasError,
         valueChangeHandler,
         inputBlurHandler,
+        fillEdit,
         reset
     }
 };

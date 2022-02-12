@@ -27,7 +27,7 @@
   display: flex;
 }
 
-.socialContainer > svg {
+.socialContainer svg {
   width: 2.4rem;
   height: 2.4rem;
   border-radius: 50%;
@@ -42,7 +42,7 @@
   transition: all 0.5s ease-in-out;
 }
 
-.socialContainer > svg:hover {
+.socialContainer svg:hover {
   transform: scale(1.15);
 }
 
@@ -66,7 +66,8 @@
   flex: 1;
   text-align: center;
   padding: 1.3rem;
-  width: 25rem;
+  display: flex;
+  flex-direction: column;
 }
 
 .title {
@@ -120,13 +121,25 @@
     width: 100%;
   }
 
-  .center {
-    display: none;
-  }
-
   .right {
     width: 100%;
+  }
+  .center {
     background-color: var(--secondary);
     color: var(--primary);
+  }
+
+  .list li {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .list li a {
+    padding: 0.7rem 0;
+    width: 100%;
+    display: block;
+    font-weight: bold;
   }
 }

@@ -1,20 +1,21 @@
 import Link from "next/link";
 import { useAuth } from "context/auth/authContext";
+import styles from '@/styles/ui/SignLog.module.css'
 
 export default function SignLog() {
 
-    const { user, logOut } = useAuth()
+    const { isLoggedIn, logOut, userName } = useAuth()
 
 
     return (
         <div className='containerLogSign'>
-            {user ? (
+            {isLoggedIn ? (
                 <>
                     <Link href='/user/userInformation'>
-                        <span className="auth register" style={{ textTransform: 'capitalize' }}>Hi, {user}</span>
+                        <span className={`${styles.auth} ${styles.register}`} style={{ textTransform: 'capitalize' }}>Hi, {userName}</span>
                     </Link>
-                    <button className='logout' onClick={logOut}>
-                        <span className='auth login'>
+                    <button className={styles.logout} onClick={logOut}>
+                        <span className={`${styles.auth} ${styles.login}`}>
                             LogOut
                         </span>
                     </button>
@@ -24,12 +25,12 @@ export default function SignLog() {
                 (
                     <>
                         <Link href='/login#register'>
-                            <span className='auth register'>
+                            <span className={`${styles.auth} ${styles.register}`}>
                                 Sing Up
                             </span>
                         </Link>
                         <Link href='/login#login'>
-                            <span className='auth login'>
+                            <span className={`${styles.auth} ${styles.login}`}>
                                 Log In
                             </span>
                         </Link>
@@ -39,6 +40,3 @@ export default function SignLog() {
         </div>
     )
 }
-
-
-{/*  */ }

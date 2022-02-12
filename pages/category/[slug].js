@@ -1,38 +1,32 @@
 import Layout from "@/components/public/layout/Layout";
-import { getAllCategories, getProductsByCategory } from "helpers/api-util";
+import { getProductsByCategory } from "helpers/api-util";
 import ProductContainer from "@/components/public/ui/ProductContainer";
+import Meta from "@/components/public/ui/Meta";
 
-const Category = ({ products, title }) => {
+const Category = ({ data, title }) => {
+
+    const url = `/category/${title}?`
     return (
         <Layout>
-            <ProductContainer products={products} title={title} />
+            <Meta title={title} />
+            <ProductContainer data={data} title={title} url={url} />
         </Layout>
     )
 };
 
-export async function getStaticProps({ params }) {
+export async function getServerSideProps({ params, query }) {
 
     const slug = params.slug
+    const page = query?.page || 1
+    const sort = query?.sort || 'name'
 
-    const products = await getProductsByCategory(slug)
+    const data = await getProductsByCategory(slug, page, sort) || ''
+    if (data?.response?.status === 404) return { notFound: true }
     return {
         props: {
-            products,
+            data,
             title: slug
-        },
-        revalidate: 10
-    }
-}
-
-export async function getStaticPaths() {
-
-    const categories = await getAllCategories()
-    const slugs = categories.map(category => category.slug)
-    const pathsWithParams = slugs.map(slug => ({ params: { slug: slug } }))
-
-    return {
-        paths: pathsWithParams,
-        fallback: false
+        }
     }
 }
 

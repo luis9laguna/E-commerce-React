@@ -1,13 +1,24 @@
-import Layout from "@/components/public/layout/Layout";
+import Sidebar from "@/components/admin/layout/Sidebar";
 
 export default function DashBoard() {
     return (
-        <div>
-            <Layout>
-                <div>
-                    Yep here we are
-                </div>
-            </Layout>
-        </div>
+        <Sidebar>
+            <div>asdasdasdsa</div>
+            <div>asdasdasdsa</div>
+            <div>asdasdasdsa</div>
+            <div>asdasdasdsa</div>
+            <div>asdasdasdsa</div>
+            <div>asdasdasdsa</div>
+            <div>asdasdasdsa</div>
+            <div>asdasdasdsa</div>
+            <div>asdasdasdsa</div>
+            <div>asdasdasdsa</div>
+            <div>asdasdasdsa</div>
+            <div>asdasdasdsa</div>
+            <div>asdasdasdsa</div>
+            <div>asdasdasdsa</div>
+            <div>asdasdasdsa</div>
+            <div>asdasdasdsa</div>
+        </Sidebar>
     )
 }

@@ -1,21 +1,23 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router'
+import GoogleLogin from 'react-google-login';
 import { FavoriteBorderOutlined, HistoryOutlined, ShopOutlined } from '@material-ui/icons';
-import styles from '@/styles/Auth.module.css'
+import { useAuth } from 'context/auth/authContext';
 import LoginForm from '@/components/public/auth/forms/LoginForm'
 import RegisterForm from '@/components/public/auth/forms/RegisterForm';
 import ForgetForm from '@/components/public/auth/forms/ForgetForm';
-import Meta from '@/components/public/ui/Meta'
+import styles from '@/styles/Auth.module.css'
 
 
 const Auth = () => {
+
+    const { logInGoogle } = useAuth()
 
     const [register, setRegister] = useState(false);
     const [showForgetPassword, setShowForgetPassword] = useState(false);
 
     //SHOW OR HIDE MODAL
-    const hideForgetPasswordHandler = () => setShowForgetPassword(false);
-    const showForgetPasswordHandler = () => setShowForgetPassword(true);
+    const handlerShowForgetPassword = () => setShowForgetPassword(!showForgetPassword);
 
     //GET PATH
     const router = useRouter()
@@ -29,10 +31,11 @@ const Auth = () => {
     const getRegisterForm = () => setRegister(true)
     const getLoginForm = () => setRegister(false)
 
+    //HANDLER GOOGLE
+    const handleLogin = async googleData => logInGoogle({ token: googleData.tokenId })
 
     return (
         <>
-            <Meta title='Auth' />
             <div className={styles.container}>
                 <div>
                     <h2>Sign in or create an account</h2>
@@ -40,12 +43,18 @@ const Auth = () => {
                         <button id='login' className={(register ? '' : styles.current)} onClick={getLoginForm}>Sign In</button>
                         <button id='register' className={(register ? styles.current : '')} onClick={getRegisterForm}>Create Account</button>
                     </div>
-                    {register ? <RegisterForm /> : <LoginForm showModal={showForgetPasswordHandler} />}
+                    {register ? <RegisterForm /> : <LoginForm showModal={handlerShowForgetPassword} />}
                 </div>
                 <div >
                     <h2>Use another account</h2>
                     <div className={styles.another}>
-                        <button className={styles.google}>Sign In with Google</button>
+                        <GoogleLogin
+                            clientId={process.env.GOOGLE_ID}
+                            buttonText="Log in with Google"
+                            onSuccess={handleLogin}
+                            onFailure={handleLogin}
+                            cookiePolicy={'single_host_origin'}
+                        />
                         <p>Join and get all the benefits!</p>
                         <ul>
                             <li> <ShopOutlined /> Save time during checkout</li>
@@ -56,7 +65,7 @@ const Auth = () => {
                 </div>
             </div>
 
-            {showForgetPassword && <ForgetForm onClose={hideForgetPasswordHandler} />}
+            {showForgetPassword && <ForgetForm onClose={handlerShowForgetPassword} />}
         </>
     )
 }

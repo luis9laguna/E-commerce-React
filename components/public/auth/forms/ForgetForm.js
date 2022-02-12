@@ -1,5 +1,7 @@
 import styles from '@/styles/ui/Form.module.css';
+import { forgetPassword } from 'helpers/api-util';
 import useInput from 'hooks/useInput';
+import Swal from 'sweetalert2';
 import Modal from '../../ui/Modal';
 
 export default function ForgetForm({ onClose }) {
@@ -30,7 +32,25 @@ export default function ForgetForm({ onClose }) {
         //CHECK
         if (!formIsValid) return;
 
-        console.log("IS VALID");
+
+        const email = e.target.email.value
+        forgetPassword({ email }).then(resp => {
+            if (resp.ok) {
+                //MODAL
+                Swal.fire(
+                    'Good job!', 'Check your email to continue with the process of recovering your account', 'success'
+                )
+                //REDIRECT
+                router.push('/')
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: resp.message
+                })
+            }
+        })
+        // onClose()
         //RESET VALUES
         resetEmailInput()
     }
@@ -50,7 +70,7 @@ export default function ForgetForm({ onClose }) {
                 />
                 {emailInputHasError && <p className={styles.invalidText}>It must be a valid email.</p>}
 
-                <button disabled={!formIsValid} onClick={onClose}>SEND</button>
+                <button disabled={!formIsValid}>SEND</button>
             </form>
         </Modal>
     )

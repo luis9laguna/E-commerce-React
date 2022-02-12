@@ -6,10 +6,19 @@ const TopNav = () => {
     return (
         <div className={styles.container}>
             <div className={styles.social}>
-                <WhatsApp />
-                <Instagram />
-                <Facebook />
-                <Twitter />
+                <a href="https://www.whatsapp.com">
+                    <WhatsApp />
+                </a>
+                <a href="https://www.instagram.com">
+                    <Instagram />
+                </a>
+                <a href="https://www.facebook.com">
+                    <Facebook />
+                </a>
+                <a href="https://www.twitter.com">
+                    <Twitter />
+                </a>
+
             </div>
             <SignLog />
         </div>

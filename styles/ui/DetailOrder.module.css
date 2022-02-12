@@ -1,0 +1,163 @@
+.top {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.top span {
+  font-size: var(--size-1);
+  text-align: center;
+}
+
+.status {
+  font-size: var(--size-4) !important;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.table {
+  border-collapse: collapse;
+  margin: 25px 0;
+  font-size: var(--size-1);
+  width: 100%;
+  min-width: 260px;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.tr {
+  background-color: var(--primary);
+  color: var(--secondary);
+  text-align: left;
+  font-weight: bold;
+}
+
+.table tbody {
+  background-color: var(--secondary);
+}
+
+.table th,
+.table td {
+  padding: 12px 15px;
+}
+
+.table th {
+  font-size: var(--size-3);
+}
+
+.table tbody tr {
+  border-bottom: 1px solid var(--primary);
+  transition: all 0.3s ease-in-out;
+}
+
+.table tbody tr:hover {
+  background-color: var(--primary);
+}
+
+.table tbody tr:hover > td {
+  color: var(--secondary);
+}
+
+.table td {
+  color: var(--primary);
+  font-size: var(--size-1);
+}
+.tableProduct {
+  display: flex;
+  flex-direction: column;
+}
+.tableProduct span {
+  margin-left: 18%;
+  font-size: var(--size-3);
+  font-weight: bold;
+}
+
+.tableProduct img {
+  width: 200px;
+}
+
+.extraInfo {
+  display: flex;
+  flex: 1;
+  justify-content: space-evenly;
+}
+
+.address {
+  display: flex;
+  flex-direction: column;
+  align-items: center !important;
+}
+
+.bill {
+  text-align: center;
+}
+
+.bill div {
+  font-size: var(--size-2);
+}
+
+.bill div span {
+  font-weight: bold;
+}
+
+.total {
+  font-size: var(--size-4) !important;
+  font-weight: bold;
+}
+
+.infoTitle {
+  font-weight: bold;
+  font-size: 2rem !important;
+  margin-bottom: 1rem;
+}
+.containerButton {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.button {
+  width: 70%;
+  border-radius: 2rem;
+  border-color: var(--primary);
+  padding: 1rem 1.5rem;
+  background-color: var(--primary);
+  color: var(--secondary);
+  margin: 1rem 0 !important;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.button:hover {
+  background-color: var(--secondary);
+  color: var(--primary);
+}
+
+@media (max-width: 768px) {
+  .extraInfo {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+@media (max-width: 550px) {
+  .tableProduct img {
+    width: 130px;
+  }
+  .tableProduct span {
+    font-size: var(--size-1);
+    margin-left: 25%;
+  }
+
+  .table th {
+    font-size: var(--size-1);
+  }
+}
+
+@media (max-width: 380px) {
+  .tableProduct img {
+    width: 80px;
+  }
+}

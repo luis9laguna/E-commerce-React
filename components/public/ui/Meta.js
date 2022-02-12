@@ -17,7 +17,7 @@ const Meta = ({ title, keywords, description }) => {
 Meta.defaultProps = {
     title: 'Best E-Commerce',
     keywords: 'best e-commerce, shop online',
-    description: 'The best e-commerce'
+    description: 'The best e-commerce, here you can find any type of product that you can imagine and at a really good price, so dont think twice and enter!'
 }
 
 export default Meta;

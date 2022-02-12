@@ -1,0 +1,43 @@
+.containerLogSign {
+  align-items: center;
+  display: flex;
+}
+
+.auth {
+  display: inline-block;
+  text-transform: uppercase;
+  padding: 0.5rem 1.3rem;
+  font-size: 0.8rem;
+  border: 2px solid var(--primary);
+  border-radius: 2rem;
+  line-height: 1;
+  margin: 0.2rem;
+  transition: 0.3s;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.register,
+.login:hover {
+  background-color: var(--secondary);
+  color: var(--primary);
+}
+
+.login,
+.register:hover {
+  background-color: var(--primary);
+  color: var(--secondary);
+}
+
+.logout {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .auth {
+    border: 2px solid var(--secondary);
+  }
+}

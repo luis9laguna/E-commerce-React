@@ -1,12 +1,12 @@
 import Layout from "@/components/public/layout/Layout";
 import Slider from "@/components/public/home/Slider";
 import SliderCategory from "@/components/public/home/SliderCategory";
-import SliderProduct from "@/components/public/home/SliderProduct";
+import SliderProduct from "@/components/public/ui/SliderProduct";
 import InfoHome from "@/components/public/home/InfoHome";
-import { getAllCategories, getNewestProducts } from "helpers/api-util";
+import { getAllCategories, getNewestProducts, getProductsWithMoreLikes } from "helpers/api-util";
 
 
-export default function Home({ categories, newestProducts }) {
+export default function Home({ categories, newestProducts, likesProducts }) {
 
   return (
     <>
@@ -14,7 +14,8 @@ export default function Home({ categories, newestProducts }) {
         <Slider />
         <InfoHome />
         <SliderCategory categories={categories} />
-        <SliderProduct newestProducts={newestProducts} />
+        <SliderProduct products={newestProducts} description='Take a look to our new Products' icon='news' />
+        <SliderProduct products={likesProducts} description='Check The Favorite Products of our users' icon='favs' />
       </Layout>
     </>
   )
@@ -22,12 +23,14 @@ export default function Home({ categories, newestProducts }) {
 
 
 export async function getStaticProps() {
-  const categories = await getAllCategories()
-  const newestProducts = await getNewestProducts()
+  const categories = await getAllCategories() || []
+  const newestProducts = await getNewestProducts() || []
+  const likesProducts = await getProductsWithMoreLikes() || []
   return {
     props: {
       categories,
-      newestProducts
+      newestProducts,
+      likesProducts
     },
     revalidate: 10
   }

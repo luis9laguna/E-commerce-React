@@ -1,8 +1,7 @@
-import Modal from "../../ui/Modal"
+import Modal from "@/components/public/ui/Modal"
 
 
 export default function InfoAbout({ onClose }) {
-
 
     return (
         <Modal onClose={onClose}>

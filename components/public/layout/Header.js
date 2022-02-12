@@ -1,17 +1,19 @@
 import { useState, useEffect } from 'react';
+import { useAuth } from 'context/auth/authContext';
+import { useCart } from 'context/cart/cartContext';
 import TopNav from './navbar/TopNav';
 import MiddleNav from './navbar/MiddleNav';
 import DownNav from './navbar/DownNav';
 import Announcement from './elements/Announcement';
 import ContactForm from './elements/ContactForm';
 import InfoAbout from './elements/InfoAbout';
-import { useAuth } from 'context/auth/authContext';
 
 
 const Header = () => {
 
     //CONTEXT
     const { userAuth } = useAuth()
+    const { getCartLocal } = useCart()
 
     //USESTATE FOR NAVBAR
     const [isOpen, setIsOpen] = useState(false);
@@ -20,21 +22,21 @@ const Header = () => {
     const [showAboutUs, setShowAboutUs] = useState(false);
     const [showContactForm, setShowContactForm] = useState(false);
 
+    //HANDER NAVBAR
+    const handlerNavbar = () => setIsOpen(!isOpen)
 
     //SHOW OR HIDE MODAL ABOUT US
-    const hideAboutUsHandler = () => setShowAboutUs(false);
-    const showAboutUsHandler = () => setShowAboutUs(true);
+    const handlerShowAboutUS = () => setShowAboutUs(!showAboutUs);
 
     //SHOW OR HIDE MODAL CONTACT FORM
-    const hideContactFormHandler = () => setShowContactForm(false);
-    const showContactFormHandler = () => setShowContactForm(true);
+    const handlerShowContactForm = () => setShowContactForm(!showContactForm);
 
-
+    //GET USER IF THERE IS A VALID TOKEN
     useEffect(() => {
-        const token = localStorage.getItem('token')
-
-        if (token) {
-            userAuth()
+        userAuth()
+        const items = localStorage.getItem('cart')
+        if (items) {
+            getCartLocal()
         }
     }, []);
 
@@ -43,15 +45,15 @@ const Header = () => {
             <div className='header'>
                 <Announcement />
                 <TopNav />
-                <MiddleNav open={(isOpen) => setIsOpen(isOpen)} statusOpen={isOpen} />
+                <MiddleNav setIsOpen={handlerNavbar} isOpen={isOpen} />
                 <DownNav
                     statusOpen={isOpen}
-                    showContactForm={showContactFormHandler}
-                    showAboutUs={showAboutUsHandler}
+                    showContactForm={handlerShowContactForm}
+                    showAboutUs={handlerShowAboutUS}
                 />
             </div>
-            {showAboutUs && <InfoAbout onClose={hideAboutUsHandler} />}
-            {showContactForm && <ContactForm onClose={hideContactFormHandler} />}
+            {showAboutUs && <InfoAbout onClose={handlerShowAboutUS} />}
+            {showContactForm && <ContactForm onClose={handlerShowContactForm} />}
         </>
     )
 }

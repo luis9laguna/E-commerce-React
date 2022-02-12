@@ -10,7 +10,7 @@
   align-items: center;
   border-radius: 1rem;
   padding: 20px;
-  min-width: 320px;
+  min-width: 300px;
   width: 80%;
   margin: 3rem auto;
   text-align: center;
@@ -20,12 +20,21 @@
 }
 
 .form > input {
-  min-width: 100%;
+  width: 100%;
   margin: 1rem 0rem;
   padding: 1rem;
   border: none;
   background-color: var(--secondary);
   border-bottom: 1px solid var(--primary);
+}
+
+.labelInfo {
+  font-size: 1.5rem;
+  margin-top: 1rem;
+}
+.labelInfo span {
+  font-weight: bold;
+  text-transform: capitalize;
 }
 
 .invalidInput {
@@ -78,8 +87,21 @@
   margin: 1rem 0;
 }
 
-@media (max-width: 600px) {
+.userInput {
+  width: 60% !important;
+}
+.userButton {
+  width: 40% !important;
+}
+
+@media (max-width: 768px) {
   .form {
     width: 80%;
+  }
+  .userInput {
+    width: 100% !important;
+  }
+  .userButton {
+    width: 70% !important;
   }
 }

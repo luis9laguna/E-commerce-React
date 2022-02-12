@@ -15,23 +15,30 @@ const Footer = () => {
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
                     </p>
                     <div className={styles.socialContainer}>
-                        <Facebook className={styles.facebook} />
-                        <Twitter className={styles.twitter} />
-                        <WhatsApp className={styles.whatsapp} />
-                        <Instagram className={styles.instagram} />
+                        <a href="https://www.facebook.com">
+                            <Facebook className={styles.facebook} />
+                        </a>
+                        <a href="https://www.twitter.com">
+                            <Twitter className={styles.twitter} />
+                        </a>
+                        <a href="https://www.whatsapp.com">
+                            <WhatsApp className={styles.whatsapp} />
+                        </a>
+                        <a href="https://www.instagram.com">
+                            <Instagram className={styles.instagram} />
+                        </a>
                     </div>
                 </div>
                 <div className={styles.center}>
                     <div className={styles.title}>Useful Links</div>
                     <ul className={styles.list}>
                         <li> <Link href='/'>Home</Link> </li>
-                        <li><Link href='/allProducts'>All Products</Link></li>
-                        <li><Link href='/aboutUs'>About Us</Link></li>
-                        <li><Link href='/contactUs'>Contact Us</Link></li>
+                        <li><Link href='/product/all'>All Products</Link></li>
                         <li><Link href='/wishList'> WishList</Link></li>
                         <li><Link href='/cart'>Cart</Link></li>
-                        <li><Link href='/auth/register'>Register</Link></li>
-                        <li><Link href='/auth/login'>Log In</Link></li>
+                        <li><Link href='/login#register'>Register</Link></li>
+                        <li><Link href='/login#login'>Log In</Link></li>
+                        <li><Link href='/statusOrder'>Status of package</Link></li>
                     </ul>
                 </div>
                 <div className={styles.right}>
@@ -47,7 +54,9 @@ const Footer = () => {
                     </span>
                     <img className={styles.payment} src="https://i.ibb.co/Qfvn4z6/payment.png" />
                 </div>
-                <Whatsapp />
+                <a href="https://www.whatsapp.com">
+                    <Whatsapp />
+                </a>
             </div>
         </>
     )

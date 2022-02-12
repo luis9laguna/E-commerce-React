@@ -103,7 +103,6 @@ export default function RegisterForm() {
         resetEmailInput()
         resetPasswordInput()
         resetPasswordConfirmInput()
-
     }
 
     return (
@@ -115,7 +114,7 @@ export default function RegisterForm() {
                 value={enteredName}
                 onChange={nameChangedHandler}
                 onBlur={nameBlurHandler}
-            ></input>
+            />
             {nameInputHasError && <p className={styles.invalidText}>Name need to has at least 3 characters</p>}
             <input
                 placeholder="Sur Name*"
@@ -124,7 +123,7 @@ export default function RegisterForm() {
                 value={enteredSurName}
                 onChange={surNameChangedHandler}
                 onBlur={surNameBlurHandler}
-            ></input>
+            />
             {surNameInputHasError && <p className={styles.invalidText}>SurName need to has at least 3 characters</p>}
             <input
                 placeholder="Email*"
@@ -133,7 +132,7 @@ export default function RegisterForm() {
                 value={enteredEmail}
                 onChange={emailChangedHandler}
                 onBlur={emailBlurHandler}
-            ></input>
+            />
             {emailInputHasError && <p className={styles.invalidText}>It must be a valid email.</p>}
             <input
                 placeholder="Password*"
@@ -142,7 +141,7 @@ export default function RegisterForm() {
                 value={enteredPassword}
                 onChange={passwordChangedHandler}
                 onBlur={passwordBlurHandler}
-            ></input>
+            />
             {passwordInputHasError && <p className={styles.invalidText}>Password must be at least 8 characters, 1 uppercase, 1 lowercase and 1 number.</p>}
             <input
                 placeholder="Confirm Password*"
@@ -151,7 +150,7 @@ export default function RegisterForm() {
                 value={enteredPasswordConfirm}
                 onChange={passwordConfirmChangedHandler}
                 onBlur={passwordConfirmBlurHandler}
-            ></input>
+            />
             {passwordConfirmInputHasError && <p className={styles.invalidText}>Password are not matching</p>}
             <span>
                 By creating an account, I consent to the processing of my personal data in accordance with the <b>PRIVACY POLICY</b>

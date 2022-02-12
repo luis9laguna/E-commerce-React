@@ -1,58 +1,51 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-import styles from '@/styles/UserLayout.module.css'
-import { AddLocationOutlined, ArrowForwardIosOutlined, LockOutlined, PersonOutlined, ShoppingBasketOutlined } from '@material-ui/icons';
 import { useAuth } from 'context/auth/authContext';
+import styles from '@/styles/user/UserLayout.module.css'
+import { AddLocationOutlined, ArrowForwardIosOutlined, LockOutlined, PersonOutlined, ShoppingBasketOutlined } from '@material-ui/icons';
 
 
 export default function information({ children }) {
 
-    const { user } = useAuth()
+    const { isLoggedIn, loadingUser } = useAuth()
     const router = useRouter()
 
     useEffect(() => {
-        if (user === '' || user === null) router.replace('/')
-    }, [user]);
-
-    if (user === '' || user === null) return <div></div>
+        if (!loadingUser && !isLoggedIn) router.replace('/login#login')
+    }, [isLoggedIn, loadingUser]);
+    if (!isLoggedIn) return <div></div>
 
     return (
         <div className={styles.container}>
             <div className={styles.pageContainer}>
                 <ul className={styles.list} >
                     <Link href='/user/userInformation'>
-                        <li>
+                        <li className={router.pathname === '/user/userInformation' ? styles.active : ''}>
                             <PersonOutlined style={{ fontSize: "2.5rem" }} />
                             <span>User Information</span>
                             <ArrowForwardIosOutlined />
                         </li>
                     </Link>
                     <Link href='/user/changePassword'>
-                        <li>
+                        <li className={router.pathname === '/user/changePassword' ? styles.active : ''}>
                             <LockOutlined style={{ fontSize: "2.5rem" }} />
-                            <span>
-                                Change password
-                            </span>
+                            <span>Change password</span>
                             <ArrowForwardIosOutlined />
                         </li>
                     </Link>
                     <Link href='/user/myOrders'>
-                        <li>
+                        <li className={router.pathname === '/user/myOrders' ? styles.active : ''}>
                             <ShoppingBasketOutlined style={{ fontSize: "2.5rem" }} />
-                            <span>
-                                My orders
-                            </span>
+                            <span>My orders</span>
                             <ArrowForwardIosOutlined />
 
                         </li>
                     </Link>
                     <Link href='/user/addresses'>
-                        <li>
+                        <li className={router.pathname === '/user/addresses' ? styles.active : ''}>
                             <AddLocationOutlined style={{ fontSize: "2.5rem" }} />
-                            <span>
-                                Addresses
-                            </span>
+                            <span>Addresses</span>
                             <ArrowForwardIosOutlined />
                         </li>
                     </Link>

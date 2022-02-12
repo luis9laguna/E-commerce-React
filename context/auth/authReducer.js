@@ -1,4 +1,4 @@
-import { USER_AUTH, FORM_AUTH, LOG_OUT } from "types";
+import { USER_AUTH, FORM_AUTH, LOG_OUT, UPDATE_USER } from "types";
 
 
 export default (state, action) => {
@@ -8,26 +8,39 @@ export default (state, action) => {
             localStorage.setItem('token', action.payload.token)
             return {
                 ...state,
-                user: action.payload.user,
-                role: action.payload.role
+                userName: action.payload.user,
+                ref: action.payload.ref,
+                role: action.payload.role,
+                isLoggedIn: true
             }
 
         case USER_AUTH:
             return {
                 ...state,
-                user: action.payload.name,
-                role: action.payload.role
+                userName: action.payload.user,
+                ref: action.payload.ref,
+                role: action.payload.role,
+                isLoggedIn: true
+
+            }
+        case UPDATE_USER:
+            return {
+                ...state,
+                userName: action.payload
             }
 
         case LOG_OUT:
             localStorage.removeItem('token')
             return {
                 ...state,
-                user: null,
-                role: null
+                userName: null,
+                ref: null,
+                role: null,
+                isLoggedIn: false
             }
 
+
         default:
-            return state;
+            return { ...state };
     }
 }

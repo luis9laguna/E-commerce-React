@@ -1,23 +1,34 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { useCart } from 'context/cart/cartContext';
 import styles from '@/styles/layout/MiddleNav.module.css';
 import { Badge } from '@material-ui/core';
 import { FavoriteBorderOutlined, Search, ShoppingCartOutlined } from '@material-ui/icons';
 
 
-const MiddleNav = (props) => {
+const MiddleNav = ({ setIsOpen, isOpen }) => {
 
     const [search, setSearch] = useState('');
 
     const router = useRouter();
 
+    const querySearch = router.query?.q
+
+
+    useEffect(() => {
+        querySearch && setSearch(querySearch)
+    }, [])
+
+    //CONTEXT
+    const { totalQuantityCart } = useCart()
+
+    // HANDLE SEARCH FORM
     const searchForm = (e) => {
         e.preventDefault();
 
-        if (search === '' || search.length < 3) {
-            return
-        }
+        if (search === '' || search.length < 3) return
+
         router.push({
             pathname: '/search',
             query: { q: search }
@@ -27,12 +38,10 @@ const MiddleNav = (props) => {
     return (
         <div className={styles.container}>
             <h1 className={styles.logo}>
-                <Link href='/' >
-                    SHOOP.
-                </Link>
+                <Link href='/'>SHOOP.</Link>
             </h1>
             <form className={styles.searchContainer} onSubmit={searchForm}>
-                <input className={styles.input} placeholder="Search" onChange={e => setSearch(e.target.value)} />
+                <input value={search} className={styles.input} placeholder="Search" onChange={e => setSearch(e.target.value)} />
                 <button type='submit'><Search style={{ color: "black" }} /></button>
             </form>
             <div className={styles.cartFavContainer}>
@@ -42,17 +51,14 @@ const MiddleNav = (props) => {
                     </Link>
                 </div>
                 <div>
-                    <Badge style={{ zIndex: "0" }} badgeContent={4} color="secondary">
+                    <Badge style={{ zIndex: "0" }} badgeContent={totalQuantityCart} color="secondary">
                         <Link href='/cart'>
                             <ShoppingCartOutlined />
                         </Link>
                     </Badge>
                 </div>
-                <input type="checkbox" onChange={() => props.open(!props.statusOpen)} className={styles.check} />
-                <div className={styles.burguerContainer}>
-                    <div className={styles.burguer}>
-                        <div></div>
-                    </div>
+                <div className={`${styles.burguer} ${isOpen ? styles.open : ''}`} onClick={setIsOpen}>
+                    <div></div>
                 </div>
             </div>
         </div>

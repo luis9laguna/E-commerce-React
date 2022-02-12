@@ -2,24 +2,41 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Layout from "@/components/public/layout/Layout";
 import ProductContainer from "@/components/public/ui/ProductContainer";
-import AllItemsProduct from "@/components/public/ui/AllItemsProduct";
 import { searchProducts } from "helpers/api-util";
+import Meta from "@/components/public/ui/Meta";
 
 const Search = () => {
 
-    const [resultProducts, setResultProducts] = useState([]);
+    const [resultProducts, setResultProducts] = useState(false);
 
     const router = useRouter()
-    const query = router.query.q
+    const search = router.query?.q
+    const page = router.query?.page || 1
+    const sort = router.query?.sort || 'name'
+    const url = `/search?q=${search}&`
 
     useEffect(async () => {
-        const result = await searchProducts(query);
-        setResultProducts(result)
-    }, [query])
+        if (search !== undefined) {
+            await searchProducts(search, page, sort).then(resp => {
+                if (resp.ok) {
+                    setResultProducts(resp)
+                } else {
+                    setResultProducts(false)
+                }
+            });
+        }
+    }, [search, page, sort])
+
 
     return (
         <Layout>
-            <ProductContainer products={resultProducts} title={query} />
+            <Meta title={search} />
+
+            {resultProducts ?
+                <ProductContainer data={resultProducts} title={search} url={url} />
+                :
+                <h1 style={{ textAlign: 'center', margin: '5rem 0' }}>There aren't results with '{search || '????'}'</h1>
+            }
         </Layout>
     );
 };

@@ -1,6 +1,7 @@
 .container {
   display: flex;
   flex-direction: column;
+  margin-top: 8rem;
 }
 
 .order {
@@ -46,11 +47,21 @@
 @media (max-width: 768px) {
   .order {
     flex-direction: column;
+    width: 350px;
+  }
+  .title {
+    margin-top: 1rem;
   }
   .button {
     width: 80%;
   }
   .box {
     margin-top: 1rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .order {
+    width: 250px;
   }
 }

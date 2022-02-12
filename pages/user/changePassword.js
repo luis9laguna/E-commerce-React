@@ -1,15 +1,15 @@
-import Layout from "../../components/public/layout/Layout";
-import UserLayout from "../../components/public/user/UserLayout"
-import Form from "../../components/public/user/changePassword/Form";
+import Layout from "@/components/public/layout/Layout";
+import Meta from "@/components/public/ui/Meta";
+import UserLayout from "@/components/public/user/UserLayout"
+import Form from "@/components/public/user/userOptions/ChangePasswordForm";
 
 export default function ChangePassword() {
   return (
-    <div>
-      <Layout>
-        <UserLayout>
-          <Form />
-        </UserLayout>
-      </Layout>
-    </div>
+    <Layout>
+      <Meta title='Change Password' />
+      <UserLayout>
+        <Form />
+      </UserLayout>
+    </Layout>
   )
 }

@@ -1,11 +1,14 @@
 import AuthState from 'context/auth/authState'
+import CartState from 'context/cart/cartState'
 import '@/styles/globals.css'
 
 
 function MyApp({ Component, pageProps }) {
   return (
     <AuthState>
-      <Component {...pageProps} />
+      <CartState>
+        <Component {...pageProps} />
+      </CartState>
     </AuthState>
   )
 }

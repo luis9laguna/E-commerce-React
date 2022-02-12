@@ -58,7 +58,7 @@ export default function ContactForm({ onClose }) {
     return (
         <Modal onClose={onClose}>
             <h2 className={styles.title}>CONTACT</h2>
-            <form className={styles.form} style={{ boxShadow: 'initial', minWidth: '250px', width: "50%" }} onSubmit={formSubmissionHandler}>
+            <form className={styles.form} style={{ boxShadow: 'initial', minWidth: '240px', width: "50%" }} onSubmit={formSubmissionHandler}>
                 <input
                     placeholder="Name*"
                     type="text"

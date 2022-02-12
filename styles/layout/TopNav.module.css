@@ -9,14 +9,18 @@
   align-items: center;
   display: flex;
 }
+.social a {
+  justify-content: center;
+  display: flex;
+}
 
-.social > svg {
+.social svg {
   margin-right: 1.5rem;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
 }
 
-.social > svg:hover {
+.social svg:hover {
   transform: scale(1.1);
 }
 

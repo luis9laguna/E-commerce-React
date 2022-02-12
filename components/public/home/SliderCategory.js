@@ -17,11 +17,9 @@ const SliderCategory = ({ categories }) => {
 
     let slides = 3.3
 
-    if (width < 800 && width > 600) {
-        slides = 2.3
-    } else if (width < 600) {
-        slides = 1.3
-    }
+    if (width < 800 && width > 600) slides = 2.3
+    else if (width < 600) slides = 1.3
+
 
 
     useEffect(() => {
@@ -39,17 +37,18 @@ const SliderCategory = ({ categories }) => {
 
     return (
 
-        <Swiper
-            modules={[Navigation]}
-            style={{ margin: "2rem 2rem" }}
-            slidesPerView={slides}
-            navigation
-            loop={true}
-            spaceBetween={50}
-        >
-            {swiperSlider}
-        </Swiper>
-
+        <>
+            <Swiper
+                modules={[Navigation]}
+                style={{ margin: "2rem 2rem" }}
+                slidesPerView={slides}
+                navigation
+                loop={true}
+                spaceBetween={50}
+            >
+                {swiperSlider}
+            </Swiper>
+        </>
     )
 }
 

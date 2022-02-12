@@ -57,13 +57,13 @@
 }
 
 .dropDown ul {
+  list-style: none;
   position: relative;
   padding: 0;
   margin: 0;
 }
 
 .dropDown li {
-  list-style: none;
   transform: translateY(30px);
   opacity: 0;
   transition: 0.5s;
@@ -102,6 +102,7 @@
     max-width: 100%;
     transform: translateY(-700px);
     transition: all 0.5s ease-in-out;
+    padding-bottom: 1rem;
   }
 
   .show {
@@ -124,30 +125,33 @@
     justify-content: initial;
   }
 
-  .category:hover .dropDown li {
+  .category.dropActive .dropDown li {
     display: initial;
   }
 
-  .category {
-    display: flex;
-    flex-direction: column;
-  }
-
   .dropDown {
+    display: none;
     position: initial;
     pointer-events: auto;
-    width: 100%;
-    margin: 0;
-    margin-top: 0.7rem;
   }
 
-  .dropDown li {
-    display: none;
+  .dropDown a {
+    justify-content: initial;
+    background-color: var(--primary);
+    color: var(--secondary);
+    padding-top: 1rem !important;
+  }
+
+  .category.dropActive .dropDown {
+    display: initial;
   }
 }
 
-@media (max-height: 600px) {
+@media (max-height: 650px) {
   .dropDown a {
     padding: 8px 0;
+  }
+  .home {
+    margin-top: 4rem;
   }
 }

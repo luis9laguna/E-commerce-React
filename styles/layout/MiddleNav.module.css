@@ -20,7 +20,7 @@
   align-items: center;
   justify-content: center;
   position: relative;
-  width: 100%;
+  width: 95%;
   height: 3rem;
   border: 4px solid var(--primary);
   padding: 0px 10px;
@@ -71,22 +71,20 @@
   transform: scale(1.1);
 }
 
-.burguerContainer {
+.burguer {
   display: none !important;
   grid-area: burguer;
-  z-index: 15;
-}
-
-.burguer {
-  width: 2.5rem;
-  height: 2.5rem;
+  display: flex;
+  justify-content: center !important;
+  align-items: center !important;
+  padding: 1rem 0.4rem;
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 15;
 }
 
-.burguer div {
+.burguer > div {
   width: 1.6rem;
   height: 3px;
   border-radius: 3px;
@@ -103,9 +101,9 @@
   width: inherit;
   height: inherit;
   background-color: inherit;
-  border-radius: 3px;
-  transition: 0.5s;
-  z-index: 15;
+  border-radius: inherit;
+  transition: inherit;
+  z-index: inherit;
 }
 
 .burguer div::before {
@@ -116,27 +114,15 @@
   transform: translateY(7px);
 }
 
-.check {
-  position: absolute;
-  width: 2.5rem;
-  height: 2.5rem;
-  top: 3rem;
-  right: 0.8rem;
-  opacity: 0;
-  display: none;
-  z-index: 20;
-}
-
-.check:checked ~ .burguerContainer .burguer div {
+.burguer.open > div {
   background-color: transparent;
 }
-
-.check:checked ~ .burguerContainer .burguer div::before {
+.burguer.open > div::before {
   background-color: var(--secondary);
   transform: translateY(0) rotate(-45deg);
 }
 
-.check:checked ~ .burguerContainer .burguer div::after {
+.burguer.open > div::after {
   background-color: var(--secondary);
   transform: translateY(0) rotate(45deg);
 }
@@ -148,11 +134,8 @@
       "logo logo logo cartfav"
       "search search search search";
   }
-  .burguerContainer {
+  .burguer {
     display: initial !important;
-  }
-  .check {
-    display: block;
   }
   .searchContainer {
     margin-bottom: 1rem;
