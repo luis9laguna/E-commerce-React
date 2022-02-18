@@ -11,10 +11,6 @@ import InfoAbout from './elements/InfoAbout';
 
 const Header = () => {
 
-    //CONTEXT
-    const { userAuth } = useAuth()
-    const { getCartLocal } = useCart()
-
     //USESTATE FOR NAVBAR
     const [isOpen, setIsOpen] = useState(false);
 
@@ -30,15 +26,6 @@ const Header = () => {
 
     //SHOW OR HIDE MODAL CONTACT FORM
     const handlerShowContactForm = () => setShowContactForm(!showContactForm);
-
-    //GET USER IF THERE IS A VALID TOKEN
-    useEffect(() => {
-        userAuth()
-        const items = localStorage.getItem('cart')
-        if (items) {
-            getCartLocal()
-        }
-    }, []);
 
     return (
         <>

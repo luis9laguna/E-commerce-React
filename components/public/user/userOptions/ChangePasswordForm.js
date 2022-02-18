@@ -93,7 +93,7 @@ export default function Form() {
                 ></input>
                 {oldPasswordInputHasError ? <p className={styles.invalidText}>Password must be at least 8 characters, 1 uppercase, 1 lowercase and 1 number.</p> : ''}
                 <input
-                    placeholder="Confirm Password*"
+                    placeholder="New Password*"
                     type="password"
                     id="newPassword"
                     value={enteredNewPassword}

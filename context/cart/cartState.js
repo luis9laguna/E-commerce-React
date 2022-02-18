@@ -22,16 +22,18 @@ const CartState = ({ children }) => {
             type: ADD_CART,
             payload: item
         });
-        Swal.fire({
-            title: item.name,
-            text: `'${item.quantity}' has been added succesfully to your cart`,
-            imageUrl: item.image,
-            imageWidth: 300,
-            imageHeight: 300,
-            imageAlt: item.name,
-            timer: 2000,
-            timerProgressBar: true
-        })
+        if (!item.cart) {
+            Swal.fire({
+                title: item.name,
+                text: `'${item.quantity}' has been added succesfully to your cart`,
+                imageUrl: item.image,
+                imageWidth: 300,
+                imageHeight: 300,
+                imageAlt: item.name,
+                timer: 2000,
+                timerProgressBar: true
+            })
+        }
     };
 
     const removeItemFromCartHandler = slug => {

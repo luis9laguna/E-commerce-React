@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import useInput from 'hooks/useInput'
 import { useRouter } from 'next/router';
 import { useAuth } from 'context/auth/authContext';
@@ -11,6 +12,15 @@ export default function UserDataForm({ userInfo }) {
     const { updateUser } = useAuth()
     const router = useRouter()
 
+    //FILL FORM EDIT
+    useEffect(() => {
+        if (userInfo !== '') {
+            const { name, surname } = userInfo
+            nameFillEdit(name)
+            surnameFillEdit(surname)
+        }
+    }, [userInfo]);
+
     //NAME
     const {
         value: enteredName,
@@ -18,6 +28,7 @@ export default function UserDataForm({ userInfo }) {
         hasError: nameInputHasError,
         valueChangeHandler: nameChangedHandler,
         inputBlurHandler: nameBlurHandler,
+        fillEdit: nameFillEdit,
         reset: resetNameInput
     } = useInput(value => value.trim().length >= 3)
 
@@ -28,6 +39,7 @@ export default function UserDataForm({ userInfo }) {
         hasError: surNameInputHasError,
         valueChangeHandler: surNameChangedHandler,
         inputBlurHandler: surNameBlurHandler,
+        fillEdit: surnameFillEdit,
         reset: resetSurNameInput
     } = useInput(value => value.trim().length >= 3)
 
@@ -57,7 +69,7 @@ export default function UserDataForm({ userInfo }) {
             updateUser(resp.name)
             //MODAL
             Swal.fire(
-                'Good job!', 'Your registration is completed!', 'success'
+                'Good job!', 'Update completed!', 'success'
             )
             //REDIRECT
             router.push('/')
@@ -75,7 +87,7 @@ export default function UserDataForm({ userInfo }) {
                 User Information
             </h2>
             <form className={styles.form} onSubmit={formSubmissionHandler}>
-                <label className={styles.labelInfo} htmlFor='name'>Name (<span>{userInfo.name}</span>)</label>
+                <label className={styles.labelInfo} htmlFor='name'>Name</label>
                 <input
                     name='name'
                     placeholder="Name"
@@ -88,7 +100,7 @@ export default function UserDataForm({ userInfo }) {
                 />
                 {nameInputHasError ? <p className={styles.invalidText}>Name need to has at least 3 characters</p> : ''}
 
-                <label className={styles.labelInfo} htmlFor='surName'>Sur Name (<span>{userInfo.surname}</span>)</label>
+                <label className={styles.labelInfo} htmlFor='surName'>Sur Name</label>
                 <input
                     name='surname'
                     placeholder="SurName"

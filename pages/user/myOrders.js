@@ -1,9 +1,9 @@
 import { useState } from "react";
 import Layout from "@/components/public/layout/Layout";
 import UserLayout from "@/components/public/user/UserLayout";
-import Orders from "@/components/public/user/userOptions/Orders";
-import DetailOrder from "@/components/public/ui/DetailOrder";
+import DetailOrder from "@/components/public/ui/orders/DetailOrder";
 import Meta from "@/components/public/ui/Meta";
+import ContainerOrders from "@/components/public/ui/orders/ContainerOrders";
 
 
 export default function MyOrders() {
@@ -18,7 +18,7 @@ export default function MyOrders() {
     <Layout>
       <Meta title='My Orders' />
       <UserLayout>
-        <Orders showModal={handlerShowDetailOrder} setDetailOrder={setDetailOrder} />
+        <ContainerOrders showModal={handlerShowDetailOrder} setDetailOrder={setDetailOrder} />
       </UserLayout>
       {modalDetailOrder && <DetailOrder hideModal={handlerShowDetailOrder} detailOrder={detailOrder} />}
     </Layout>

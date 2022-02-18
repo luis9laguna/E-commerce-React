@@ -65,7 +65,7 @@ export default function ProductContainer({ data, title, setDeleteFav, url }) {
     }
 
     return (
-        <div>
+        <div className={styles.productContainer}>
             <h2 className={styles.title}>{title}</h2>
 
             <div className={styles.sortContainer}>

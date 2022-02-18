@@ -42,7 +42,10 @@ export default function WishList() {
       {data !== undefined && data !== false ?
         <ProductContainer setDeleteFav={setDeleteFav} data={data} title={'Your WishList'} url={url} />
         : (
-          <h2 style={{ textAlign: 'center', margin: '5rem 0' }}>You don't have any product added to yout wishlist, go and check some <Link href='/product/all'>products!</Link></h2>
+          <h2 style={{ textAlign: 'center', margin: '5rem 0' }}>
+            You don't have any product added to yout wishlist, go and check some
+            <Link href='/product/all'><span style={{ color: 'red' }}> products!</span></Link>
+          </h2>
         )}
     </Layout>
   )

@@ -24,6 +24,8 @@ export async function getNewestProducts() {
 
 export async function getAllProducts(page, sort) {
     try {
+        if (page === undefined) page = 1
+
         const resp = await clientAxios.get(`/product?page=${page}&limit=15&sort=${sort}`)
         const data = resp.data
         return data
@@ -47,6 +49,8 @@ export async function searchProducts(search, page, sort) {
 
 export async function getProductsByCategory(slug, page, sort) {
     try {
+        if (page === undefined) page = 1
+
         const resp = await clientAxios.get(`/category/${slug}?page=${page}&limit=15&sort=${sort}`)
         const data = resp.data
         return data
@@ -112,7 +116,7 @@ export async function getUserInfo() {
 
     try {
         const resp = await clientAxios.get(`/user`)
-        const data = resp.data.user
+        const data = resp.data
         return data
     } catch (error) {
         return error.response
@@ -185,7 +189,9 @@ export async function getAllOrdersByUser(page) {
     else return false
 
     try {
-        const resp = await clientAxios.get(`/order/user/all?page=${page}&limit=1`)
+        if (page === undefined) page = 1
+
+        const resp = await clientAxios.get(`/order/user/all?page=${page}&limit=5`)
         const data = resp.data
         return data
     } catch (error) {
@@ -283,3 +289,122 @@ export async function deleteAddress(id) {
     }
 }
 
+
+export async function getAllUsers(page) {
+    const token = localStorage.getItem('token')
+    if (token) tokenAuth(token)
+    else return false
+
+    try {
+        if (page === undefined) page = 1
+
+        const resp = await clientAxios.get(`/user/all?page=${page}&limit=10`)
+        const data = resp.data
+        return data
+    } catch (error) {
+        return error.response.data
+    }
+}
+
+export async function getAllAdmins(page) {
+    const token = localStorage.getItem('token')
+    if (token) tokenAuth(token)
+    else return false
+
+    try {
+        if (page === undefined) page = 1
+
+        const resp = await clientAxios.get(`/admin?page=${page}&limit=10`)
+        const data = resp.data
+        return data
+    } catch (error) {
+        return error.response.data
+    }
+}
+
+export async function deleteUserDB(id) {
+    const token = localStorage.getItem('token')
+    if (token) tokenAuth(token)
+    else return false
+
+    try {
+        const resp = await clientAxios.delete(`/user/${id}`)
+        const data = resp.data
+        return data
+    } catch (error) {
+        return error.response.data
+    }
+}
+
+export async function deleteAdminDB(id) {
+    const token = localStorage.getItem('token')
+    if (token) tokenAuth(token)
+    else return false
+
+    try {
+        const resp = await clientAxios.delete(`/admin/${id}`)
+        const data = resp.data
+        return data
+    } catch (error) {
+        return error.response.data
+    }
+}
+
+export async function createAdmin(info) {
+    const token = localStorage.getItem('token')
+    if (token) tokenAuth(token)
+    else return false
+
+    try {
+        const resp = await clientAxios.post(`/admin`, info)
+        const data = resp.data
+        return data
+    } catch (error) {
+        return error.response.data
+    }
+}
+
+export async function updateAdmin(id, info) {
+    const token = localStorage.getItem('token')
+    if (token) tokenAuth(token)
+    else return false
+
+    try {
+        const resp = await clientAxios.put(`/admin/${id}`, info)
+        const data = resp.data
+        return data
+    } catch (error) {
+        return error.response.data
+    }
+}
+
+export async function getAllOrders(page, sort) {
+    const token = localStorage.getItem('token')
+    if (token) tokenAuth(token)
+    else return false
+
+    try {
+        if (page === undefined) page = 1
+        if (sort === undefined) sort = 'all'
+
+        const resp = await clientAxios.get(`/order?page=${page}&limit=10&sort=${sort}`)
+        const data = resp.data
+        return data
+    } catch (error) {
+        return error.response.data
+    }
+}
+
+export async function updateOrder(id, info) {
+    const token = localStorage.getItem('token')
+    if (token) tokenAuth(token)
+    else return false
+
+    try {
+        const resp = await clientAxios.put(`/order/${id}`, info)
+        const data = resp.data
+        return data
+    } catch (error) {
+        return error.response.data
+    }
+}

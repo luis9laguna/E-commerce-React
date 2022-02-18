@@ -1,8 +1,11 @@
 import Sidebar from "@/components/admin/layout/Sidebar";
 
-export default function Dashboard() {
+
+const inventory = () => {
     return (
         <Sidebar>
         </Sidebar>
     )
 }
+
+export default inventory

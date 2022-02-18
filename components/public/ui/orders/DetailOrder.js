@@ -1,5 +1,5 @@
 import Modal from "@/components/public/ui/Modal"
-import styles from "@/styles/ui/DetailOrder.module.css"
+import styles from "@/styles/ui/orders/DetailOrder.module.css"
 
 export default function DetailOrder({ hideModal, detailOrder }) {
 

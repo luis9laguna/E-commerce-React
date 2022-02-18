@@ -1,8 +1,8 @@
 import Layout from "@/components/public/layout/Layout";
-import CartItems from '@/components/public/CartItems';
+import CartItems from '@/components/public/cart/CartItems';
 import Meta from "@/components/public/ui/Meta";
 
-export default function Home() {
+export default function Cart() {
   return (
     <Layout>
       <Meta title='Cart' />

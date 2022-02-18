@@ -10,8 +10,9 @@ export default function UserInformation() {
   const [userInfo, setUserInfo] = useState('')
 
   useEffect(async () => {
-    const user = await getUserInfo()
-    setUserInfo(user)
+    await getUserInfo().then(resp => {
+      if (resp.ok) setUserInfo(resp.user)
+    })
   }, [])
 
   return (

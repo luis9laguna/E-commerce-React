@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Layout from "@/components/public/layout/Layout";
 import StatusOrderForm from "@/components/public/StatusOrderForm";
-import DetailOrder from "@/components/public/ui/DetailOrder";
+import DetailOrder from "@/components/public/ui/orders/DetailOrder";
 
 export default function statusPackage() {
 

@@ -8,12 +8,12 @@ import Meta from "@/components/public/ui/Meta";
 
 export default function Login() {
 
-  const { isLoggedIn } = useAuth()
+  const { isLoggedIn, role } = useAuth()
   const router = useRouter()
 
   useEffect(() => {
     if (isLoggedIn) router.replace('/')
-  }, [isLoggedIn]);
+  }, []);
 
   if (isLoggedIn) return (<div></div>)
   return (

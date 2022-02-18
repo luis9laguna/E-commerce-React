@@ -1,0 +1,46 @@
+.container {
+  margin-top: 3rem;
+}
+
+.sortContainer {
+  margin: 1.5rem 2rem;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.sortContainer span {
+  font-size: var(--size-3);
+  font-weight: bold;
+  margin-right: 1rem;
+}
+
+.sortContainer select {
+  padding: 0.8rem;
+  border-radius: 25px;
+  background-color: var(--secondary);
+}
+
+.orderHeader {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  margin: 0 2rem;
+  height: 70px;
+  background-color: var(--secondary);
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+.orderHeader span {
+  font-size: var(--size-3);
+  font-weight: bold;
+  margin-right: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .container {
+    align-items: center;
+  }
+  .orderHeader {
+    display: none;
+  }
+}

@@ -2,8 +2,13 @@
   display: flex;
 }
 .children {
-  width: 100%;
+  width: calc(100% - 78px);
 }
+
+.childrenOpen {
+  width: calc(100% - 15rem);
+}
+
 .sidebar {
   left: 0;
   top: 0;
@@ -11,12 +16,12 @@
   width: 78px;
   background: var(--primary);
   padding: 6px 14px;
-  z-index: 99;
+  z-index: 10;
   transition: all 0.5s ease;
   color: var(--secondary);
 }
 .open {
-  width: 250px;
+  width: 15rem;
 }
 
 .logoDetails {
@@ -45,7 +50,7 @@
   transform: translateY(-50%);
   cursor: pointer;
   transition: all 0.5s ease;
-  height: 60px !important;
+  height: 40px !important;
   min-width: 50px !important;
 }
 
@@ -110,6 +115,10 @@
   cursor: pointer;
 }
 
+.sidebar.open li div {
+  width: 180px;
+}
+
 .sidebar li div:hover,
 .active {
   background-color: var(--secondary) !important;
@@ -136,8 +145,29 @@
   transition: all 0.5s ease-in-out;
 }
 
+.logout {
+  margin-top: 30vh !important;
+}
+
 @media (max-width: 420px) {
   .sidebar li .tooltip {
+    display: none;
+  }
+  .sidebar {
+    display: none;
+  }
+
+  .children {
+    width: 100%;
+  }
+
+  .childrenOpen {
+    width: 100%;
+  }
+  .sidebar.open {
+    display: initial;
+  }
+  .logoDetails svg {
     display: none;
   }
 }

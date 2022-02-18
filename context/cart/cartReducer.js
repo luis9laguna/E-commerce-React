@@ -58,6 +58,9 @@ export default (state, action) => {
                 updatedItems[existingCartItemIndex] = updatedItem
             }
 
+            //SETTING LOCALSTORAGE
+            localStorage.setItem('cart', JSON.stringify(updatedItems))
+
             return {
                 items: updatedItems,
                 totalQuantityCart: updatedTotalQuantity

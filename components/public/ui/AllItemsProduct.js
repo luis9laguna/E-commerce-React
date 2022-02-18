@@ -46,7 +46,8 @@ const AllItemsProduct = ({ product, setDeleteFav }) => {
             slug: product.slug,
             quantity: 1,
             name: product.name,
-            image: product.image
+            image: product.image,
+            price: product.price
         })
     }
 

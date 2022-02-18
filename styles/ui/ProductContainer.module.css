@@ -1,3 +1,7 @@
+.productContainer {
+  margin: 2rem;
+}
+
 .title {
   margin: 2rem;
   text-align: center;
@@ -41,5 +45,9 @@
   .select {
     width: 90px;
     padding: 0.8rem 0;
+  }
+
+  .productContainer {
+    margin: 0;
   }
 }

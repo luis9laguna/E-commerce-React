@@ -58,10 +58,12 @@ const AuthState = ({ children }) => {
         try {
             const resp = await clientAxios.post('/auth/login', data)
 
+            const role = resp.data.user.role
+
             dispatch({
                 type: FORM_AUTH,
                 payload: {
-                    role: resp.data.user.role,
+                    role,
                     user: resp.data.user.name,
                     ref: resp.data.user.ref,
                     token: resp.data.token
@@ -72,7 +74,11 @@ const AuthState = ({ children }) => {
                 'Good job!', 'LogIn succesfull!', 'success'
             )
             //REDIRECT
-            router.replace('/')
+            if (role === 'USER_ROLE') {
+                router.replace('/')
+            } else if (role === 'ADMIN_ROLE' || 'SUPER_ROLE') {
+                router.replace('/admin/dashboard')
+            }
         } catch (error) {
             Swal.fire({
                 icon: 'error',

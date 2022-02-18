@@ -14,7 +14,8 @@ export default function ProductItem({ product }) {
             slug: product.slug,
             quantity,
             name: product.name,
-            image: product.image
+            image: product.image,
+            price: product.price
         })
     }
 
