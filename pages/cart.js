@@ -2,7 +2,7 @@ import Layout from "@/components/public/layout/Layout";
 import CartItems from '@/components/public/cart/CartItems';
 import Meta from "@/components/public/ui/Meta";
 
-export default function Cart() {
+const Cart = () => {
   return (
     <Layout>
       <Meta title='Cart' />
@@ -10,3 +10,5 @@ export default function Cart() {
     </Layout>
   )
 }
+
+export default Cart

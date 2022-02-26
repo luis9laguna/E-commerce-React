@@ -3,7 +3,7 @@ import 'react-medium-image-zoom/dist/styles.css'
 import { useCart } from 'context/cart/cartContext';
 import styles from "@/styles/ProductItem.module.css";
 
-export default function ProductItem({ product }) {
+const ProductItem = ({ product }) => {
 
     const { addItem } = useCart()
 
@@ -55,3 +55,6 @@ export default function ProductItem({ product }) {
         </div>
     )
 }
+
+
+export default ProductItem

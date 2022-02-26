@@ -1,53 +1,71 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { getLikedProducts } from "helpers/api-util";
+import useFetch from 'use-http'
 import Layout from "@/components/public/layout/Layout";
 import ProductContainer from "@/components/public/ui/ProductContainer";
 import Meta from "@/components/public/ui/Meta";
+import { useAuth } from "context/auth/authContext";
+import Loading from "@/components/public/ui/Loading";
 
-export default function WishList() {
+const WishList = () => {
 
+  //DATA
   const [data, setData] = useState([])
   const [deleteFav, setDeleteFav] = useState(false)
 
+  //IS THE USER LOGGED IN?
+  const { isLoggedIn } = useAuth()
+
+  //PAGINATION AND PARAMETERS
   const router = useRouter()
   const page = router.query?.page || 1
   const sort = router.query?.sort || 'name'
   const url = '/wishList?'
 
+  //USEFETCH
+  const storage = typeof localStorage !== 'undefined';
+  let options
+  if (storage) {
+    options = { cachePolicy: 'no-cache', headers: { 'Authorization': localStorage.getItem('token') } }
+  }
+  const { get, response, loading, error } = useFetch(`${process.env.url}`, options)
 
-  useEffect(async () => {
-    await getLikedProducts(page, sort).then(resp => {
-      if (resp?.ok) setData(resp)
-      else {
-        setData(resp)
-      }
-    })
-  }, [page, sort])
 
-  useEffect(async () => {
-    if (deleteFav) {
-      await getLikedProducts().then(resp => {
-        setData(resp)
-      })
-      setDeleteFav(false)
-    }
-  }, [deleteFav])
+  const getLikedProducts = async () => {
+    const products = await get(`/like?page=${page}&limit=15&sort=${sort}`)
+    if (response.ok) setData(products)
+  }
 
+
+  useEffect(() => {
+    if (isLoggedIn) getLikedProducts()
+    if (deleteFav) setDeleteFav(false)
+  }, [page, sort, deleteFav, isLoggedIn])
 
   return (
     <Layout>
       <Meta title='WishList' />
-      {data !== undefined && data !== false ?
-        <ProductContainer setDeleteFav={setDeleteFav} data={data} title={'Your WishList'} url={url} />
-        : (
-          <h2 style={{ textAlign: 'center', margin: '5rem 0' }}>
-            You don't have any product added to yout wishlist, go and check some
-            <Link href='/product/all'><span style={{ color: 'red' }}> products!</span></Link>
-          </h2>
-        )}
+      {loading ? <Loading /> : ''}
+      {!isLoggedIn ?
+        <h2 style={{ textAlign: 'center', margin: '5rem 0' }}>
+          To get access to your saved products you must access to your
+          <Link href='/login#login'><span style={{ color: 'red', cursor: 'pointer' }}> account!</span></Link>
+        </h2>
+        :
+        <>
+          {data.length !== 0 ?
+            <ProductContainer setDeleteFav={setDeleteFav} data={data} title={'Your WishList'} url={url} />
+            : (
+              <h2 style={{ textAlign: 'center', margin: '5rem 0' }}>
+                You don't have any product added to yout wishlist, go and check some
+                <Link href='/product/all'><span style={{ color: 'red', cursor: 'pointer' }}> products!</span></Link>
+              </h2>
+            )}
+        </>
+      }
     </Layout>
   )
 }
 
+export default WishList

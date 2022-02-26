@@ -1,7 +1,7 @@
 import styles from '@/styles/ui/Form.module.css';
 
 
-export default function Form() {
+const ResetForm = () => {
     return (
         <div className={styles.container}>
             <h2 className={styles.title}>RESET PASSWORD</h2>
@@ -14,3 +14,5 @@ export default function Form() {
         </div>
     )
 }
+
+export default ResetForm

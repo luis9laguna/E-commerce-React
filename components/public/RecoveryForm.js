@@ -1,15 +1,16 @@
 import { useRouter } from 'next/router';
 import useInput from 'hooks/useInput';
+import useFetch from 'use-http'
 import { resetPassword } from 'helpers/api-util';
 import styles from 'styles/ui/Form.module.css';
 
-
-
-const recoveryForm = () => {
-
+const RecoveryForm = () => {
 
     const router = useRouter()
     const { token } = router.query
+
+    //USEFETCH
+    const { put, response, loading, error } = useFetch(`${process.env.url}`, options)
 
     //REGEX
     const regexPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/
@@ -30,7 +31,7 @@ const recoveryForm = () => {
 
 
     //FORMHANDLER
-    const formSubmissionHandler = (e) => {
+    const formSubmissionHandler = async e => {
         e.preventDefault();
 
         //CHECK
@@ -40,20 +41,20 @@ const recoveryForm = () => {
         const password = e.target.password.value
 
         //SEND
-        resetPassword({ password }, token).then(resp => {
-            if (resp.ok) {
-                //MODAL
-                Swal.fire(
-                    'Good job!', 'Password changed successfully!', 'success'
-                )
-            } else {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: resp.message,
-                })
-            }
-        })
+        await put(`/auth/password-reset/${token}`, { password })
+        if (response) {
+            //MODAL
+            Swal.fire(
+                'Good job!', 'Password changed successfully!', 'success'
+            )
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: response.data.message,
+            })
+        }
+
         //RESET VALUES
         resetPasswordInput()
     }
@@ -78,4 +79,4 @@ const recoveryForm = () => {
     )
 };
 
-export default recoveryForm;
+export default RecoveryForm;

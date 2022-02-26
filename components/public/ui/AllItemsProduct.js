@@ -1,36 +1,40 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import useFetch from 'use-http'
 import { useAuth } from "context/auth/authContext";
 import { useCart } from "context/cart/cartContext";
-import { giveLikeAndDislike } from "helpers/api-util";
 import { FavoriteBorderOutlined, SearchOutlined, ShoppingBasketOutlined } from "@material-ui/icons";
 import styles from '@/styles/ui/AllItemsProduct.module.css'
+import Loading from "./Loading";
 
 const AllItemsProduct = ({ product, setDeleteFav }) => {
 
     const [likeOrDislike, setLikeOrDislike] = useState(null);
+    const [itemStock, setItemStock] = useState(0);
     const { ref } = useAuth()
     const { addItem } = useCart()
     const router = useRouter()
 
+    //USEFETCH
+    const storage = typeof localStorage !== 'undefined';
+    let options
+    if (storage) {
+        options = { cachePolicy: 'no-cache', headers: { 'Authorization': localStorage.getItem('token') } }
+    }
+    const { post, response, loading, error } = useFetch(`${process.env.url}`, options)
+
     //GET LIKES GIVEN BY USER TO SHOW FEEDBACK
     const hasLike = product.likes.includes(ref)
 
-    useEffect(() => {
-        setLikeOrDislike(hasLike)
-    }, [hasLike]);
+    useEffect(() => { setLikeOrDislike(hasLike) }, [hasLike]);
+    useEffect(() => { setItemStock(product.stock) }, [])
 
     //BUTTON FAV
-    const favButton = async (slug) => {
-
+    const favButton = async (id) => {
         //SEND LIKE TO DB
-        await giveLikeAndDislike(slug).then(resp => {
-            if (!resp.ok) {
-                //VALIDATION OF USER
-                router.push('/login#login')
-            }
-        })
+        await post(`/like/${id}`)
+        if (!response.ok) router.push('/login#login')
 
         //FEEDBACK USER
         setLikeOrDislike(!likeOrDislike)
@@ -41,7 +45,6 @@ const AllItemsProduct = ({ product, setDeleteFav }) => {
 
     //HANDLER ADD CART
     const addCartHandler = () => {
-
         addItem({
             slug: product.slug,
             quantity: 1,
@@ -49,20 +52,23 @@ const AllItemsProduct = ({ product, setDeleteFav }) => {
             image: product.image,
             price: product.price
         })
+        setItemStock(prev => prev - 1)
     }
 
 
     return (
 
         <div className={styles.container}>
-            {product.stock === 0 ? <div className={styles.noStock}>Sold Out</div> : ''}
-            <img className={`${styles.image} ${product.stock === 0 ? styles.noStockImg : ''}`} src='https://d2r9epyceweg5n.cloudfront.net/stores/001/064/802/products/dscn5121-011-63ea8aaaee2ca1bbaa16114183468496-640-0.jpeg' />
+            {itemStock === 0 ? <div className={styles.noStock}>Sold Out</div> : ''}
+            <Link href={`/product/${product.slug}`}>
+                <img className={`${styles.image} ${itemStock === 0 ? styles.noStockImg : ''}`} src='https://d2r9epyceweg5n.cloudfront.net/stores/001/064/802/products/dscn5121-011-63ea8aaaee2ca1bbaa16114183468496-640-0.jpeg' />
+            </Link>
             <div className={styles.info}>
                 <h1 className={styles.title}>{product.name}</h1>
                 <span className={styles.price}>${product.price}</span>
                 <div className={styles.allIcons}>
 
-                    {product.stock !== 0 ? (
+                    {itemStock !== 0 ? (
                         <button className={styles.buttonOptions} onClick={addCartHandler}>
                             <ShoppingBasketOutlined style={{ margin: 'auto' }} />
                         </button>
@@ -76,17 +82,17 @@ const AllItemsProduct = ({ product, setDeleteFav }) => {
                     </Link>
                     <button
                         className={`${styles.buttonOptions} ${likeOrDislike ? styles.hasLike : ''} `}
-                        onClick={() => favButton(product.slug)}
+                        onClick={() => favButton(product._id)}
                     >
-                        <FavoriteBorderOutlined style={{ margin: 'auto' }} />
+                        {loading ? <Loading /> : <FavoriteBorderOutlined style={{ margin: 'auto' }} />}
                     </button>
                 </div>
-                {product.stock !== 0 ? <button onClick={addCartHandler}>ADD TO CART</button> : ''}
+                {itemStock !== 0 ? <button onClick={addCartHandler}>ADD TO CART</button> : ''}
                 <button
                     className={`${styles.fav} ${likeOrDislike ? styles.hasLike : ''} `}
                     onClick={() => favButton(product.slug)}
                 >
-                    <FavoriteBorderOutlined style={{ margin: 'auto' }} />
+                    {loading ? <Loading light={true} /> : <FavoriteBorderOutlined style={{ margin: 'auto' }} />}
                 </button>
             </div>
         </div >

@@ -1,7 +1,7 @@
 import Modal from "@/components/public/ui/Modal"
 import styles from "@/styles/ui/orders/DetailOrder.module.css"
 
-export default function DetailOrder({ hideModal, detailOrder }) {
+const DetailOrder = ({ hideModal, detailOrder }) => {
 
 
     //DATE
@@ -68,3 +68,6 @@ export default function DetailOrder({ hideModal, detailOrder }) {
         </Modal>
     )
 }
+
+
+export default DetailOrder

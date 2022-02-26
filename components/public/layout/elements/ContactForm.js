@@ -1,8 +1,8 @@
 import styles from '@/styles/ui/Form.module.css'
 import useInput from 'hooks/useInput'
-import Modal from '../../ui/Modal'
+import Modal from "@/components/public/ui/Modal"
 
-export default function ContactForm({ onClose }) {
+const ContactForm = ({ onClose }) => {
 
     //REGEX FOR EMAIL
     const regexEmail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
@@ -94,3 +94,5 @@ export default function ContactForm({ onClose }) {
         </Modal>
     )
 }
+
+export default ContactForm

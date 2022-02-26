@@ -3,7 +3,7 @@ import CartState from 'context/cart/cartState'
 import '@/styles/globals.css'
 
 
-function MyApp({ Component, pageProps }) {
+const MyApp = ({ Component, pageProps }) => {
   return (
     <AuthState>
       <CartState>

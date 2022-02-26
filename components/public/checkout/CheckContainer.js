@@ -14,11 +14,9 @@ const CheckContainer = ({ children, userHasAddress }) => {
     }
 
     const total = () => {
-
         const arrayTotalPriceItem = items.map(item => (
             item.price * item.quantity
         ))
-
         return arrayTotalPriceItem.reduce((a, b) => a + b, 0)
     }
 

@@ -28,6 +28,13 @@
   border-bottom: 1px solid var(--primary);
 }
 
+.form > select {
+  width: 50%;
+  height: 2rem;
+  border-radius: 15px;
+  margin-top: 1rem;
+}
+
 .labelInfo {
   font-size: 1.5rem;
   margin-top: 1rem;

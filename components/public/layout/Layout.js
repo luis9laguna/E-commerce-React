@@ -5,8 +5,7 @@ import Meta from '../ui/Meta';
 import { useAuth } from 'context/auth/authContext';
 import { useCart } from 'context/cart/cartContext';
 
-
-export default function Layout({ children }) {
+const Layout = ({ children }) => {
 
     //CONTEXT
     const { userAuth } = useAuth()
@@ -32,3 +31,5 @@ export default function Layout({ children }) {
         </>
     )
 }
+
+export default Layout

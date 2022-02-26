@@ -1,13 +1,13 @@
-import { Add, Remove } from "@material-ui/icons";
+import { Add, Remove, DeleteOutline } from "@material-ui/icons";
 import styles from '@/styles/CartItems.module.css';
 import { useCart } from "context/cart/cartContext";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
 
-export default function CartItems() {
+const CartItems = () => {
 
-    const { totalQuantityCart, items, addItem, removeItem } = useCart()
+    const { totalQuantityCart, items, addItem, removeItem, subtractItem } = useCart()
 
     const router = useRouter()
 
@@ -19,20 +19,16 @@ export default function CartItems() {
         })
     }
 
-    const removeQuantity = slug => {
-        removeItem(slug)
-    }
+    const subtractQuantity = slug => subtractItem(slug)
+
+    const deleteItem = slug => removeItem(slug)
 
     const total = () => {
-
         const arrayTotalPriceItem = items.map(item => (
             item.price * item.quantity
         ))
-
         return arrayTotalPriceItem.reduce((a, b) => a + b, 0)
     }
-
-
 
     return (
         <div className={styles.container}>
@@ -44,17 +40,19 @@ export default function CartItems() {
                             <span>Cart (<b>{totalQuantityCart} products</b>)</span>
                         </div>
                         {items.map((product, i) => (
-
                             <div key={i} className={styles.product}>
                                 <div className={styles.productDetail}>
                                     <img src={product.image} />
                                     <h2>{product.name}</h2>
                                 </div>
                                 <span className={styles.productPrice}>${product.price}</span>
-                                <div className={styles.quantityContainer}>
-                                    <button onClick={() => addQuantity(product.slug)}><Add /></button>
-                                    <span>{product.quantity}</span>
-                                    <button onClick={() => removeQuantity(product.slug)}> <Remove /></button>
+                                <div className={styles.lastContainer}>
+                                    <div className={styles.quantityContainer}>
+                                        <button onClick={() => addQuantity(product.slug)}><Add /></button>
+                                        <span>{product.quantity}</span>
+                                        <button onClick={() => subtractQuantity(product.slug)}> <Remove /></button>
+                                    </div>
+                                    <span className={styles.delete} onClick={() => deleteItem(product.slug)}><DeleteOutline /> Delete Product</span>
                                 </div>
                             </div>
                         ))}
@@ -83,3 +81,6 @@ export default function CartItems() {
         </div>
     )
 }
+
+
+export default CartItems

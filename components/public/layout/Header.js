@@ -1,6 +1,4 @@
 import { useState, useEffect } from 'react';
-import { useAuth } from 'context/auth/authContext';
-import { useCart } from 'context/cart/cartContext';
 import TopNav from './navbar/TopNav';
 import MiddleNav from './navbar/MiddleNav';
 import DownNav from './navbar/DownNav';

@@ -3,7 +3,7 @@ import Meta from "@/components/public/ui/Meta";
 import { useRouter } from "next/router";
 import styles from '@/styles/404.module.css'
 
-export default function Error() {
+const Error = () => {
 
     const router = useRouter()
 
@@ -19,3 +19,5 @@ export default function Error() {
         </Layout>
     )
 }
+
+export default Error

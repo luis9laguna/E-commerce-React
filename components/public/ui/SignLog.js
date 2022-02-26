@@ -2,7 +2,7 @@ import Link from "next/link";
 import { useAuth } from "context/auth/authContext";
 import styles from '@/styles/ui/SignLog.module.css'
 
-export default function SignLog() {
+const SignLog = () => {
 
     const { isLoggedIn, logOut, userName } = useAuth()
 
@@ -40,3 +40,5 @@ export default function SignLog() {
         </div>
     )
 }
+
+export default SignLog

@@ -1,12 +1,10 @@
-import { categories } from "../../../utils/data";
-import ItemCategory from "./ItemCategory";
+import { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper';
 import 'swiper/css';
 import 'swiper/css/bundle';
 import useWindowDimensions from "hooks/useWindowDimensions";
-import { useEffect, useState } from "react";
-
+import ItemCategory from "./ItemCategory";
 
 
 const SliderCategory = ({ categories }) => {

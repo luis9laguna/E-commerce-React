@@ -6,7 +6,6 @@ import 'swiper/css';
 import 'swiper/css/bundle';
 
 
-
 const Slider = () => {
 
     return (

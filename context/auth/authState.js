@@ -1,16 +1,13 @@
 import { useRouter } from 'next/router'
 import { useReducer, useState } from "react";
+import useFetch from 'use-http'
 import authContext from "./authContext";
 import authReducer from "./authReducer";
 import Swal from 'sweetalert2'
 
 import { USER_AUTH, FORM_AUTH, LOG_OUT, UPDATE_USER } from "types";
 
-import clientAxios from "config/axios";
-import tokenAuth from 'config/tokenAuth';
-
 const AuthState = ({ children }) => {
-
 
     const [loadingUser, setLoadingUser] = useState(true)
 
@@ -24,19 +21,26 @@ const AuthState = ({ children }) => {
         ref: null,
         loading: false
     }
-
     const [state, dispatch] = useReducer(authReducer, initialState)
 
+
+    //USEFETCH
+    const storage = typeof localStorage !== 'undefined';
+    let token
+    if (storage) token = localStorage.getItem('token')
+    const options = { cachePolicy: 'no-cache', headers: { 'Authorization': token } }
+    const { get, post, response, loading, error } = useFetch(`${process.env.url}`, options)
+
     const userRegister = async data => {
-        try {
-            const resp = await clientAxios.post('/user', data)
+        const resp = await post('user', data)
+        if (response.ok) {
             dispatch({
                 type: FORM_AUTH,
                 payload: {
-                    role: resp.data.user.role,
-                    user: resp.data.user.name,
-                    ref: resp.data.user.ref,
-                    token: resp.data.token
+                    role: resp.user.role,
+                    user: resp.user.name,
+                    ref: resp.user.ref,
+                    token: resp.token
                 }
             })
             //MODAL
@@ -45,28 +49,28 @@ const AuthState = ({ children }) => {
             )
             //REDIRECT
             router.replace('/')
-        } catch (error) {
+        } else {
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: error.response.data.message,
+                text: response.data.message,
             })
         }
     }
 
+
     const logIn = async data => {
-        try {
-            const resp = await clientAxios.post('/auth/login', data)
+        const resp = await post('auth/login', data)
 
-            const role = resp.data.user.role
-
+        if (response.ok) {
+            const role = resp.user.role
             dispatch({
                 type: FORM_AUTH,
                 payload: {
                     role,
-                    user: resp.data.user.name,
-                    ref: resp.data.user.ref,
-                    token: resp.data.token
+                    user: resp.user.name,
+                    ref: resp.user.ref,
+                    token: resp.token
                 }
             })
             //MODAL
@@ -79,26 +83,26 @@ const AuthState = ({ children }) => {
             } else if (role === 'ADMIN_ROLE' || 'SUPER_ROLE') {
                 router.replace('/admin/dashboard')
             }
-        } catch (error) {
+        } else {
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: error.response.data.message,
+                text: response.data.message,
             })
         }
     }
 
     const logInGoogle = async token => {
-        try {
-            const resp = await clientAxios.post('/auth/google', token)
+        const resp = await post('auth/google', token)
 
+        if (response.ok) {
             dispatch({
                 type: FORM_AUTH,
                 payload: {
-                    role: resp.data.user.role,
-                    user: resp.data.user.name,
-                    ref: resp.data.user.ref,
-                    token: resp.data.token
+                    role: resp.user.role,
+                    user: resp.user.name,
+                    ref: resp.user.ref,
+                    token: resp.token
                 }
             })
             //MODAL
@@ -107,36 +111,30 @@ const AuthState = ({ children }) => {
             )
             //REDIRECT
             router.replace('/')
-        } catch (error) {
+        } else {
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: error.response.data.message,
+                text: response.data.message,
             })
         }
     }
 
     const userAuth = async () => {
-        const token = localStorage.getItem('token')
-        if (!token) {
-            setLoadingUser(false)
-            return
-        }
-        try {
-            tokenAuth(token)
-            const resp = await clientAxios.get('/user')
-
+        let resp
+        if (token !== null) resp = await fetch(`${process.env.url}/user`, { headers: { 'Authorization': token } })
+        const data = await resp?.json()
+        if (data?.ok) {
             dispatch({
                 type: USER_AUTH,
                 payload: {
-                    role: resp.data.user.role,
-                    user: resp.data.user.name,
-                    ref: resp.data.user.ref,
+                    role: data.user?.role,
+                    user: data.user?.name,
+                    ref: data.user?.ref,
                 }
             })
-        } catch (error) {
-            const errorMessage = error.response?.data.message
-            if (errorMessage === 'Token Invalid') {
+        } else {
+            if (data?.message === 'Token Invalid') {
                 localStorage.removeItem('token')
             }
         }
@@ -171,8 +169,7 @@ const AuthState = ({ children }) => {
                 updateUser,
                 logOut,
                 loadingUser,
-            }}
-        >
+            }}>
             {children}
         </authContext.Provider>
     )

@@ -1,13 +1,15 @@
 import styles from '@/styles/ui/Form.module.css';
-import { forgetPassword } from 'helpers/api-util';
 import useInput from 'hooks/useInput';
 import Swal from 'sweetalert2';
 import Modal from '../../ui/Modal';
 
-export default function ForgetForm({ onClose }) {
+const ForgetForm = ({ onClose }) => {
 
     //REGEX
     const regexEmail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
+
+    //USEFETCH
+    const { post, response, loading, error } = useFetch(`${process.env.url}`)
 
     //EMAIL
     const {
@@ -26,30 +28,29 @@ export default function ForgetForm({ onClose }) {
     }
 
     //FORMHANDLER
-    const formSubmissionHandler = (e) => {
+    const formSubmissionHandler = async (e) => {
         e.preventDefault();
 
         //CHECK
         if (!formIsValid) return;
-
-
         const email = e.target.email.value
-        forgetPassword({ email }).then(resp => {
-            if (resp.ok) {
-                //MODAL
-                Swal.fire(
-                    'Good job!', 'Check your email to continue with the process of recovering your account', 'success'
-                )
-                //REDIRECT
-                router.push('/')
-            } else {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: resp.message
-                })
-            }
-        })
+
+        await post(`/auth/password-reset`, email)
+        if (response.ok) {
+            //MODAL
+            Swal.fire(
+                'Good job!', 'Check your email to continue with the process of recovering your account', 'success'
+            )
+            //REDIRECT
+            router.push('/')
+
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: response.data.message
+            })
+        }
         // onClose()
         //RESET VALUES
         resetEmailInput()
@@ -75,3 +76,6 @@ export default function ForgetForm({ onClose }) {
         </Modal>
     )
 }
+
+
+export default ForgetForm

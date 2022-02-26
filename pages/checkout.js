@@ -1,18 +1,22 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "context/auth/authContext";
-import { getUserInfo } from "helpers/api-util";
+import useFetch from 'use-http'
 import Layout from "@/components/public/layout/Layout";
 import Meta from "@/components/public/ui/Meta";
 import CheckContainer from '@/components/public/checkout/CheckContainer'
 import AddressesInfo from "@/components/public/user/userOptions/addresses/AddressesInfo";
 import FormAddress from "@/components/public/user/userOptions/addresses/FormAddress";
 
-export default function Checkout() {
+const Checkout = () => {
 
     const [modalFormAddress, setModalFormAddress] = useState(false);
     const [addressUpdate, setAddressUpdate] = useState('');
     const [reFetchAddress, setReFetchAddress] = useState(false)
     const [userHasAddress, setUserHasAddress] = useState(false)
+
+    //USEFETCH
+    const options = { cachePolicy: 'no-cache', headers: { 'Authorization': localStorage.getItem('token') } }
+    const { get, response, loading, error } = useFetch(`${process.env.url}`, options)
 
     //HANDLER OF MODAL FORM ADDRESS
     const handlerShowFormAddress = () => setModalFormAddress(!modalFormAddress);
@@ -20,24 +24,17 @@ export default function Checkout() {
     //CHECK IF USER IS LOGGED
     const { isLoggedIn } = useAuth()
 
+    const getUser = async () => {
+        const user = await get(`/user`)
+        if (response.ok) setUserHasAddress(user.user.address !== null)
+    }
+
     useEffect(async () => {
-        if (reFetchAddress && isLoggedIn) {
-            await getUserInfo().then(resp => {
-                if (resp.ok) {
-                    setUserHasAddress(resp.user.address !== null)
-                }
-            })
-        }
+        if (reFetchAddress && isLoggedIn) { getUser() }
     }, [reFetchAddress])
 
     useEffect(async () => {
-        if (isLoggedIn) {
-            await getUserInfo().then(resp => {
-                if (resp.ok) {
-                    setUserHasAddress(resp.user.address !== null)
-                }
-            })
-        }
+        if (isLoggedIn) { getUser() }
     }, [])
 
     return (
@@ -59,3 +56,6 @@ export default function Checkout() {
         </Layout>
     )
 }
+
+
+export default Checkout

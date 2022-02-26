@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: column;
   margin-top: 2rem;
+  flex-wrap: wrap;
 }
 
 .order {
@@ -52,10 +53,15 @@
   color: var(--primary);
 }
 
+@media (max-width: 1000px) {
+  .button {
+    width: 20%;
+  }
+}
+
 @media (max-width: 768px) {
   .containerOrder {
     flex-direction: row;
-    flex-wrap: wrap;
     justify-content: center;
   }
   .order {

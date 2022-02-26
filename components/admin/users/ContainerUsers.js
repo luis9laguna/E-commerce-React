@@ -1,10 +1,10 @@
 import { useState } from 'react'
-import Swal from 'sweetalert2';
+import useFetch from 'use-http'
 import styles from './ContainerUsers.module.css'
 import { ArrowBack, PersonOutlined, VerifiedUserOutlined } from '@material-ui/icons';
-import { getAllAdmins, getAllUsers, deleteUserDB, deleteAdminDB, updateAdmin } from 'helpers/api-util';
 import TableUsers from './TableUsers';
 import FormAdmin from './FormAdmin';
+import Pagination from '@/components/public/ui/Pagination';
 
 const ContainerUsers = () => {
 
@@ -14,35 +14,37 @@ const ContainerUsers = () => {
 
     //USERS
     const [users, setUsers] = useState([]);
-    const [userUpdate, setUserUpdate] = useState(null);
+    const [userUpdate, setAdminUpdate] = useState(null);
+
+    //USEFETCH
+    const options = { cachePolicy: 'no-cache', headers: { 'Authorization': localStorage.getItem('token') } }
+    const { get, response, loading, error } = useFetch(`${process.env.url}`, options)
 
     //ADMIN OR USER OR FORM
     const [inAdmin, setInAdmin] = useState(false);
     const [inUser, setInUser] = useState(false);
     const [inForm, setInForm] = useState(false);
 
-    const getUsers = (page) => {
-        getAllUsers(page).then(resp => {
-            if (resp.ok) {
-                setUsers(resp.allUsers)
-                setPage(resp.page)
-                setPages(resp.pages)
-                setInUser(true)
-                setInAdmin(false)
-            }
-        })
+    const getUsers = async (page) => {
+        const allUsers = await get(`/user/all?page=${page}`)
+        if (response.ok) {
+            setUsers(allUsers.allUsers)
+            setPage(allUsers.page)
+            setPages(allUsers.pages)
+            setInUser(true)
+            setInAdmin(false)
+        }
     }
 
-    const getAdmins = (page) => {
-        getAllAdmins(page).then(resp => {
-            if (resp.ok) {
-                setUsers(resp.allUsers)
-                setPage(resp.page)
-                setPages(resp.pages)
-                setInAdmin(true)
-                setInUser(false)
-            }
-        })
+    const getAdmins = async (page) => {
+        const allAdmins = await get(`/admin?page=${page}`)
+        if (response.ok) {
+            setUsers(allAdmins.allUsers)
+            setPage(allAdmins.page)
+            setPages(allAdmins.pages)
+            setInAdmin(true)
+            setInUser(false)
+        }
     }
 
     const goBack = () => {
@@ -52,61 +54,9 @@ const ContainerUsers = () => {
     }
 
     const createBack = () => {
-        setUserUpdate(null)
+        setAdminUpdate(null)
         setInForm(!inForm)
     }
-
-    const deleteUser = (id, isUser) => {
-        //MODAL CONFIRMATION
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "Once deleted, you will not be able to recover this Address!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
-
-        }).then(async (result) => {
-            if (result.isConfirmed) {
-
-                let resp
-
-                //DELETING USER OR ADMIN
-                if (isUser) {
-                    resp = await deleteUserDB(id)
-                    //FETCH NEW DATA
-                    if (resp.ok) getUsers()
-                } else if (!isUser) {
-                    resp = await deleteAdminDB(id)
-                    //FETCH NEW DATA
-                    if (resp.ok) getAdmins()
-                }
-
-                if (resp.ok) {
-                    Swal.fire(
-                        'Deleted!',
-                        resp.message,
-                        'success'
-                    )
-                } else {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: resp.message
-                    })
-                }
-            }
-        })
-
-
-    }
-
-    const editUser = id => {
-        setUserUpdate(id)
-        setInForm(!inForm)
-    }
-
 
     const handlePageClick = e => {
         const selectedPage = e.selected
@@ -132,22 +82,24 @@ const ContainerUsers = () => {
                             : ''}
                     </div>
                     {inForm ?
-                        <FormAdmin getAdmins={getAdmins} userUpdate={userUpdate} setInForm={() => setInForm(!inForm)} /> :
-                        <TableUsers
-                            editUser={editUser}
-                            deleteUser={deleteUser}
-                            handlePageClick={handlePageClick}
-                            page={page}
-                            pages={pages}
-                            inAdmin={inAdmin}
-                            users={users} />
+                        <FormAdmin getAdmins={getAdmins} userUpdate={userUpdate} setInForm={() => setInForm(!inForm)} />
+                        :
+                        <>
+                            <TableUsers
+                                getAdmins={getAdmins}
+                                setAdminUpdate={setAdminUpdate}
+                                setInForm={() => setInForm(!inForm)}
+                                inAdmin={inAdmin}
+                                users={users} />
+                            <Pagination pages={pages} page={page} handlePageClick={handlePageClick} />
+                        </>
                     }
                 </>
                 :
                 <div className={styles.containerButtonAU}>
                     {inForm}
-                    <button onClick={getAdmins}> <VerifiedUserOutlined /> Admins</button>
-                    <button onClick={getUsers}> <PersonOutlined /> Users</button>
+                    <button onClick={() => getAdmins(1)}> <VerifiedUserOutlined /> Admins</button>
+                    <button onClick={() => getUsers(1)}> <PersonOutlined /> Users</button>
                 </div>
             }
         </div >

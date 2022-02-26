@@ -1,4 +1,4 @@
-import { ADD_CART, REMOVE_CART, CLEAR_CART, CART_LOCAL } from "types";
+import { ADD_CART, SUBTRACT_CART, REMOVE_CART, CLEAR_CART, CART_LOCAL } from "types";
 
 
 export default (state, action) => {
@@ -40,7 +40,7 @@ export default (state, action) => {
                 totalQuantityCart: updatedTotalQuantity
             }
 
-        case REMOVE_CART:
+        case SUBTRACT_CART:
 
             //GETTING INDEX AND INFO OF PRODUCT
             existingCartItemIndex = state.items.findIndex(item => item.slug === action.payload);
@@ -57,6 +57,26 @@ export default (state, action) => {
                 updatedItems = [...state.items];
                 updatedItems[existingCartItemIndex] = updatedItem
             }
+
+            //SETTING LOCALSTORAGE
+            localStorage.setItem('cart', JSON.stringify(updatedItems))
+
+            return {
+                items: updatedItems,
+                totalQuantityCart: updatedTotalQuantity
+            }
+
+        case REMOVE_CART:
+
+            //GETTING INDEX AND INFO OF PRODUCT
+            existingCartItemIndex = state.items.findIndex(item => item.slug === action.payload);
+            existingCartItem = state.items[existingCartItemIndex];
+
+            //UPDATING TOTAL OF CART
+            updatedTotalQuantity = state.totalQuantityCart - existingCartItem.quantity
+
+            //UPDATING OR DELETING PRODUCT FROM THE CART
+            updatedItems = state.items.filter(item => item.slug !== action.payload);
 
             //SETTING LOCALSTORAGE
             localStorage.setItem('cart', JSON.stringify(updatedItems))

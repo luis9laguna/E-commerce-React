@@ -1,12 +1,10 @@
 import { useReducer } from "react";
+import useFetch from 'use-http'
 import cartContext from "./cartContext";
 import cartReducer from "./cartReducer";
 import Swal from 'sweetalert2'
 
-import { ADD_CART, REMOVE_CART, CLEAR_CART, CART_LOCAL } from "types";
-
-import clientAxios from "config/axios";
-import tokenAuth from 'config/tokenAuth';
+import { ADD_CART, SUBTRACT_CART, REMOVE_CART, CLEAR_CART, CART_LOCAL } from "types";
 
 const CartState = ({ children }) => {
 
@@ -16,6 +14,14 @@ const CartState = ({ children }) => {
     }
 
     const [state, dispatch] = useReducer(cartReducer, initialState)
+
+    //USEFETCH
+    const storage = typeof localStorage !== 'undefined';
+    let options
+    if (storage) {
+        options = { cachePolicy: 'no-cache', headers: { 'Authorization': localStorage.getItem('token') } }
+    }
+    const { post, put, response, loading, error } = useFetch(`${process.env.url}`, options)
 
     const addItemToCartHandler = item => {
         dispatch({
@@ -36,13 +42,20 @@ const CartState = ({ children }) => {
         }
     };
 
+    const subtractItemFromCartHandler = slug => {
+        dispatch({
+            type: SUBTRACT_CART,
+            payload: slug
+        });
+    }
+
     const removeItemFromCartHandler = slug => {
         dispatch({
             type: REMOVE_CART,
             payload: slug
         });
-
     }
+
     const clearCartHandler = () => {
         dispatch({ type: CLEAR_CART })
     }
@@ -58,8 +71,9 @@ const CartState = ({ children }) => {
                 items: state.items,
                 totalQuantityCart: state.totalQuantityCart,
                 addItem: addItemToCartHandler,
+                subtractItem: subtractItemFromCartHandler,
                 removeItem: removeItemFromCartHandler,
-                clearCart: clearCartHandler.apply,
+                clearCart: clearCartHandler,
                 getCartLocal
             }}
         >

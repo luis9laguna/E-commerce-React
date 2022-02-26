@@ -2,7 +2,7 @@ import styles from '@/styles/ui/Form.module.css';
 import useInput from 'hooks/useInput';
 import { useAuth } from 'context/auth/authContext';
 
-export default function RegisterForm() {
+const RegisterForm = () => {
 
     //CONTEXT
     const { userRegister } = useAuth()
@@ -159,3 +159,6 @@ export default function RegisterForm() {
         </form>
     )
 }
+
+
+export default RegisterForm

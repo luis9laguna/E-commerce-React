@@ -2,7 +2,7 @@ import useInput from 'hooks/useInput';
 import styles from 'styles/ui/Form.module.css';
 import { useAuth } from 'context/auth/authContext';
 
-export default function Form({ showModal }) {
+const Form = ({ showModal }) => {
 
     //CONTEXT
     const { logIn } = useAuth()
@@ -87,3 +87,6 @@ export default function Form({ showModal }) {
         </form>
     )
 }
+
+
+export default Form

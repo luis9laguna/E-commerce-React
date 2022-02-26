@@ -1,14 +1,25 @@
-.container {
+.containerBottom {
+  display: flex;
+  justify-content: space-around;
   margin: 2rem;
+}
+
+.containerProducts {
+  overflow-x: auto !important;
+}
+
+.containerProducts h2 {
+  text-align: center;
+}
+
+.tableContainer {
+  border-radius: 18px !important;
 }
 
 .table {
   border-collapse: collapse;
-  margin: 25px 0;
   font-size: var(--size-1);
   width: 100%;
-  min-width: 260px;
-  border-radius: 5px;
 }
 
 .tr {
@@ -20,6 +31,16 @@
 
 .table tbody {
   background-color: var(--secondary);
+}
+
+.tableProduct {
+  display: flex;
+  align-items: center;
+}
+
+.tableProduct img {
+  width: 4rem;
+  margin-right: 1rem;
 }
 
 .table th,
@@ -47,27 +68,4 @@
 .table td {
   color: var(--primary);
   font-size: var(--size-1);
-}
-.tableProduct {
-  display: flex;
-  flex-direction: column;
-}
-.tableProduct span {
-  margin-left: 18%;
-  font-size: var(--size-3);
-  font-weight: bold;
-}
-
-.tableProduct img {
-  width: 200px;
-}
-
-@media (max-width: 768px) {
-  .table th,
-  .table td {
-    display: flex;
-    flex-direction: column;
-    color: red;
-    background-color: red;
-  }
 }

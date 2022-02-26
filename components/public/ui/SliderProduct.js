@@ -6,25 +6,8 @@ import 'swiper/css/bundle';
 import AllItemsProduct from '@/components/public/ui/AllItemsProduct'
 import { Favorite, NewReleases } from "@material-ui/icons";
 import useWindowDimensions from "hooks/useWindowDimensions";
-import { popularProducts1, popularProducts2 } from "../../../utils/data";
-
 
 const SliderProduct = ({ products, description, icon }) => {
-
-    //SWIPER
-    const [productsData, setProductsData] = useState(null)
-
-    useEffect(() => {
-        const slide = products.map((product) => {
-            return (
-                <SwiperSlide key={product._id}>
-                    <AllItemsProduct product={product} />
-                </SwiperSlide>
-            )
-        })
-        setProductsData(slide)
-    }, [products]);
-
 
     //WIDTH OF SCREEN
     const { width } = useWindowDimensions();
@@ -34,7 +17,6 @@ const SliderProduct = ({ products, description, icon }) => {
     else if (width < 1521 && width > 970) slides = 3.3
     else if (width < 971 && width > 670) slides = 2.3
     else if (width < 671) slides = 1.3
-
 
     const information = {
         alignItems: 'center',
@@ -62,7 +44,11 @@ const SliderProduct = ({ products, description, icon }) => {
                 loop={true}
                 spaceBetween={30}
             >
-                {productsData}
+                {products.map((product) => (
+                    <SwiperSlide key={product._id}>
+                        <AllItemsProduct product={product} />
+                    </SwiperSlide>
+                ))}
             </Swiper>
         </>
     )

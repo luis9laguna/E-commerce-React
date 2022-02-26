@@ -1,7 +1,7 @@
 import Modal from "@/components/public/ui/Modal"
 
 
-export default function InfoAbout({ onClose }) {
+const InfoAbout = ({ onClose }) => {
 
     return (
         <Modal onClose={onClose}>
@@ -12,3 +12,5 @@ export default function InfoAbout({ onClose }) {
         </Modal>
     )
 }
+
+export default InfoAbout

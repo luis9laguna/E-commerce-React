@@ -1,17 +1,18 @@
 import { useEffect, useState } from "react";
+import useFetch from 'use-http'
 import Layout from "@/components/public/layout/Layout";
 import ProductItem from "@/components/public/ProductItem";
 import Meta from "@/components/public/ui/Meta";
-import { getProductBySlug, getProductsByCategory } from "helpers/api-util";
 import SliderProduct from "@/components/public/ui/SliderProduct";
 
-export default function Product({ product }) {
+const Product = ({ product }) => {
 
     const [relatedProducts, setRelatedProducts] = useState([])
+    const { get, response, loading, error } = useFetch(`${process.env.url}`)
 
     useEffect(async () => {
-        const result = await getProductsByCategory(product.category)
-        setRelatedProducts(result.products)
+        const result = await get(`/category/${product.category}`)
+        if (response.ok) setRelatedProducts(result.products)
     }, [])
 
     return (
@@ -23,24 +24,19 @@ export default function Product({ product }) {
     )
 }
 
-export async function getStaticProps({ params }) {
+export async function getServerSideProps({ params }) {
 
-    const product = await getProductBySlug(params.slug)
-    if (!product) return { redirect: { destination: '/404' } }
+    const slug = params.slug
+
+    const resp = await fetch(`${process.env.url}/product/${slug}`)
+    const data = await resp.json()
+    if (!data.ok) return { notFound: true }
 
     return {
         props: {
-            product
+            product: data.product,
         },
-        revalidate: 1
     }
 }
 
-export async function getStaticPaths() {
-    return {
-        paths: [
-            { params: { slug: '' } }
-        ],
-        fallback: 'blocking'
-    }
-}
+export default Product

@@ -1,16 +1,18 @@
 import { useEffect } from 'react';
+import useFetch from 'use-http'
 import useInput from 'hooks/useInput'
-import { useRouter } from 'next/router';
 import { useAuth } from 'context/auth/authContext';
-import { updateUserInfo } from 'helpers/api-util';
 import Swal from 'sweetalert2';
 import styles from '@/styles/ui/Form.module.css';
 
 
-export default function UserDataForm({ userInfo }) {
+const UserDataForm = ({ userInfo }) => {
 
     const { updateUser } = useAuth()
-    const router = useRouter()
+
+    //USEFETCH
+    const options = { cachePolicy: 'no-cache', headers: { 'Authorization': localStorage.getItem('token') } }
+    const { put, response, loading, error } = useFetch(`${process.env.url}`, options)
 
     //FILL FORM EDIT
     useEffect(() => {
@@ -51,7 +53,7 @@ export default function UserDataForm({ userInfo }) {
     }
 
 
-    const formSubmissionHandler = e => {
+    const formSubmissionHandler = async e => {
         e.preventDefault();
 
         //CHECK
@@ -62,22 +64,20 @@ export default function UserDataForm({ userInfo }) {
         const surname = e.target.surname.value
 
         //SEND
-        updateUserInfo({
-            name,
-            surname
-        }).then(resp => {
-            updateUser(resp.name)
+        const infoUpdatedUser = await put(`/user/update`, { name, surname })
+        if (response.ok) {
+            updateUser(infoUpdatedUser.user.name)
             //MODAL
             Swal.fire(
                 'Good job!', 'Update completed!', 'success'
             )
-            //REDIRECT
-            router.push('/')
-        })
-
-        //RESET VALUES
-        resetNameInput()
-        resetSurNameInput()
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: response.data.message
+            })
+        }
     }
 
 
@@ -120,3 +120,6 @@ export default function UserDataForm({ userInfo }) {
         </div >
     )
 }
+
+
+export default UserDataForm

@@ -1,43 +1,22 @@
+import Link from "next/link";
+import { useEffect, useState } from 'react';
+import useFetch from 'use-http'
 import { ArrowDropDown } from '@material-ui/icons';
 import styles from '@/styles/layout/DownNav.module.css';
-import Link from "next/link";
 import SignLog from '@/components/public/ui/SignLog';
-import { useEffect, useState } from 'react';
-import { getAllCategories } from 'helpers/api-util';
 
 const DownNav = ({ statusOpen, showContactForm, showAboutUs }) => {
 
-    const [categories, setCategories] = useState(null);
+    const [categories, setCategories] = useState([]);
     const [dropCategory, setDropCategory] = useState(false);
 
+    //USEFETCH
+    const { get, response, loading, error } = useFetch(`${process.env.url}`)
+
     useEffect(async () => {
-        const data = await getAllCategories()
-        setCategories(data)
+        const data = await get('category')
+        if (response.ok) setCategories(data.categories)
     }, [])
-
-    let navCategories
-
-    const titleCase = (str) => {
-        var splitStr = str.toLowerCase().split(' ');
-        for (var i = 0; i < splitStr.length; i++) {
-            splitStr[i] = splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);
-        }
-        return splitStr.join(' ');
-    }
-
-    if (categories !== null) {
-        navCategories = categories?.map((category) => {
-
-            const title = titleCase(category.name);
-            return (
-                <li key={category._id}>
-                    <Link href={`/category/${category.slug}`}>
-                        {title}
-                    </Link>
-                </li>
-            )
-        })
-    }
 
     return (
         <div className={`${styles.containerNavDown} ${statusOpen ? styles.show : ''}`} >
@@ -46,7 +25,13 @@ const DownNav = ({ statusOpen, showContactForm, showAboutUs }) => {
                 <div className={styles.cateArrow}> Categories<ArrowDropDown /></div>
                 <div className={styles.dropDown}>
                     <ul>
-                        {navCategories}
+                        {categories.map(category => (
+                            <li key={category._id}>
+                                <Link href={`/category/${category.slug}`}>
+                                    {category.name}
+                                </Link>
+                            </li>
+                        ))}
                     </ul>
                 </div>
             </div>

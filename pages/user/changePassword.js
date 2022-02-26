@@ -3,7 +3,7 @@ import Meta from "@/components/public/ui/Meta";
 import UserLayout from "@/components/public/user/UserLayout"
 import Form from "@/components/public/user/userOptions/ChangePasswordForm";
 
-export default function ChangePassword() {
+const ChangePassword = () => {
   return (
     <Layout>
       <Meta title='Change Password' />
@@ -13,3 +13,5 @@ export default function ChangePassword() {
     </Layout>
   )
 }
+
+export default ChangePassword

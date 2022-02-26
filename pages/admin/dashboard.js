@@ -1,8 +1,15 @@
+import ContainerDashboard from "@/components/admin/dashboard/ContainerDashboard";
 import Sidebar from "@/components/admin/layout/Sidebar";
 
-export default function Dashboard() {
+
+const Dashboard = () => {
+
     return (
         <Sidebar>
+            <ContainerDashboard />
         </Sidebar>
     )
 }
+
+
+export default Dashboard

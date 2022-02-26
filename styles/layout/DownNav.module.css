@@ -67,6 +67,7 @@
   transform: translateY(30px);
   opacity: 0;
   transition: 0.5s;
+  text-transform: capitalize;
 }
 
 .category:hover .dropDown li {

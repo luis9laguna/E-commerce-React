@@ -1,0 +1,90 @@
+.container {
+  margin: 2rem;
+}
+
+.container h1 {
+  text-align: center;
+}
+
+.containerOptions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.containerOptions button {
+  width: 100px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: var(--size-2);
+  font-weight: bold;
+  background-color: var(--primary);
+  color: var(--secondary);
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+  margin-top: 0.5rem;
+}
+
+.containerOptions button:hover {
+  background-color: var(--secondary);
+  color: var(--primary);
+}
+
+.containerOptions div {
+  display: flex;
+  align-items: center;
+  margin-top: 0.5rem;
+}
+
+.containerOptions span {
+  font-size: var(--size-2);
+  font-weight: bold;
+  margin-right: 0.5rem;
+}
+.containerOptions input,
+.containerOptions select {
+  height: 2rem;
+  border-radius: 18px;
+  background-color: var(--secondary);
+}
+
+.containerButtonAU {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20%;
+}
+
+.containerButtonAU button {
+  min-width: 280px;
+  height: 130px;
+  border-radius: 15px;
+  border-color: var(--primary);
+  font-size: var(--size-3);
+  margin: 1rem;
+  background-color: var(--primary);
+  color: var(--secondary);
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.containerButtonAU button:hover {
+  background-color: var(--secondary);
+  color: var(--primary);
+}
+
+.containerButtonAU svg {
+  font-size: 2rem;
+}
+
+@media (max-width: 768px) {
+  .containerButtonAU {
+    flex-direction: column;
+  }
+}

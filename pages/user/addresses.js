@@ -5,8 +5,7 @@ import UserLayout from "@/components/public/user/UserLayout"
 import Meta from "@/components/public/ui/Meta";
 import FormAddress from "@/components/public/user/userOptions/addresses/FormAddress";
 
-export default function Addresses() {
-
+const Addresses = () => {
 
   const [modalFormAddress, setModalFormAddress] = useState(false);
   const [addressUpdate, setAddressUpdate] = useState('');
@@ -36,3 +35,5 @@ export default function Addresses() {
     </Layout>
   )
 }
+
+export default Addresses

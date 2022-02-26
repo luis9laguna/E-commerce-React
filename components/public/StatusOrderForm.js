@@ -1,9 +1,12 @@
 import Swal from 'sweetalert2';
-import { getStatusOrder } from 'helpers/api-util';
+import useFetch from 'use-http'
 import useInput from 'hooks/useInput';
 import styles from '@/styles/ui/Form.module.css';
 
-export default function StatusOrderForm({ showModal, setDetailOrder }) {
+const StatusOrderForm = ({ showModal, setDetailOrder }) => {
+
+    //USEFETCH
+    const { post, response, loading, error } = useFetch(`${process.env.url}`, options)
 
     const {
         value: enteredCode,
@@ -18,9 +21,8 @@ export default function StatusOrderForm({ showModal, setDetailOrder }) {
     let formIsValid = false;
     if (enteredCodeIsValid) formIsValid = true;
 
-
     //FORMHANDLER
-    const formSubmissionHandler = (e) => {
+    const formSubmissionHandler = async e => {
         e.preventDefault();
 
         //CHECK
@@ -30,19 +32,18 @@ export default function StatusOrderForm({ showModal, setDetailOrder }) {
         const code = e.target.code.value
 
         //SEND
-        getStatusOrder({ code }).then(resp => {
-            if (resp.ok) {
-                //MODAL
-                setDetailOrder(resp.order)
-                showModal()
-            } else {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: resp.message,
-                })
-            }
-        })
+        const getDetailOrder = await post(`/order/code/status`, { code })
+        if (response.ok) {
+            //MODAL
+            setDetailOrder(getDetailOrder.order)
+            showModal()
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: response.data.message,
+            })
+        }
         //RESET VALUES
         resetCodeInput()
     }
@@ -65,3 +66,6 @@ export default function StatusOrderForm({ showModal, setDetailOrder }) {
         </div>
     )
 }
+
+
+export default StatusOrderForm

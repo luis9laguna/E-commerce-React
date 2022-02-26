@@ -3,7 +3,7 @@ import Layout from "@/components/public/layout/Layout";
 import StatusOrderForm from "@/components/public/StatusOrderForm";
 import DetailOrder from "@/components/public/ui/orders/DetailOrder";
 
-export default function statusPackage() {
+const statusPackage = () => {
 
     const [detailOrder, setDetailOrder] = useState(null)
 
@@ -20,3 +20,6 @@ export default function statusPackage() {
         </Layout>
     )
 }
+
+
+export default statusPackage

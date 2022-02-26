@@ -6,9 +6,9 @@ import { useAuth } from "context/auth/authContext";
 import Meta from "@/components/public/ui/Meta";
 
 
-export default function Login() {
+const Login = () => {
 
-  const { isLoggedIn, role } = useAuth()
+  const { isLoggedIn } = useAuth()
   const router = useRouter()
 
   useEffect(() => {
@@ -23,3 +23,5 @@ export default function Login() {
     </Layout>
   )
 }
+export default Login
+

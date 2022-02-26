@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-export default function useWindowDimensions() {
+const useWindowDimensions = () => {
 
     const hasWindow = typeof window !== 'undefined';
 
@@ -28,3 +28,5 @@ export default function useWindowDimensions() {
 
     return windowDimensions;
 }
+
+export default useWindowDimensions

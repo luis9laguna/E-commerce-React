@@ -6,7 +6,7 @@ import Meta from "@/components/public/ui/Meta";
 import ContainerOrders from "@/components/public/ui/orders/ContainerOrders";
 
 
-export default function MyOrders() {
+const MyOrders = () => {
 
   const [detailOrder, setDetailOrder] = useState(null)
   const [modalDetailOrder, setModalDetailOrder] = useState(false);
@@ -24,3 +24,5 @@ export default function MyOrders() {
     </Layout>
   )
 }
+
+export default MyOrders

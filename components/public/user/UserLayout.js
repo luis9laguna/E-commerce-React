@@ -5,8 +5,7 @@ import { useAuth } from 'context/auth/authContext';
 import styles from '@/styles/user/UserLayout.module.css'
 import { AddLocationOutlined, ArrowForwardIosOutlined, LockOutlined, PersonOutlined, ShoppingBasketOutlined } from '@material-ui/icons';
 
-
-export default function information({ children }) {
+const UserLayout = ({ children }) => {
 
     const { isLoggedIn, loadingUser } = useAuth()
     const router = useRouter()
@@ -57,3 +56,6 @@ export default function information({ children }) {
         </div>
     )
 }
+
+
+export default UserLayout

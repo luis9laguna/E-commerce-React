@@ -1,12 +1,16 @@
 import { useRouter } from "next/router";
 import Swal from "sweetalert2";
-import { changePassword } from "helpers/api-util";
+import useFetch from 'use-http'
 import useInput from "hooks/useInput"
 import styles from '@/styles/ui/Form.module.css';
 
-export default function Form() {
+const ChangePasswordForm = () => {
 
     const router = useRouter()
+
+    //USEFETCH
+    const options = { cachePolicy: 'no-cache', headers: { 'Authorization': localStorage.getItem('token') } }
+    const { put, response, loading, error } = useFetch(`${process.env.url}`, options)
 
     //REGEX
     const regexPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/
@@ -39,7 +43,7 @@ export default function Form() {
     }
 
 
-    const formSubmissionHandler = e => {
+    const formSubmissionHandler = async e => {
         e.preventDefault();
 
         //CHECK
@@ -50,26 +54,21 @@ export default function Form() {
         const newPassword = e.target.newPassword.value
 
         //SEND
-        changePassword({
-            oldPassword,
-            newPassword
-        }).then(resp => {
-            if (resp.ok) {
-                //MODAL
-                Swal.fire(
-                    'Good job!', 'Your Password has been changed succesfully!', 'success'
-                )
-                //REDIRECT
-                router.push('/')
-
-            } else {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: resp.message
-                })
-            }
-        })
+        await put(`/auth/change-password`, { oldPassword, newPassword })
+        if (response.ok) {
+            //MODAL
+            Swal.fire(
+                'Good job!', 'Your Password has been changed succesfully!', 'success'
+            )
+            //REDIRECT
+            router.push('/')
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: response.data.message
+            })
+        }
 
         //RESET VALUES
         resetOldPasswordInput()
@@ -107,3 +106,6 @@ export default function Form() {
         </div>
     )
 }
+
+
+export default ChangePasswordForm

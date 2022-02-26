@@ -1,14 +1,18 @@
 import { useEffect } from 'react'
 import Swal from 'sweetalert2'
 import useInput from 'hooks/useInput'
-import { createAdmin, updateAdmin } from 'helpers/api-util'
 import styles from '@/styles/ui/Form.module.css'
+import useFetch from 'use-http'
 
-export default function FormAdmin({ getAdmins, setInForm, userUpdate }) {
+const FormAdmin = ({ getAdmins, setInForm, userUpdate }) => {
 
     //REGEX FOR EMAIL
     const regexEmail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
     const regexPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/
+
+    //USEFETCH
+    const options = { headers: { 'Authorization': localStorage.getItem('token') } }
+    const { post, put, response, loading, error } = useFetch(`${process.env.url}`, options)
 
 
     //FILL FORM EDIT
@@ -111,23 +115,23 @@ export default function FormAdmin({ getAdmins, setInForm, userUpdate }) {
 
 
         //SEND
-        let resp
         if (userUpdate === null) {
-            resp = await createAdmin({
+            await post('/admin', {
                 name,
                 surname,
                 email,
                 password
             })
         } else {
-            resp = await updateAdmin(userUpdate._id, {
+            await put(`/admin/${userUpdate._id}`, {
                 name,
                 surname,
                 email
             })
         }
 
-        if (resp.ok) {
+        //MODAL
+        if (response.ok) {
             Swal.fire(
                 'Good job!',
                 'The Admin has been created/edit successfully',
@@ -140,10 +144,9 @@ export default function FormAdmin({ getAdmins, setInForm, userUpdate }) {
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: resp.message
+                text: response.data.message
             })
         }
-
 
         //RESET VALUES
         resetNameInput()
@@ -214,3 +217,4 @@ export default function FormAdmin({ getAdmins, setInForm, userUpdate }) {
     )
 }
 
+export default FormAdmin

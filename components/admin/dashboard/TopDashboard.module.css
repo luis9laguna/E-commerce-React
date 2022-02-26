@@ -1,0 +1,92 @@
+.containerTop {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  color: var(--secondary);
+  font-size: var(--size-1);
+  margin-top: 3rem;
+}
+.number {
+  font-size: var(--size-4);
+  font-weight: bold;
+}
+
+.containerSides {
+  display: flex;
+  flex-direction: column;
+}
+.containerSides div {
+  width: 12rem;
+  height: 6rem;
+  background-color: var(--primary);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  border-radius: 3rem;
+  margin: 1rem;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  transition: all 0.4s ease-in-out;
+}
+
+.containerCenter {
+  display: flex;
+  align-items: center;
+}
+
+.center {
+  width: 21rem;
+  height: 10rem;
+  border-radius: 3rem;
+  background-color: var(--primary);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  transition: all 0.4s ease-in-out;
+}
+
+.containerCenter div {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0.8rem;
+  align-items: center;
+}
+
+.finishedOrders {
+  flex-direction: row !important;
+  margin: 0 !important;
+}
+
+.containerCenter .number {
+  font-size: var(--size-5);
+}
+
+.containerSides div:hover,
+.center:hover {
+  background-color: var(--secondary);
+  color: var(--primary);
+}
+
+@media (max-width: 1050px) {
+  .containerTop {
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+  }
+  .containerSides {
+    flex-direction: row;
+  }
+}
+
+@media (max-width: 600px) {
+  .containerSides {
+    display: none;
+  }
+
+  .center {
+    width: 18rem;
+    margin-top: 2rem;
+  }
+}

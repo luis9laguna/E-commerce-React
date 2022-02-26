@@ -1,29 +1,34 @@
-import { getAddressByID, postNewAddress, updateAddress } from 'helpers/api-util';
+import { useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
+import useFetch from 'use-http'
 import Modal from '@/components/public/ui/Modal'
 import useInput from 'hooks/useInput';
 import styles from '@/styles/ui/Form.module.css'
-import { useEffect, useState } from 'react';
 
 const FormAddress = ({ hideModal, addressUpdate, setReFetchAddress }) => {
 
     const [editAddress, setEditAddress] = useState('');
 
-    //GET DATA FROM THE DB TO THE FORM THAT IS GOING TO BE EDITED
-    useEffect(async () => {
-        if (addressUpdate !== '') {
-            await getAddressByID(addressUpdate).then(resp => {
-                if (resp.ok) {
-                    setEditAddress(resp.address)
-                } else {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: resp.message
-                    })
-                }
+    //USEFETCH
+    const options = { headers: { 'Authorization': localStorage.getItem('token') } }
+    const { get, post, put, response, loading, error } = useFetch(`${process.env.url}`, options)
+
+    //GET ADDRESS
+    const getAddressByID = async id => {
+        const address = await get(`/address/${id}`)
+        if (response.ok) setEditAddress(address.address)
+        else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: response.data.message
             })
         }
+    }
+
+    //GET DATA FROM THE DB TO THE FORM THAT IS GOING TO BE EDITED
+    useEffect(async () => {
+        if (addressUpdate !== '') getAddressByID(addressUpdate)
     }, [])
 
     //PUT THE DATA OBTAIN FROM THE DB IN THE FORM
@@ -176,7 +181,7 @@ const FormAddress = ({ hideModal, addressUpdate, setReFetchAddress }) => {
     }
 
     //FORMHANDLER
-    const formSubmissionHandler = (e) => {
+    const formSubmissionHandler = async (e) => {
         e.preventDefault();
 
         //CHECK
@@ -209,46 +214,40 @@ const FormAddress = ({ hideModal, addressUpdate, setReFetchAddress }) => {
 
         //SEND
         if (editAddress === '') {
-            postNewAddress({
-                address
-            }).then(resp => {
-                if (resp.ok) {
-                    //MODAL
-                    Swal.fire(
-                        'Good job!', 'Your Address has been created succesfully!', 'success'
-                    )
-                    setReFetchAddress(true)
-
-                } else {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: resp.message,
-                    })
-                }
-            })
+            await post(`/address`, { address })
+            if (response.ok) {
+                //MODAL
+                Swal.fire(
+                    'Good job!', 'Your Address has been created succesfully!', 'success'
+                )
+                //REFETCH ADDRESS
+                setReFetchAddress(true)
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: resp.message,
+                })
+            }
         } else {
-            updateAddress(addressUpdate, {
-                address
-            }).then(resp => {
-                if (resp.ok) {
-                    //MODAL
-                    Swal.fire(
-                        'Good job!', 'Your Address has been created succesfully!', 'success'
-                    )
-                    setReFetchAddress(true)
-
-                } else {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: resp.message,
-                    })
-                }
-            })
+            put(`/address/${id}`, { address })
+            if (response.ok) {
+                //MODAL
+                Swal.fire(
+                    'Good job!', 'Your Address has been updated succesfully!', 'success'
+                )
+                //REFETCH ADDRESS
+                setReFetchAddress(true)
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: resp.message,
+                })
+            }
         }
 
-
+        //HIDE
         hideModal()
 
         //RESET VALUES

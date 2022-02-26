@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import ReactPaginate from 'react-paginate';
 import AllItemsProduct from "@/components/public/ui/AllItemsProduct";
 import styles from "@/styles/ui/ProductContainer.module.css";
+import Pagination from "./Pagination";
 
-export default function ProductContainer({ data, title, setDeleteFav, url }) {
+const ProductContainer = ({ data, title, setDeleteFav, url }) => {
 
     //PAGINATION
     const [page, setPage] = useState(1)
@@ -17,7 +17,6 @@ export default function ProductContainer({ data, title, setDeleteFav, url }) {
     const [currentPage, setCurrentPage] = useState(null)
     const [currentSort, setCurrentSort] = useState(null)
     const [currentSearch, setCurrentSearch] = useState(null)
-
 
     const router = useRouter()
 
@@ -89,21 +88,10 @@ export default function ProductContainer({ data, title, setDeleteFav, url }) {
                 }
             </div>
             {products === undefined ? '' : (
-                <ReactPaginate
-                    containerClassName={'pagination'}
-                    activeClassName={'active'}
-                    disabledClassName={'disabled-page'}
-                    breakLabel="..."
-                    nextLabel=">"
-                    onPageChange={handlePageClick}
-                    pageRangeDisplayed={1}
-                    marginPagesDisplayed={1}
-                    pageCount={pages}
-                    forcePage={page - 1}
-                    previousLabel="<"
-                    renderOnZeroPageCount={null}
-                />
+                <Pagination page={page} pages={pages} handlePageClick={handlePageClick} />
             )}
         </div>
     )
 }
+
+export default ProductContainer

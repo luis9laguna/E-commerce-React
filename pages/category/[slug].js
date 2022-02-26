@@ -1,7 +1,7 @@
 import Layout from "@/components/public/layout/Layout";
-import { getProductsByCategory } from "helpers/api-util";
 import ProductContainer from "@/components/public/ui/ProductContainer";
 import Meta from "@/components/public/ui/Meta";
+
 
 const Category = ({ data, title }) => {
 
@@ -20,12 +20,13 @@ export async function getServerSideProps({ params, query }) {
     const page = query?.page || 1
     const sort = query?.sort || 'name'
 
-    const data = await getProductsByCategory(slug, page, sort) || ''
-    if (data?.response?.status === 404) return { notFound: true }
+    const resp = await fetch(`${process.env.url}/category/${slug}?page=${page}&limit=15&sort=${sort}`)
+    const data = await resp.json()
+    if (!data.ok) return { notFound: true }
     return {
         props: {
-            data,
-            title: slug
+            title: slug,
+            data
         }
     }
 }

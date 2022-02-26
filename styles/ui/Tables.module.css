@@ -21,6 +21,17 @@
   background-color: var(--secondary);
 }
 
+.tableProduct {
+  display: flex;
+  align-items: center;
+  text-transform: capitalize;
+}
+
+.tableProduct img {
+  width: 4rem;
+  margin-right: 1rem;
+}
+
 .table th,
 .table td {
   padding: 12px 15px;
@@ -62,4 +73,56 @@
 .table button:hover {
   background-color: var(--secondary);
   color: var(--primary);
+}
+.options {
+  display: flex;
+}
+
+/*FORM CONTAINER*/
+.form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 2rem;
+}
+
+.form h1 {
+  text-transform: capitalize;
+  margin-top: 0;
+}
+
+.form input {
+  width: 50%;
+  height: 3rem;
+  font-size: var(--size-4);
+  margin: 2rem;
+  text-align: center;
+}
+
+.form > button {
+  width: 70%;
+  border-radius: 2rem;
+  border-color: var(--primary);
+  padding: 1rem 1.5rem;
+  background-color: var(--primary);
+  color: var(--secondary);
+  margin: 1rem 0;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  margin-top: 2rem;
+}
+
+.form > button:hover {
+  background-color: var(--secondary);
+  color: var(--primary);
+}
+
+@media (max-width: 500px) {
+  .form h2 {
+    font-size: var(--size-1);
+  }
+  .form h1 {
+    font-size: var(--size-3);
+  }
 }

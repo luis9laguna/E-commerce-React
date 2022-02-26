@@ -1,19 +1,23 @@
+import { useEffect, useState } from "react";
+import useFetch from 'use-http'
 import Layout from "@/components/public/layout/Layout";
 import UserLayout from "@/components/public/user/UserLayout"
 import UserDataForm from '@/components/public/user/userOptions/UserDataForm'
-import { useEffect, useState } from "react";
-import { getUserInfo } from "helpers/api-util";
 import Meta from "@/components/public/ui/Meta";
 
-export default function UserInformation() {
+const UserInformation = () => {
 
   const [userInfo, setUserInfo] = useState('')
 
-  useEffect(async () => {
-    await getUserInfo().then(resp => {
-      if (resp.ok) setUserInfo(resp.user)
-    })
-  }, [])
+  //USEFETCH
+  const options = { cachePolicy: 'no-cache', headers: { 'Authorization': localStorage.getItem('token') } }
+  const { get, response, loading, error } = useFetch(`${process.env.url}`, options)
+
+  const getUser = async () => {
+    const user = await get(`/user`)
+    if (response.ok) setUserInfo(user.user)
+  }
+  useEffect(() => { getUser() }, [])
 
   return (
     <Layout>
@@ -24,3 +28,5 @@ export default function UserInformation() {
     </Layout>
   )
 }
+
+export default UserInformation
