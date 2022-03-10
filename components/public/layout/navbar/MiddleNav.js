@@ -11,8 +11,8 @@ const MiddleNav = ({ setIsOpen, isOpen }) => {
 
     const [search, setSearch] = useState('');
 
+    //GET QUERY IF THERE IS
     const router = useRouter();
-
     const querySearch = router.query?.q
 
 
@@ -28,7 +28,6 @@ const MiddleNav = ({ setIsOpen, isOpen }) => {
         e.preventDefault();
 
         if (search === '' || search.length < 3) return
-
         router.push({
             pathname: '/search',
             query: { q: search }

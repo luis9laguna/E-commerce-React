@@ -15,7 +15,7 @@ export default (state, action) => {
         case ADD_CART:
 
             //GETTING INDEX AND INFO OF PRODUCT IF IT EXISTS
-            existingCartItemIndex = state.items.findIndex(item => item.slug === action.payload.slug);
+            existingCartItemIndex = state.items.findIndex(item => item.id === action.payload.id);
             existingCartItem = state.items[existingCartItemIndex];
 
             //IF IT EXISTS, UPDATING...
@@ -32,9 +32,6 @@ export default (state, action) => {
             //GETTING TOTAL OF PRODUCTS IN CART
             updatedTotalQuantity = updatedItems.reduce((c, item) => { return c + item.quantity }, 0)
 
-            //SETTING LOCALSTORAGE
-            localStorage.setItem('cart', JSON.stringify(updatedItems))
-
             return {
                 items: updatedItems,
                 totalQuantityCart: updatedTotalQuantity
@@ -43,7 +40,7 @@ export default (state, action) => {
         case SUBTRACT_CART:
 
             //GETTING INDEX AND INFO OF PRODUCT
-            existingCartItemIndex = state.items.findIndex(item => item.slug === action.payload);
+            existingCartItemIndex = state.items.findIndex(item => item.id === action.payload);
             existingCartItem = state.items[existingCartItemIndex];
 
             //UPDATING TOTAL OF CART
@@ -51,15 +48,12 @@ export default (state, action) => {
 
             //UPDATING OR DELETING PRODUCT FROM THE CART
             if (existingCartItem.quantity === 1) {
-                updatedItems = state.items.filter(item => item.slug !== action.payload);
+                updatedItems = state.items.filter(item => item.id !== action.payload);
             } else {
                 updatedItem = { ...existingCartItem, quantity: existingCartItem.quantity - 1 }
                 updatedItems = [...state.items];
                 updatedItems[existingCartItemIndex] = updatedItem
             }
-
-            //SETTING LOCALSTORAGE
-            localStorage.setItem('cart', JSON.stringify(updatedItems))
 
             return {
                 items: updatedItems,
@@ -69,17 +63,14 @@ export default (state, action) => {
         case REMOVE_CART:
 
             //GETTING INDEX AND INFO OF PRODUCT
-            existingCartItemIndex = state.items.findIndex(item => item.slug === action.payload);
+            existingCartItemIndex = state.items.findIndex(item => item.id === action.payload);
             existingCartItem = state.items[existingCartItemIndex];
 
             //UPDATING TOTAL OF CART
             updatedTotalQuantity = state.totalQuantityCart - existingCartItem.quantity
 
             //UPDATING OR DELETING PRODUCT FROM THE CART
-            updatedItems = state.items.filter(item => item.slug !== action.payload);
-
-            //SETTING LOCALSTORAGE
-            localStorage.setItem('cart', JSON.stringify(updatedItems))
+            updatedItems = state.items.filter(item => item.id !== action.payload);
 
             return {
                 items: updatedItems,
@@ -90,9 +81,7 @@ export default (state, action) => {
             return state
 
         case CART_LOCAL:
-            //GETTING ITEMS FROM THE LOCAL STORAGE
-            const items = localStorage.getItem('cart')
-            updatedItems = JSON.parse(items)
+            updatedItems = [...action.payload]
 
             //GETTING TOTAL OF PRODUCTS IN CART
             updatedTotalQuantity = updatedItems.reduce((c, item) => { return c + item.quantity }, 0)

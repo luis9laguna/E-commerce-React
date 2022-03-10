@@ -4,6 +4,8 @@ import useFetch from 'use-http'
 import Modal from '@/components/public/ui/Modal'
 import useInput from 'hooks/useInput';
 import styles from '@/styles/ui/Form.module.css'
+import Loading from '@/components/public/ui/Loading';
+import ErrorMessage from '@/components/public/ui/ErrorMessage';
 
 const FormAddress = ({ hideModal, addressUpdate, setReFetchAddress }) => {
 
@@ -356,7 +358,10 @@ const FormAddress = ({ hideModal, addressUpdate, setReFetchAddress }) => {
                     onBlur={addressNameBlurHandler}
                 />
                 {addressNameInputHasError && <p className={styles.invalidText}>Street need to has at least 3 characters</p>}
-                <button disabled={!formIsValid}>{editAddress !== '' ? 'Edit' : 'Create'}</button>
+                <button disabled={!formIsValid}>
+                    {loading ? <Loading light={true} /> : (editAddress !== '' ? 'Edit' : 'Create')}
+                </button>
+                {error && <ErrorMessage />}
             </form>
         </Modal>
     )

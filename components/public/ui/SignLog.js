@@ -9,7 +9,7 @@ const SignLog = () => {
 
     return (
         <div className='containerLogSign'>
-            {isLoggedIn ? (
+            {isLoggedIn ?
                 <>
                     <Link href='/user/userInformation'>
                         <span className={`${styles.auth} ${styles.register}`} style={{ textTransform: 'capitalize' }}>Hi, {userName}</span>
@@ -20,22 +20,20 @@ const SignLog = () => {
                         </span>
                     </button>
                 </>
-            )
                 :
-                (
-                    <>
-                        <Link href='/login#register'>
-                            <span className={`${styles.auth} ${styles.register}`}>
-                                Sing Up
-                            </span>
-                        </Link>
-                        <Link href='/login#login'>
-                            <span className={`${styles.auth} ${styles.login}`}>
-                                Log In
-                            </span>
-                        </Link>
-                    </>
-                )}
+                <>
+                    <Link href='/login#register'>
+                        <span className={`${styles.auth} ${styles.register}`}>
+                            Sing Up
+                        </span>
+                    </Link>
+                    <Link href='/login#login'>
+                        <span className={`${styles.auth} ${styles.login}`}>
+                            Log In
+                        </span>
+                    </Link>
+                </>
+            }
 
         </div>
     )

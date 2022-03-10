@@ -1,6 +1,7 @@
 import useFetch from 'use-http'
 import Swal from 'sweetalert2'
 import styles from '@/styles/ui/orders/TableOrders.module.css'
+import Loading from '../Loading'
 
 const TableOrders = (props) => {
 
@@ -93,7 +94,10 @@ const TableOrders = (props) => {
                         }
 
                     </div>
-                    <button className={styles.button} onClick={() => handlerModalDetails(order.code)}>Details</button>
+                    <button className={styles.button} onClick={() => handlerModalDetails(order.code)}>
+                        {loading ? <Loading light={true} /> : 'Details'}
+                    </button>
+                    {error && "There was an error try again later."}
                 </div>
             ))}
         </div>

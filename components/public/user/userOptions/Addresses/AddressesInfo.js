@@ -3,6 +3,8 @@ import useFetch from 'use-http'
 import styles from '@/styles/user/Adresses.module.css'
 import { CheckCircleOutlined, EditOutlined, RemoveCircleOutlined } from '@material-ui/icons'
 import Swal from 'sweetalert2';
+import Loading from '@/components/public/ui/Loading';
+import ErrorMessage from '@/components/public/ui/ErrorMessage';
 
 const AddressesInfo = ({ showModal, setAddressUpdate, reFetchAddress, setReFetchAddress }) => {
 
@@ -102,54 +104,50 @@ const AddressesInfo = ({ showModal, setAddressUpdate, reFetchAddress, setReFetch
 
     return (
         <div className={styles.container}>
-
             <div className={styles.buttonContainer}>
-
                 {addresses.length >= 3 ?
                     <h2>You can't create more than 3 addresses</h2>
                     : <button onClick={buttonAddAddress}>Add address</button>
                 }
             </div>
 
-            <div className={styles.addressContainer}>
-
-                {addresses.length !== 0 ? addresses.map((address, i) => (
-                    <div className={styles.address} key={i}>
-                        <h3 className={styles.name}>{address.address.addressname}</h3>
-
-                        <div className={styles.info}>
-                            <div>Name: <span>{address.address.name}</span></div>
-                            <div>Phone: <span>{address.address.phone}</span></div>
-                            <div>ID: <span>{address.address.id}</span></div>
-                            <div>State: <span>{address.address.state}</span></div>
-                            <div>City: <span>{address.address.city}</span></div>
-                            <div>Province: <span>{address.address.province}</span></div>
-                            <div>Street: <span>{address.address.street}, {address.address.numstreet}</span></div>
-                            <div>Apartment: <span>{address.address.apartment || 'none'}</span></div>
+            {error && <ErrorMessage />}
+            {loading ? <Loading space={true} /> :
+                <div className={styles.addressContainer}>
+                    {addresses.length !== 0 ? addresses.map((address, i) => (
+                        <div className={styles.address} key={i}>
+                            <h3 className={styles.name}>{address.address.addressname}</h3>
+                            <div className={styles.info}>
+                                <div>Name: <span>{address.address.name}</span></div>
+                                <div>Phone: <span>{address.address.phone}</span></div>
+                                <div>ID: <span>{address.address.id}</span></div>
+                                <div>State: <span>{address.address.state}</span></div>
+                                <div>City: <span>{address.address.city}</span></div>
+                                <div>Province: <span>{address.address.province}</span></div>
+                                <div>Street: <span>{address.address.street}, {address.address.numstreet}</span></div>
+                                <div>Apartment: <span>{address.address.apartment || 'none'}</span></div>
+                            </div>
+                            <hr />
+                            <div className={styles.containerDefault}>
+                                {address._id === userAddress
+                                    ? <div className={styles.default}><CheckCircleOutlined /> Default Address</div>
+                                    : <button onClick={() => handlerMakeDefault(address._id)}>Make Default</button>}
+                            </div>
+                            <div className={styles.options}>
+                                <button onClick={() => handlerEdit(address._id)}>
+                                    <EditOutlined />
+                                </button>
+                                <button onClick={() => handlerDelete(address._id)}>
+                                    <RemoveCircleOutlined />
+                                </button>
+                            </div>
                         </div>
-                        <hr />
-                        <div className={styles.containerDefault}>
-
-                            {address._id === userAddress
-                                ? <div className={styles.default}><CheckCircleOutlined /> Default Address</div>
-                                : <button onClick={() => handlerMakeDefault(address._id)}>Make Default</button>}
-                        </div>
-                        <div className={styles.options}>
-                            <button onClick={() => handlerEdit(address._id)}>
-                                <EditOutlined />
-                            </button>
-                            <button onClick={() => handlerDelete(address._id)}>
-                                <RemoveCircleOutlined />
-                            </button>
-                        </div>
-                    </div>
-                ))
-                    :
-                    <h1>You haven't created any address yet</h1>
-                }
-
-
-            </div>
+                    ))
+                        :
+                        <h1>You haven't created any address yet</h1>
+                    }
+                </div>
+            }
         </div>
     )
 }

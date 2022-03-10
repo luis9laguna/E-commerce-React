@@ -3,6 +3,8 @@ import Swal from "sweetalert2";
 import useFetch from 'use-http'
 import useInput from "hooks/useInput"
 import styles from '@/styles/ui/Form.module.css';
+import Loading from "../../ui/Loading";
+import ErrorMessage from "../../ui/ErrorMessage";
 
 const ChangePasswordForm = () => {
 
@@ -101,7 +103,10 @@ const ChangePasswordForm = () => {
                     className={styles.userInput}
                 ></input>
                 {newPasswordInputHasError ? <p className={styles.invalidText}>Password must be at least 8 characters, 1 uppercase, 1 lowercase and 1 number.</p> : ''}
-                <button className={styles.userButton} disabled={!formIsValid}>Change Password</button>
+                <button className={styles.userButton} disabled={!formIsValid}>
+                    {loading ? <Loading light={true} /> : 'Change Password'}
+                </button>
+                {error && <ErrorMessage />}
             </form>
         </div>
     )

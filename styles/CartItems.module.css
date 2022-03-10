@@ -22,6 +22,14 @@
   background-color: var(--secondary);
   margin: 2rem;
   padding: 1rem 0;
+  border-radius: 10px;
+  transition: all 0.2s ease-in-out;
+}
+.info > div:hover {
+  transform: scale(1.005);
+}
+.cart {
+  text-align: center;
 }
 
 .cart span {
@@ -106,7 +114,7 @@
   border: 0.5px solid var(--light);
   border-radius: 0.8rem;
   padding: 1.5rem;
-  height: 40vh;
+  height: 300px;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   background-color: var(--secondary);
 }
@@ -116,9 +124,14 @@
   text-align: center;
 }
 .summary div {
-  margin: 2rem 0;
   display: flex;
   justify-content: space-between;
+}
+
+.summary div:last-of-type {
+  font-size: var(--size-3);
+  font-weight: bold;
+  margin: 1rem 0;
 }
 
 .summary div b {
@@ -128,7 +141,7 @@
 .button {
   width: 100%;
   border-radius: 2rem;
-  border-color: var(--primary);
+  border: 1px solid var(--primary);
   padding: 1rem 1.5rem;
   background-color: var(--primary);
   color: var(--secondary);

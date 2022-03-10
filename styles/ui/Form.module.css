@@ -33,6 +33,9 @@
   height: 2rem;
   border-radius: 15px;
   margin-top: 1rem;
+  text-align: center;
+  background-color: var(--secondary);
+  margin: 2rem 0;
 }
 
 .labelInfo {
@@ -56,6 +59,7 @@
 .form textarea {
   width: 90%;
   height: 10rem;
+  background-color: var(--secondary);
 }
 
 .form > button {

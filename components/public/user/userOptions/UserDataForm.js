@@ -4,6 +4,8 @@ import useInput from 'hooks/useInput'
 import { useAuth } from 'context/auth/authContext';
 import Swal from 'sweetalert2';
 import styles from '@/styles/ui/Form.module.css';
+import Loading from '../../ui/Loading';
+import ErrorMessage from '../../ui/ErrorMessage';
 
 
 const UserDataForm = ({ userInfo }) => {
@@ -115,7 +117,10 @@ const UserDataForm = ({ userInfo }) => {
 
                 <label className={styles.labelInfo} htmlFor='email'>Email (<span>{userInfo.email}</span>)</label>
 
-                <button className={styles.userButton} disabled={!formIsValid}>Save</button>
+                <button className={styles.userButton} disabled={!formIsValid}>
+                    {loading ? <Loading light={true} /> : 'Save'}
+                </button>
+                {error && <ErrorMessage />}
             </form >
         </div >
     )

@@ -6,6 +6,8 @@ import Meta from "@/components/public/ui/Meta";
 import CheckContainer from '@/components/public/checkout/CheckContainer'
 import AddressesInfo from "@/components/public/user/userOptions/addresses/AddressesInfo";
 import FormAddress from "@/components/public/user/userOptions/addresses/FormAddress";
+import Loading from "@/components/public/ui/Loading";
+import ErrorMessage from "@/components/public/ui/ErrorMessage";
 
 const Checkout = () => {
 
@@ -40,14 +42,17 @@ const Checkout = () => {
     return (
         <Layout>
             <Meta title='Checkout' />
-            <CheckContainer userHasAddress={userHasAddress}>
-                <AddressesInfo
-                    showModal={handlerShowFormAddress}
-                    setAddressUpdate={setAddressUpdate}
-                    reFetchAddress={reFetchAddress}
-                    setReFetchAddress={setReFetchAddress}
-                />
-            </CheckContainer>
+            {loading ? <Loading space={true} /> :
+                <CheckContainer userHasAddress={userHasAddress}>
+                    <AddressesInfo
+                        showModal={handlerShowFormAddress}
+                        setAddressUpdate={setAddressUpdate}
+                        reFetchAddress={reFetchAddress}
+                        setReFetchAddress={setReFetchAddress}
+                    />
+                </CheckContainer>
+            }
+            {error && <ErrorMessage />}
 
             {modalFormAddress && <FormAddress
                 hideModal={handlerShowFormAddress}

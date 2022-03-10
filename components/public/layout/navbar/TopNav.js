@@ -18,7 +18,6 @@ const TopNav = () => {
                 <a href="https://www.twitter.com">
                     <Twitter />
                 </a>
-
             </div>
             <SignLog />
         </div>

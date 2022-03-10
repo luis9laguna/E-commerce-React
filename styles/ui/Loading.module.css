@@ -1,8 +1,17 @@
 .sk-fading-circle {
-  margin: 100px auto;
+  margin: auto;
   width: 40px;
   height: 40px;
   position: relative;
+}
+
+.space.sk-fading-circle {
+  margin: 100px auto !important;
+}
+
+.light.sk-fading-circle,
+.light.sk-circle:before {
+  background-color: var(--secondary) !important;
 }
 
 .sk-fading-circle .sk-circle {
@@ -17,9 +26,9 @@
   content: "";
   display: block;
   margin: 0 auto;
+  background-color: var(--primary);
   width: 15%;
   height: 15%;
-  background-color: var(--primary) !important;
   border-radius: 100%;
   -webkit-animation: sk-circleFadeDelay 1.2s infinite ease-in-out both;
   animation: sk-circleFadeDelay 1.2s infinite ease-in-out both;

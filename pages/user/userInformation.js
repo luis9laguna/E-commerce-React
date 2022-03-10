@@ -4,6 +4,8 @@ import Layout from "@/components/public/layout/Layout";
 import UserLayout from "@/components/public/user/UserLayout"
 import UserDataForm from '@/components/public/user/userOptions/UserDataForm'
 import Meta from "@/components/public/ui/Meta";
+import Loading from "@/components/public/ui/Loading";
+import ErrorMessage from "@/components/public/ui/ErrorMessage";
 
 const UserInformation = () => {
 
@@ -23,7 +25,10 @@ const UserInformation = () => {
     <Layout>
       <Meta title='UserInfo' />
       <UserLayout>
-        <UserDataForm userInfo={userInfo} />
+        {loading ? <Loading space={true} /> :
+          <UserDataForm userInfo={userInfo} />
+        }
+        {error && <ErrorMessage />}
       </UserLayout>
     </Layout>
   )

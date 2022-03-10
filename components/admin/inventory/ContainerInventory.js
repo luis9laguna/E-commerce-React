@@ -6,6 +6,8 @@ import styles from './ContainerInventory.module.css'
 import TableInventory from './TableInventory'
 import FormProduct from './FormProduct'
 import FormCategory from './FormCategory'
+import Loading from '@/components/public/ui/Loading'
+import ErrorMessage from '@/components/public/ui/ErrorMessage'
 
 
 const ContainerInventory = () => {
@@ -80,14 +82,15 @@ const ContainerInventory = () => {
 
     const getSearchProducts = async (search, page) => {
         const searchProducts = await get(`/search/product/${search}?page=${page}`)
-        if (response.ok) {
-            setDbInventory(searchProducts.products)
-            setPage(searchProducts.page)
-            setPages(searchProducts.pages)
+
+        if (response.status === 200) {
+            setDbInventory(searchProducts?.products)
+            setPage(searchProducts?.page)
+            setPages(searchProducts?.pages)
             setInProducts(true)
             setInCategories(false)
         } else {
-            setDbInventory(null)
+            setDbInventory([])
         }
     }
 
@@ -118,66 +121,76 @@ const ContainerInventory = () => {
         }
     }
 
+
     return (
         <div className={styles.container}>
-            <h1>{inCategories ? 'Categories' : ''}</h1>
-            <h1>{inProducts ? 'Products' : ''}</h1>
+            <h1>{inCategories && 'Categories'}</h1>
+            <h1>{inProducts && 'Products'}</h1>
             {inCategories || inProducts ?
                 <>
                     <div className={styles.containerOptions}>
-                        {inForm ? '' : <button onClick={goback}><ArrowBack />Back</button>}
+                        {!inForm && <button onClick={goback}><ArrowBack />Back</button>}
                         <button onClick={createBack}>
                             {inForm ? 'Back' : 'Create'}
                         </button>
-                        {inProducts && !inForm ?
+                        {inProducts && !inForm &&
                             <>
                                 <div>
                                     <span>Search</span>
                                     <input onChange={e => setSearch(e.target.value)} />
                                 </div>
                                 <div>
-                                    <span>Filter by category</span>
-                                    <select id="status" onChange={selectCategory}>
-                                        <option selected="true" value='all'>All</option>
+                                    <span>Category</span>
+                                    <select id="category" onChange={selectCategory}>
+                                        <option value='all'>All</option>
                                         {selectCategories.map((category, i) => (
                                             <option key={i} value={category.slug}>{category.name}</option>
                                         ))}
                                     </select>
+                                </div><div>
+                                    <span>Status</span>
+                                    <select id="status" onChange={selectCategory}>
+                                        <option value='all'>All</option>
+                                        <option value='true'>True</option>
+                                        <option value='false'>False</option>
+                                    </select>
                                 </div>
                             </>
-                            : ''}
+                        }
                     </div>
                     {inForm ?
                         <>
-                            {inProducts ?
+                            {inProducts &&
                                 <FormProduct
                                     selectCategories={selectCategories}
                                     inventoryUpdate={inventoryUpdate}
                                     setInForm={() => setInForm(!inForm)}
                                     getProducts={getProducts} />
-                                : ''
                             }
-                            {inCategories ?
+                            {inCategories &&
                                 <FormCategory
                                     selectCategories={selectCategories}
                                     inventoryUpdate={inventoryUpdate}
                                     setInForm={() => setInForm(!inForm)}
                                     getCategories={getCategories} />
-                                : ''
                             }
                         </>
                         :
                         <>
-                            {error ?
-                                <h2 style={{ textAlign: 'center' }}>Sorry but we couldn't find what you were looking for.</h2>
-                                :
-                                <TableInventory
-                                    setInForm={() => setInForm(!inForm)}
-                                    getProducts={getProducts}
-                                    dbInventory={dbInventory}
-                                    setInventoryUpdate={setInventoryUpdate}
-                                    inCategories={inCategories}
-                                    inProducts={inProducts} />
+                            {error ? <ErrorMessage message={response.data.message} /> :
+                                <>
+                                    {loading && !error ? <Loading space={true} />
+                                        :
+                                        <TableInventory
+                                            setInForm={() => setInForm(!inForm)}
+                                            getProducts={getProducts}
+                                            dbInventory={dbInventory}
+                                            setInventoryUpdate={setInventoryUpdate}
+                                            inCategories={inCategories}
+                                            inProducts={inProducts} />
+                                    }
+                                    {dbInventory?.length === 0 || dbInventory === undefined && <h2 style={{ textAlign: 'center' }}>Sorry but we couldn't find what you were looking for.</h2>}
+                                </>
                             }
                         </>
                     }
@@ -188,7 +201,7 @@ const ContainerInventory = () => {
                     <button onClick={() => getProducts(1)}> < Filter /> Products</button>
                 </div>
             }
-            {inProducts && dbInventory !== null && !inForm ? <Pagination page={page} pages={pages} handlePageClick={handlePageClick} /> : ''}
+            {inProducts && dbInventory?.length > 0 && !inForm && <Pagination page={page} pages={pages} handlePageClick={handlePageClick} />}
         </div >
     )
 }

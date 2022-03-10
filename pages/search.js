@@ -4,10 +4,12 @@ import useFetch from 'use-http'
 import Layout from "@/components/public/layout/Layout";
 import ProductContainer from "@/components/public/ui/ProductContainer";
 import Meta from "@/components/public/ui/Meta";
+import Loading from "@/components/public/ui/Loading";
+import ErrorMessage from '@/components/public/ui/ErrorMessage'
 
 const Search = () => {
 
-    const [resultProducts, setResultProducts] = useState(false);
+    const [resultProducts, setResultProducts] = useState([]);
 
     const router = useRouter()
     const search = router.query?.q
@@ -33,10 +35,18 @@ const Search = () => {
     return (
         <Layout>
             <Meta title={search} />
-            {!error ?
-                <ProductContainer data={resultProducts} title={search} url={url} />
-                :
-                <h1 style={{ textAlign: 'center', margin: '5rem 0' }}>There aren't results with '{search || '????'}'</h1>
+            {loading ? <Loading space={true} /> :
+                <>
+                    {resultProducts.products?.length > 0 ?
+                        <ProductContainer data={resultProducts} title={search} url={url} />
+                        :
+                        <>
+                            {error ? <ErrorMessage /> :
+                                <h1 style={{ textAlign: 'center', margin: '5rem 0' }}>There aren't results with '{search || '????'}'</h1>
+                            }
+                        </>
+                    }
+                </>
             }
         </Layout>
     );

@@ -3,6 +3,8 @@ import Swal from 'sweetalert2'
 import useInput from 'hooks/useInput'
 import styles from '@/styles/ui/Form.module.css'
 import useFetch from 'use-http'
+import Loading from '@/components/public/ui/Loading'
+import ErrorMessage from '@/components/public/ui/ErrorMessage'
 
 const FormAdmin = ({ getAdmins, setInForm, userUpdate }) => {
 
@@ -188,7 +190,7 @@ const FormAdmin = ({ getAdmins, setInForm, userUpdate }) => {
                 />
                 {emailInputHasError && <p className={styles.invalidText}>It must be a valid email.</p>}
 
-                {userUpdate === null ? (
+                {userUpdate === null && (
                     <>
                         <input
                             placeholder="Password*"
@@ -209,9 +211,12 @@ const FormAdmin = ({ getAdmins, setInForm, userUpdate }) => {
                         />
                         {passwordConfirmInputHasError && <p className={styles.invalidText}>Password are not matching</p>}
                     </>
-                ) : ''}
+                )}
 
-                <button disabled={!formIsValid}>{userUpdate === null ? 'CREATE' : 'EDIT'}</button>
+                <button disabled={!formIsValid}>
+                    {loading ? <Loading light={true} /> : (userUpdate === null ? 'CREATE' : 'EDIT')}
+                </button>
+                {error && <ErrorMessage />}
             </form>
         </>
     )

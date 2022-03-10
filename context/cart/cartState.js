@@ -1,4 +1,5 @@
-import { useReducer } from "react";
+import { useEffect, useReducer } from "react";
+import Cookies from 'js-cookie'
 import useFetch from 'use-http'
 import cartContext from "./cartContext";
 import cartReducer from "./cartReducer";
@@ -6,53 +7,63 @@ import Swal from 'sweetalert2'
 
 import { ADD_CART, SUBTRACT_CART, REMOVE_CART, CLEAR_CART, CART_LOCAL } from "types";
 
-const CartState = ({ children }) => {
+const initialState = {
+    items: [],
+    totalQuantityCart: 0
+}
 
-    const initialState = {
-        items: [],
-        totalQuantityCart: 0
-    }
+const CartState = ({ children }) => {
 
     const [state, dispatch] = useReducer(cartReducer, initialState)
 
-    //USEFETCH
-    const storage = typeof localStorage !== 'undefined';
-    let options
-    if (storage) {
-        options = { cachePolicy: 'no-cache', headers: { 'Authorization': localStorage.getItem('token') } }
-    }
-    const { post, put, response, loading, error } = useFetch(`${process.env.url}`, options)
+    //GET COOKIE CART
+    useEffect(() => {
+        try {
+            const cookiesProducts = Cookies.get('cart') ? JSON.parse(Cookies.get('cart')) : []
+            dispatch({ type: CART_LOCAL, payload: cookiesProducts })
+        } catch (error) {
+            dispatch({ type: CART_LOCAL, payload: [] })
+        }
+    }, []);
 
-    const addItemToCartHandler = item => {
+    //SET COOKIE CART
+    useEffect(() => {
+        Cookies.set('cart', JSON.stringify(state.items))
+    }, [state.items]);
+
+
+    const addItemToCartHandler = product => {
+
         dispatch({
             type: ADD_CART,
-            payload: item
+            payload: product
         });
-        if (!item.cart) {
+
+        if (!product.cart) {
             Swal.fire({
-                title: item.name,
-                text: `'${item.quantity}' has been added succesfully to your cart`,
-                imageUrl: item.image,
+                title: product.name,
+                text: `'${product.quantity}' has been added succesfully to your cart`,
+                imageUrl: product.image,
                 imageWidth: 300,
                 imageHeight: 300,
-                imageAlt: item.name,
+                imageAlt: product.name,
                 timer: 2000,
                 timerProgressBar: true
             })
         }
     };
 
-    const subtractItemFromCartHandler = slug => {
+    const subtractItemFromCartHandler = id => {
         dispatch({
             type: SUBTRACT_CART,
-            payload: slug
+            payload: id
         });
     }
 
-    const removeItemFromCartHandler = slug => {
+    const removeItemFromCartHandler = id => {
         dispatch({
             type: REMOVE_CART,
-            payload: slug
+            payload: id
         });
     }
 

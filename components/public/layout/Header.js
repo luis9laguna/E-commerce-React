@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import TopNav from './navbar/TopNav';
 import MiddleNav from './navbar/MiddleNav';
 import DownNav from './navbar/DownNav';

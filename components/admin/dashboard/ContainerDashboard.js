@@ -3,6 +3,8 @@ import useFetch from 'use-http'
 import BottomDashboard from "./BottomDashboard"
 import TopDashboard from "./TopDashboard"
 import styles from './ContainerDashboard.module.css'
+import Loading from "@/components/public/ui/Loading";
+import ErrorMessage from "@/components/public/ui/ErrorMessage";
 
 
 const ContainerDashboard = () => {
@@ -23,7 +25,8 @@ const ContainerDashboard = () => {
 
     return (
         <div className={styles.containerDashboard}>
-            <TopDashboard information={information} />
+            {error && <ErrorMessage />}
+            {loading && !error ? <Loading space={true} /> : <TopDashboard information={information} />}
             <BottomDashboard />
         </div>
     )

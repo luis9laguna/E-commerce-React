@@ -11,34 +11,29 @@ const Sidebar = ({ children }) => {
     const [openNav, setOpenNav] = useState(false);
 
     //CONTEXT
-    const { userAuth, isLoggedIn, loadingUser, userName, role } = useAuth()
+    const { userAuth, isLoggedIn, loadingUser, role } = useAuth()
 
     //ROUTER
     const router = useRouter()
 
     //GET USER IF THERE IS A VALID TOKEN
-    useEffect(() => {
-        userAuth()
-    }, [])
+    useEffect(() => { userAuth() }, [])
 
     useEffect(() => {
         if (!loadingUser && !isLoggedIn || role === 'USER_ROLE') {
             router.replace('/')
         }
-
     }, [isLoggedIn, loadingUser, role]);
 
     if (!isLoggedIn) return <div></div>
 
     //OPEN NAVBAR
-    const handlerOpenNav = () => {
-        setOpenNav(!openNav)
-    }
+    const handlerOpenNav = () => { setOpenNav(!openNav) }
 
     return (
 
         <div className={styles.AdminContainer}>
-            <div className={`${styles.sidebar} ${openNav ? styles.open : ''} `}>
+            <div className={`${styles.sidebar} ${openNav && styles.open} `}>
                 <div className={styles.logoDetails}>
                     <div className={styles.logoName}>E-Commerce</div>
                     <Menu className={`${styles.icon} ${styles.burguer}`} onClick={handlerOpenNav} />
@@ -82,7 +77,7 @@ const Sidebar = ({ children }) => {
                     </li>
                 </ul>
             </div>
-            <div className={`${styles.children} ${openNav ? styles.childrenOpen : ''} `}>
+            <div className={`${styles.children} ${openNav && styles.childrenOpen} `}>
                 <HeaderAdmin setOpenNav={setOpenNav} openNav={openNav} />
                 {children}
             </div>

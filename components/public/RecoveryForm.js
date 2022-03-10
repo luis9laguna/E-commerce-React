@@ -3,6 +3,8 @@ import useInput from 'hooks/useInput';
 import useFetch from 'use-http'
 import { resetPassword } from 'helpers/api-util';
 import styles from 'styles/ui/Form.module.css';
+import Loading from './ui/Loading';
+import ErrorMessage from './ui/ErrorMessage';
 
 const RecoveryForm = () => {
 
@@ -73,7 +75,10 @@ const RecoveryForm = () => {
                     className={passwordInputHasError ? styles.invalidInput : ''}
                 />
                 {passwordInputHasError && <p className={styles.invalidText}>Password must be at least 8 characters, 1 uppercase, 1 lowercase and 1 number.</p>}
-                <button disabled={!formIsValid}>CHANGE PASSWORD</button>
+                <button disabled={!formIsValid}>
+                    {loading ? <Loading light={true} /> : 'CHANGE PASSWORD'}
+                </button>
+                {error && <ErrorMessage />}
             </form>
         </div>
     )

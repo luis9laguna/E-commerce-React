@@ -87,9 +87,9 @@ const ProductContainer = ({ data, title, setDeleteFav, url }) => {
                     ))
                 }
             </div>
-            {products === undefined ? '' : (
+            {products !== undefined &&
                 <Pagination page={page} pages={pages} handlePageClick={handlePageClick} />
-            )}
+            }
         </div>
     )
 }

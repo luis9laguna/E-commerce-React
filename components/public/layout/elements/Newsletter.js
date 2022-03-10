@@ -1,8 +1,6 @@
 import { Send } from "@material-ui/icons";
 import styles from '@/styles/layout/Newsletter.module.css';
 
-
-
 const Newsletter = () => {
     return (
         <div className={styles.container}>

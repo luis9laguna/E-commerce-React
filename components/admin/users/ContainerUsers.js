@@ -5,6 +5,8 @@ import { ArrowBack, PersonOutlined, VerifiedUserOutlined } from '@material-ui/ic
 import TableUsers from './TableUsers';
 import FormAdmin from './FormAdmin';
 import Pagination from '@/components/public/ui/Pagination';
+import Loading from '@/components/public/ui/Loading';
+import ErrorMessage from '@/components/public/ui/ErrorMessage';
 
 const ContainerUsers = () => {
 
@@ -69,28 +71,32 @@ const ContainerUsers = () => {
 
     return (
         <div className={styles.container}>
-            <h1>{inAdmin ? 'Admins' : ''}</h1>
-            <h1>{inUser ? 'Users' : ''}</h1>
+            <h1>{inAdmin && 'Admins'}</h1>
+            <h1>{inUser && 'Users'}</h1>
             {inAdmin || inUser ?
                 <>
                     <div className={styles.containerButtonBC}>
-                        {inForm ? '' : <button onClick={goBack}><ArrowBack /> Back</button>}
-                        {inAdmin ?
+                        {!inForm && <button onClick={goBack}><ArrowBack /> Back</button>}
+                        {inAdmin &&
                             <button onClick={createBack}>
                                 {inForm ? 'Back' : 'Create'}
                             </button>
-                            : ''}
+                        }
                     </div>
                     {inForm ?
                         <FormAdmin getAdmins={getAdmins} userUpdate={userUpdate} setInForm={() => setInForm(!inForm)} />
                         :
                         <>
-                            <TableUsers
-                                getAdmins={getAdmins}
-                                setAdminUpdate={setAdminUpdate}
-                                setInForm={() => setInForm(!inForm)}
-                                inAdmin={inAdmin}
-                                users={users} />
+                            {loading && !error ? <Loading space={true} />
+                                :
+                                <TableUsers
+                                    getAdmins={getAdmins}
+                                    setAdminUpdate={setAdminUpdate}
+                                    setInForm={() => setInForm(!inForm)}
+                                    inAdmin={inAdmin}
+                                    users={users} />
+                            }
+                            {error && <ErrorMessage />}
                             <Pagination pages={pages} page={page} handlePageClick={handlePageClick} />
                         </>
                     }

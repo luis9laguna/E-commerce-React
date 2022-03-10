@@ -7,12 +7,13 @@ import { useCart } from "context/cart/cartContext";
 import { FavoriteBorderOutlined, SearchOutlined, ShoppingBasketOutlined } from "@material-ui/icons";
 import styles from '@/styles/ui/AllItemsProduct.module.css'
 import Loading from "./Loading";
+import ErrorMessage from "./ErrorMessage";
 
 const AllItemsProduct = ({ product, setDeleteFav }) => {
 
     const [likeOrDislike, setLikeOrDislike] = useState(null);
     const [itemStock, setItemStock] = useState(0);
-    const { ref } = useAuth()
+    const { ref, isLoggedIn } = useAuth()
     const { addItem } = useCart()
     const router = useRouter()
 
@@ -25,7 +26,7 @@ const AllItemsProduct = ({ product, setDeleteFav }) => {
     const { post, response, loading, error } = useFetch(`${process.env.url}`, options)
 
     //GET LIKES GIVEN BY USER TO SHOW FEEDBACK
-    const hasLike = product.likes.includes(ref)
+    const hasLike = product.likes?.includes(ref)
 
     useEffect(() => { setLikeOrDislike(hasLike) }, [hasLike]);
     useEffect(() => { setItemStock(product.stock) }, [])
@@ -33,19 +34,22 @@ const AllItemsProduct = ({ product, setDeleteFav }) => {
     //BUTTON FAV
     const favButton = async (id) => {
         //SEND LIKE TO DB
+        if (!isLoggedIn) router.push('/login#login')
+        //SEND
         await post(`/like/${id}`)
-        if (!response.ok) router.push('/login#login')
+        if (response.ok) {
+            //FEEDBACK USER
+            setLikeOrDislike(!likeOrDislike)
 
-        //FEEDBACK USER
-        setLikeOrDislike(!likeOrDislike)
-
-        //IF WE WANNA DISLIKE IN THE WISHLIST PAGE
-        if (setDeleteFav) setDeleteFav(true)
+            //IF WE WANNA DISLIKE IN THE WISHLIST PAGE
+            if (setDeleteFav) setDeleteFav(true)
+        }
     }
 
     //HANDLER ADD CART
     const addCartHandler = () => {
         addItem({
+            id: product._id,
             slug: product.slug,
             quantity: 1,
             name: product.name,
@@ -55,11 +59,10 @@ const AllItemsProduct = ({ product, setDeleteFav }) => {
         setItemStock(prev => prev - 1)
     }
 
-
     return (
 
         <div className={styles.container}>
-            {itemStock === 0 ? <div className={styles.noStock}>Sold Out</div> : ''}
+            {itemStock === 0 && <div className={styles.noStock}>Sold Out</div>}
             <Link href={`/product/${product.slug}`}>
                 <img className={`${styles.image} ${itemStock === 0 ? styles.noStockImg : ''}`} src='https://d2r9epyceweg5n.cloudfront.net/stores/001/064/802/products/dscn5121-011-63ea8aaaee2ca1bbaa16114183468496-640-0.jpeg' />
             </Link>
@@ -68,13 +71,11 @@ const AllItemsProduct = ({ product, setDeleteFav }) => {
                 <span className={styles.price}>${product.price}</span>
                 <div className={styles.allIcons}>
 
-                    {itemStock !== 0 ? (
+                    {itemStock !== 0 &&
                         <button className={styles.buttonOptions} onClick={addCartHandler}>
                             <ShoppingBasketOutlined style={{ margin: 'auto' }} />
                         </button>
-                    )
-                        : ''}
-
+                    }
                     <Link href={`/product/${product.slug}`}>
                         <button className={styles.buttonOptions}>
                             <SearchOutlined style={{ margin: 'auto' }} />
@@ -84,16 +85,17 @@ const AllItemsProduct = ({ product, setDeleteFav }) => {
                         className={`${styles.buttonOptions} ${likeOrDislike ? styles.hasLike : ''} `}
                         onClick={() => favButton(product._id)}
                     >
-                        {loading ? <Loading /> : <FavoriteBorderOutlined style={{ margin: 'auto' }} />}
+                        {loading ? <Loading light={true} /> : <FavoriteBorderOutlined style={{ margin: 'auto' }} />}
                     </button>
                 </div>
-                {itemStock !== 0 ? <button onClick={addCartHandler}>ADD TO CART</button> : ''}
+                {itemStock !== 0 && <button onClick={addCartHandler}>ADD TO CART</button>}
                 <button
                     className={`${styles.fav} ${likeOrDislike ? styles.hasLike : ''} `}
                     onClick={() => favButton(product.slug)}
                 >
                     {loading ? <Loading light={true} /> : <FavoriteBorderOutlined style={{ margin: 'auto' }} />}
                 </button>
+                {error && <ErrorMessage />}
             </div>
         </div >
     )

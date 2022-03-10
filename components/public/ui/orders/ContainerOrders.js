@@ -4,6 +4,7 @@ import useFetch from 'use-http'
 import styles from '@/styles/ui/orders/ContainerOrders.module.css'
 import TableOrders from './TableOrders'
 import Pagination from '../Pagination'
+import Loading from '../Loading'
 
 const ContainerOrders = ({ showModal, setDetailOrder }) => {
 
@@ -35,8 +36,6 @@ const ContainerOrders = ({ showModal, setDetailOrder }) => {
                 setDbInfo(order.orders)
                 setPage(order.page)
                 setPages(order.pages)
-                console.log(order)
-                console.log("ADASD")
             }
         } else {
             order = await get(`order/user/all?page=${page}&limit=5`)
@@ -62,7 +61,7 @@ const ContainerOrders = ({ showModal, setDetailOrder }) => {
 
     return (
         <div className={styles.container}>
-            {inAdmin ? (
+            {inAdmin &&
                 <div className={styles.sortContainer}>
                     <span>Sort By</span>
                     <select id="status" onChange={sortOrders}>
@@ -73,7 +72,7 @@ const ContainerOrders = ({ showModal, setDetailOrder }) => {
                         <option value="delivered">Delivered</option>
                     </select>
                 </div>
-            ) : ''}
+            }
 
             <div className={styles.orderHeader}>
                 <span className={styles.title}>Order Date</span>
@@ -83,8 +82,8 @@ const ContainerOrders = ({ showModal, setDetailOrder }) => {
 
             </div>
 
-            {error ?
-                <h2 style={{ textAlign: 'center' }}>Sorry but we couldn't find what you were looking for.</h2>
+            {error && <h2 style={{ textAlign: 'center' }}>Sorry but we couldn't find what you were looking for.</h2>}
+            {loading && !error ? <Loading space={true} />
                 :
                 <TableOrders
                     dbInfo={dbInfo}
@@ -93,8 +92,6 @@ const ContainerOrders = ({ showModal, setDetailOrder }) => {
                     inAdmin={inAdmin}
                     getOrders={getOrders} />
             }
-
-
             <Pagination page={page} pages={pages} handlePageClick={handlePageClick} />
         </div>
     )

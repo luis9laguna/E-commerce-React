@@ -1,0 +1,80 @@
+.containerPrev {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  list-style: none;
+}
+.isDraggingOver {
+  transition: all 0.3s ease-in-out;
+  background-color: var(--light);
+}
+.isDragging {
+  background-color: var(--secondary);
+}
+
+.prevImage {
+  position: relative;
+}
+
+.img {
+  object-fit: contain;
+  width: 100px;
+  height: 100px;
+  margin: 10px;
+}
+
+.prevImage:hover > .containerCheckBox {
+  opacity: 1;
+}
+
+.containerCheckBox {
+  opacity: 0;
+  width: 100%;
+  height: 100% !important;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 3;
+  transition: all 0.5s ease-in-out;
+}
+.containerCheckBox input {
+  position: absolute;
+  top: 5%;
+  left: 5%;
+  cursor: pointer;
+  height: 1.3rem;
+  width: 1.3rem;
+}
+
+.selectedImages {
+  width: 70%;
+  border: 2px solid var(--primary);
+  border-radius: 2rem;
+  padding: 0.5rem 0rem;
+  background-color: var(--secondary);
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  margin-top: 1rem;
+}
+.selectedImages:hover {
+  background-color: var(--primary);
+  color: var(--secondary);
+}
+
+.buttonInput {
+  width: 70%;
+  border-radius: 2rem;
+  border: 2px solid var(--primary);
+  padding: 1rem 1.5rem;
+  background-color: var(--secondary);
+  color: var(--primary);
+  margin: 1rem 0;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.buttonInput:hover {
+  background-color: var(--primary);
+  color: var(--secondary);
+}

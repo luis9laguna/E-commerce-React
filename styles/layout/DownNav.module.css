@@ -51,7 +51,7 @@
 .dropDown {
   position: absolute;
   margin-top: 10px;
-  z-index: 2;
+  z-index: 3;
   pointer-events: none;
   width: 10rem;
 }
@@ -113,7 +113,7 @@
   }
 
   .home {
-    margin-top: 7rem;
+    margin-top: 5rem;
   }
 
   .containerNavDown > div > a::after {
@@ -149,10 +149,4 @@
 }
 
 @media (max-height: 650px) {
-  .dropDown a {
-    padding: 8px 0;
-  }
-  .home {
-    margin-top: 4rem;
-  }
 }

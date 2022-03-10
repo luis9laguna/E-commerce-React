@@ -2,6 +2,8 @@ import Swal from 'sweetalert2';
 import useFetch from 'use-http'
 import useInput from 'hooks/useInput';
 import styles from '@/styles/ui/Form.module.css';
+import Loading from './ui/Loading';
+import ErrorMessage from './ui/ErrorMessage';
 
 const StatusOrderForm = ({ showModal, setDetailOrder }) => {
 
@@ -61,7 +63,10 @@ const StatusOrderForm = ({ showModal, setDetailOrder }) => {
                     onBlur={codeBlurHandler}
                 />
                 {codeInputHasError && <p className={styles.invalidText}>Code has to be of at least 36 characters</p>}
-                <button disabled={!formIsValid}>Look Status</button>
+                <button disabled={!formIsValid}>
+                    {loading ? <Loading light={true} /> : 'Look Status'}
+                </button>
+                {error && <ErrorMessage />}
             </form>
         </div>
     )

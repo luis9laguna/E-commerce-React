@@ -48,8 +48,6 @@ const CheckContainer = ({ children, userHasAddress }) => {
                         ))}
                     </div>
                     <hr />
-
-
                     <div>
                         <span>Estimated Shipping</span>
                         <b>$ 15</b>

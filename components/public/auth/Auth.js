@@ -40,8 +40,8 @@ const Auth = () => {
                 <div>
                     <h2>Sign in or create an account</h2>
                     <div className={styles.buttonContainer}>
-                        <button id='login' className={(register ? '' : styles.current)} onClick={getLoginForm}>Sign In</button>
-                        <button id='register' className={(register ? styles.current : '')} onClick={getRegisterForm}>Create Account</button>
+                        <button id='login' className={register ? '' : styles.current} onClick={getLoginForm}>Sign In</button>
+                        <button id='register' className={register ? styles.current : ''} onClick={getRegisterForm}>Create Account</button>
                     </div>
                     {register ? <RegisterForm /> : <LoginForm showModal={handlerShowForgetPassword} />}
                 </div>
@@ -64,7 +64,6 @@ const Auth = () => {
                     </div>
                 </div>
             </div>
-
             {showForgetPassword && <ForgetForm onClose={handlerShowForgetPassword} />}
         </>
     )

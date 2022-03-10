@@ -11,6 +11,7 @@ const ProductItem = ({ product }) => {
         e.preventDefault()
         const quantity = parseInt(e.target.amount.value)
         addItem({
+            id: product._id,
             slug: product.slug,
             quantity,
             name: product.name,
@@ -18,7 +19,6 @@ const ProductItem = ({ product }) => {
             price: product.price
         })
     }
-
 
     return (
         <div className={styles.productContainer}>

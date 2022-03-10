@@ -11,15 +11,13 @@ const Login = () => {
   const { isLoggedIn } = useAuth()
   const router = useRouter()
 
-  useEffect(() => {
-    if (isLoggedIn) router.replace('/')
-  }, []);
+  useEffect(() => { if (isLoggedIn) router.replace('/') }, []);
 
-  if (isLoggedIn) return (<div></div>)
+  if (isLoggedIn) return <div></div>
   return (
     <Layout>
       <Meta title='Auth' description='Sign in or create an account' />
-      <Auth></Auth>
+      <Auth />
     </Layout>
   )
 }

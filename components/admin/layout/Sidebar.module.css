@@ -115,10 +115,6 @@
   cursor: pointer;
 }
 
-.sidebar.open li div {
-  width: 180px;
-}
-
 .sidebar li div:hover,
 .active {
   background-color: var(--secondary) !important;

@@ -1,6 +1,8 @@
 import styles from '@/styles/ui/Form.module.css';
 import useInput from 'hooks/useInput';
 import Swal from 'sweetalert2';
+import ErrorMessage from '../../ui/ErrorMessage';
+import Loading from '../../ui/Loading';
 import Modal from '../../ui/Modal';
 
 const ForgetForm = ({ onClose }) => {
@@ -51,7 +53,7 @@ const ForgetForm = ({ onClose }) => {
                 text: response.data.message
             })
         }
-        // onClose()
+        onClose()
         //RESET VALUES
         resetEmailInput()
     }
@@ -71,7 +73,10 @@ const ForgetForm = ({ onClose }) => {
                 />
                 {emailInputHasError && <p className={styles.invalidText}>It must be a valid email.</p>}
 
-                <button disabled={!formIsValid}>SEND</button>
+                <button disabled={!formIsValid}>
+                    {loading ? <Loading light={true} /> : 'SEND'}
+                </button>
+                {error && <ErrorMessage />}
             </form>
         </Modal>
     )

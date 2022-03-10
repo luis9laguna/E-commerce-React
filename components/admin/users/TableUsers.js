@@ -2,6 +2,8 @@ import useFetch from 'use-http'
 import Swal from 'sweetalert2';
 import styles from '@/styles/ui/Tables.module.css'
 import { EditOutlined, RemoveCircleOutlined } from '@material-ui/icons';
+import Loading from '@/components/public/ui/Loading';
+import ErrorMessage from '@/components/public/ui/ErrorMessage';
 
 const TableUsers = (props) => {
 
@@ -67,32 +69,34 @@ const TableUsers = (props) => {
 
     return (
         <div className={styles.tableContainer}>
-            <table className={styles.table}>
-                <thead>
-                    <tr className={styles.tr}>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>createdAt</th>
-                        {inAdmin ? <th>options</th> : ''}
-                    </tr>
-                </thead>
-                <tbody>
-                    {users.map((user, i) => (
-                        <tr key={i}>
-                            <td>{user.name}</td>
-                            <td>{user.email}</td>
-                            <td>{getDate(user.createdAt)}</td>
-                            {inAdmin ?
-                                <td className={styles.options}>
-                                    <button onClick={() => editAdmin(user)}> <EditOutlined /></button>
-                                    <button onClick={() => deleteAdmin(user._id)}><RemoveCircleOutlined /> </button>
-                                </td>
-                                : ''
-                            }
+            {error && <ErrorMessage />}
+            {loading ? <Loading space={true} /> :
+                <table className={styles.table}>
+                    <thead>
+                        <tr className={styles.tr}>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>createdAt</th>
+                            {inAdmin && <th>options</th>}
                         </tr>
-                    ))}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {users.map((user, i) => (
+                            <tr key={i}>
+                                <td>{user.name}</td>
+                                <td>{user.email}</td>
+                                <td>{getDate(user.createdAt)}</td>
+                                {inAdmin &&
+                                    <td className={styles.options}>
+                                        <button onClick={() => editAdmin(user)}> <EditOutlined /></button>
+                                        <button onClick={() => deleteAdmin(user._id)}><RemoveCircleOutlined /> </button>
+                                    </td>
+                                }
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            }
         </div>
     )
 }

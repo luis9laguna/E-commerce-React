@@ -1,3 +1,5 @@
+import ErrorMessage from '@/components/public/ui/ErrorMessage';
+import Loading from '@/components/public/ui/Loading';
 import { useEffect, useState } from 'react'
 import useFetch from 'use-http'
 import styles from './BottomDashboard.module.css'
@@ -23,29 +25,33 @@ const BottomDashboard = () => {
             </div>
             <div className={styles.containerProducts}>
                 <h2>Top 5 products more liked</h2>
-                <table className={styles.table}>
-                    <thead>
-                        <tr className={styles.tr}>
-                            <th>Name</th>
-                            <th>Stock</th>
-                            <th>Likes</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {products.map((item, i) => (
-                            <tr key={i}>
-                                <td className={styles.tableProduct}>
-                                    <img src={item.image} />
-                                    <span>{item.name}</span>
-                                </td>
-                                <td>{item.stock}</td>
-                                <td>{item.likes.length}</td>
-                                <td>{item.status.toString()}</td>
+                {error && <ErrorMessage />}
+                {loading && !error ? <Loading space={true} />
+                    :
+                    <table className={styles.table}>
+                        <thead>
+                            <tr className={styles.tr}>
+                                <th>Name</th>
+                                <th>Stock</th>
+                                <th>Likes</th>
+                                <th>Status</th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {products.map((item, i) => (
+                                <tr key={i}>
+                                    <td className={styles.tableProduct}>
+                                        <img src={item.image} />
+                                        <span>{item.name}</span>
+                                    </td>
+                                    <td>{item.stock}</td>
+                                    <td>{item.likes?.length}</td>
+                                    <td>{item.status.toString()}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                }
             </div>
         </div>
     )

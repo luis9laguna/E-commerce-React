@@ -1,21 +1,28 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import useFetch from 'use-http'
 import Swal from 'sweetalert2'
 import useInput from 'hooks/useInput'
+import React from 'react'
 import styles from '@/styles/ui/Form.module.css'
+import Upload from '@/components/public/ui/upload'
+import Loading from '@/components/public/ui/Loading'
+import ErrorMessage from '@/components/public/ui/ErrorMessage'
 
 export default function FormCategory({ inventoryUpdate, setInForm, getCategories }) {
 
+    //IMAGES STATE
+    const [images, setImages] = useState([])
 
     //USEFETCH
     const options = { cachePolicy: 'no-cache', headers: { 'Authorization': localStorage.getItem('token') } }
-    const { post, put, response, loading, error } = useFetch(`${process.env.url}/category`, options)
+    const { post, put, response, loading, error } = useFetch(`${process.env.url}`, options)
 
     //FILL FORM EDIT
     useEffect(() => {
         if (inventoryUpdate !== null) {
-            const { name } = inventoryUpdate
+            const { name, image } = inventoryUpdate
             nameFillEdit(name)
+            setImages(prev => [...prev, image])
         }
     }, [inventoryUpdate]);
 
@@ -33,7 +40,15 @@ export default function FormCategory({ inventoryUpdate, setInForm, getCategories
 
     //FORMVALID?
     let formIsValid = false;
-    if (enteredNameIsValid) formIsValid = true;
+    if (enteredNameIsValid && images.length > 0) formIsValid = true;
+
+    const dataImages = () => {
+        let arrayImages = []
+        Array.from(images).map(image => (
+            arrayImages.push(image.data)
+        ))
+        return arrayImages
+    }
 
 
     //FORMHANDLER
@@ -43,19 +58,18 @@ export default function FormCategory({ inventoryUpdate, setInForm, getCategories
         //CHECK
         if (!formIsValid) return;
 
-        //VALUES
-        const name = enteredName
 
-        //SEND
-        if (inventoryUpdate === null) {
-            await post({ name })
-        } else {
-            await put(
-                inventoryUpdate._id,
-                { name }
-            )
+        //VALUES
+        const form = {
+            images,
+            name: enteredName
         }
 
+        //SEND
+        if (inventoryUpdate === null) await post('/category', form)
+        else await put(`/category/${inventoryUpdate._id}`, form)
+
+        //MODAL
         if (response.ok) {
             Swal.fire(
                 'Good job!',
@@ -75,7 +89,9 @@ export default function FormCategory({ inventoryUpdate, setInForm, getCategories
 
         //RESET VALUES
         resetNameInput()
+        setImages([])
     }
+
 
     return (
         <>
@@ -85,12 +101,17 @@ export default function FormCategory({ inventoryUpdate, setInForm, getCategories
                     placeholder="Name*"
                     type="text"
                     id="name"
+                    name="name"
                     value={enteredName}
                     onChange={nameChangedHandler}
                     onBlur={nameBlurHandler}
                 />
                 {nameInputHasError && <p className={styles.invalidText}>Name need to has at least 3 characters</p>}
-                <button disabled={!formIsValid}>{inventoryUpdate === null ? 'CREATE' : 'EDIT'}</button>
+                <Upload images={images} setImages={setImages} limit={1} />
+                <button disabled={!formIsValid}>
+                    {loading ? <Loading light={true} /> : (inventoryUpdate === null ? 'CREATE' : 'EDIT')}
+                </button>
+                {error && <ErrorMessage />}
             </form>
         </>
     )

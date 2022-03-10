@@ -7,6 +7,7 @@ import ProductContainer from "@/components/public/ui/ProductContainer";
 import Meta from "@/components/public/ui/Meta";
 import { useAuth } from "context/auth/authContext";
 import Loading from "@/components/public/ui/Loading";
+import ErrorMessage from "@/components/public/ui/ErrorMessage";
 
 const WishList = () => {
 
@@ -46,22 +47,30 @@ const WishList = () => {
   return (
     <Layout>
       <Meta title='WishList' />
-      {loading ? <Loading /> : ''}
-      {!isLoggedIn ?
-        <h2 style={{ textAlign: 'center', margin: '5rem 0' }}>
-          To get access to your saved products you must access to your
-          <Link href='/login#login'><span style={{ color: 'red', cursor: 'pointer' }}> account!</span></Link>
-        </h2>
-        :
+      {error && <ErrorMessage />}
+      {loading ? <Loading space={true} /> :
         <>
-          {data.length !== 0 ?
-            <ProductContainer setDeleteFav={setDeleteFav} data={data} title={'Your WishList'} url={url} />
-            : (
-              <h2 style={{ textAlign: 'center', margin: '5rem 0' }}>
-                You don't have any product added to yout wishlist, go and check some
-                <Link href='/product/all'><span style={{ color: 'red', cursor: 'pointer' }}> products!</span></Link>
-              </h2>
-            )}
+          {!isLoggedIn ?
+            <h2 style={{ textAlign: 'center', margin: '5rem 0' }}>
+              To get access to your saved products you must access to your
+              <Link href='/login#login'><span style={{ color: 'red', cursor: 'pointer' }}> account!</span></Link>
+            </h2>
+            :
+            <>
+              {data.length !== 0 ?
+                <ProductContainer setDeleteFav={setDeleteFav} data={data} title={'Your WishList'} url={url} />
+                :
+                <>
+                  {error ? ErrorMessage :
+                    <h2 style={{ textAlign: 'center', margin: '5rem 0' }}>
+                      You don't have any product added to yout wishlist, go and check some
+                      <Link href='/product/all'><span style={{ color: 'red', cursor: 'pointer' }}> products!</span></Link>
+                    </h2>
+                  }
+                </>
+              }
+            </>
+          }
         </>
       }
     </Layout>

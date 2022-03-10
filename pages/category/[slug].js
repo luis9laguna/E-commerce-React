@@ -22,6 +22,7 @@ export async function getServerSideProps({ params, query }) {
 
     const resp = await fetch(`${process.env.url}/category/${slug}?page=${page}&limit=15&sort=${sort}`)
     const data = await resp.json()
+    console.log(data)
     if (!data.ok) return { notFound: true }
     return {
         props: {

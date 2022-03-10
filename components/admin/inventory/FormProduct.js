@@ -1,15 +1,20 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import useFetch from 'use-http'
 import Swal from 'sweetalert2'
 import useInput from 'hooks/useInput'
 import styles from '@/styles/ui/Form.module.css'
+import Upload from '@/components/public/ui/upload'
+import Loading from '@/components/public/ui/Loading'
+import ErrorMessage from '@/components/public/ui/ErrorMessage'
 
 export default function FormProduct({ inventoryUpdate, selectCategories, getProducts, setInForm }) {
 
+    //IMAGES STATE
+    const [images, setImages] = useState([])
 
     //USEFETCH
     const options = { cachePolicy: 'no-cache', headers: { 'Authorization': localStorage.getItem('token') } }
-    const { post, put, response, loading, error } = useFetch(`${process.env.url}/product`, options)
+    const { post, put, response, loading, error } = useFetch(`${process.env.url}`, options)
 
     //FILL FORM EDIT
     useEffect(() => {
@@ -113,34 +118,21 @@ export default function FormProduct({ inventoryUpdate, selectCategories, getProd
         if (!formIsValid) return;
 
         //VALUES
-        const name = enteredName
-        const category = e.target.category.value
-        const description = enteredDescription
-        const price = enteredPrice
-        const cost = enteredCost
-        const stock = enteredStock
-
-        //SEND
-        if (inventoryUpdate === null) {
-            await post({
-                name,
-                description,
-                category,
-                price,
-                cost,
-                stock
-            })
-        } else {
-            await put(inventoryUpdate._id, {
-                name,
-                description,
-                category,
-                price,
-                cost,
-                stock
-            })
+        const form = {
+            name: enteredName,
+            images,
+            category: e.target.category.value,
+            description: enteredDescription,
+            price: enteredPrice,
+            cost: enteredCost,
+            stock: enteredCost
         }
 
+        //SEND
+        if (inventoryUpdate === null) await post('/product', form)
+        else await put(`/product/${inventoryUpdate._id}`, form)
+
+        //MODAL
         if (response.ok) {
             Swal.fire(
                 'Good job!',
@@ -164,12 +156,13 @@ export default function FormProduct({ inventoryUpdate, selectCategories, getProd
         resetPriceInput()
         resetCostInput()
         resetStockInput()
+        setImages([])
     }
 
     return (
         <>
             <h1 className={styles.title}>{inventoryUpdate === null ? 'CREATE' : 'EDIT'}</h1>
-            <form className={styles.form} onSubmit={formSubmissionHandler} style={{ minWidth: '280px' }}>
+            <form className={styles.form} onSubmit={formSubmissionHandler} style={{ minWidth: '280px', width: '50%' }}>
                 <input
                     placeholder="Name*"
                     type="text"
@@ -179,6 +172,9 @@ export default function FormProduct({ inventoryUpdate, selectCategories, getProd
                     onBlur={nameBlurHandler}
                 />
                 {nameInputHasError && <p className={styles.invalidText}>Name need to has at least 3 characters</p>}
+
+                <Upload images={images} setImages={setImages} limit={5} />
+
                 <select id="category" value={enteredCategory} onChange={categoryChangedHandler} onBlur={categoryBlurHandler}>
                     <option selected="true" disabled="disabled" value=""> Select Category</option>
                     {selectCategories.map((category, i) => (
@@ -186,7 +182,7 @@ export default function FormProduct({ inventoryUpdate, selectCategories, getProd
                     ))}
                 </select>
                 {categoryInputHasError && <p className={styles.invalidText}>You need to choose a category</p>}
-                <input
+                <textarea
                     placeholder="Description*"
                     type="text"
                     id="description"
@@ -223,7 +219,10 @@ export default function FormProduct({ inventoryUpdate, selectCategories, getProd
                 />
                 {stockInputHasError && <p className={styles.invalidText}>Stock must be higher than 0</p>}
 
-                <button disabled={!formIsValid}>{inventoryUpdate === null ? 'CREATE' : 'EDIT'}</button>
+                <button disabled={!formIsValid}>
+                    {loading ? <Loading light={true} /> : (inventoryUpdate === null ? 'CREATE' : 'EDIT')}
+                </button>
+                {error && <ErrorMessage />}
             </form>
         </>
     )
