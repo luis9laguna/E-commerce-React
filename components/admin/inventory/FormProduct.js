@@ -19,13 +19,14 @@ export default function FormProduct({ inventoryUpdate, selectCategories, getProd
     //FILL FORM EDIT
     useEffect(() => {
         if (inventoryUpdate !== null) {
-            const { name, category, description, price, cost, stock } = inventoryUpdate
+            const { name, images, category, description, price, cost, stock } = inventoryUpdate
             nameFillEdit(name)
             categoryFillEdit(category._id)
             descriptionFillEdit(description)
             priceFillEdit(price)
             costFillEdit(cost)
             stockFillEdit(stock)
+            setImages(images)
         }
     }, [inventoryUpdate]);
 
@@ -83,7 +84,8 @@ export default function FormProduct({ inventoryUpdate, selectCategories, getProd
         inputBlurHandler: costBlurHandler,
         fillEdit: costFillEdit,
         reset: resetCostInput
-    } = useInput(value => value < enteredPrice);
+    } = useInput(value => value < parseInt(enteredPrice));
+
 
 
     //STOCK
@@ -176,7 +178,7 @@ export default function FormProduct({ inventoryUpdate, selectCategories, getProd
                 <Upload images={images} setImages={setImages} limit={5} />
 
                 <select id="category" value={enteredCategory} onChange={categoryChangedHandler} onBlur={categoryBlurHandler}>
-                    <option selected="true" disabled="disabled" value=""> Select Category</option>
+                    <option disabled="disabled" value=""> Select Category</option>
                     {selectCategories.map((category, i) => (
                         <option key={i} value={category._id}>{category.name}</option>
                     ))}

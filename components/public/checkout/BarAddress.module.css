@@ -1,0 +1,30 @@
+.barAddress {
+  display: flex;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  margin: 2rem;
+  border-radius: 1.5rem;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+}
+
+.barAddress div {
+  font-weight: bold;
+}
+
+.barAddress > button {
+  width: 200px;
+  border-radius: 2rem;
+  border-color: var(--primary);
+  padding: 1rem 1.5rem;
+  background-color: var(--primary);
+  color: var(--secondary);
+  margin: 1rem 0;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.barAddress > button:hover {
+  background-color: var(--secondary);
+  color: var(--primary);
+}

@@ -1,6 +1,6 @@
 import Layout from "@/components/public/layout/Layout";
 import Meta from "@/components/public/ui/Meta";
-import ProductContainer from "@/components/public/ui/ProductContainer";
+import ProductContainer from "@/components/public/ui/products/ProductContainer";
 
 const AllProducts = ({ data }) => {
 

@@ -3,7 +3,6 @@ import styles from "@/styles/ui/orders/DetailOrder.module.css"
 
 const DetailOrder = ({ hideModal, detailOrder }) => {
 
-
     //DATE
     const date = new Date(detailOrder.updated)
     const formattedDate = new Intl.DateTimeFormat("en-GB", {
@@ -11,6 +10,8 @@ const DetailOrder = ({ hideModal, detailOrder }) => {
         month: "long",
         day: "2-digit"
     }).format(date)
+
+    console.log(detailOrder)
 
 
     const address = detailOrder.address

@@ -1,9 +1,9 @@
 import { useState } from "react";
 import Layout from "@/components/public/layout/Layout";
-import AddressesInfo from "@/components/public/user/userOptions/addresses/AddressesInfo";
+import AddressesInfo from "@/components/public/ui/addresses/AddressesInfo";
 import UserLayout from "@/components/public/user/UserLayout"
 import Meta from "@/components/public/ui/Meta";
-import FormAddress from "@/components/public/user/userOptions/addresses/FormAddress";
+import ModalForm from "@/components/public/ui/addresses/ModalForm";
 
 const Addresses = () => {
 
@@ -26,7 +26,7 @@ const Addresses = () => {
         />
       </UserLayout>
 
-      {modalFormAddress && <FormAddress
+      {modalFormAddress && <ModalForm
         hideModal={handlerShowFormAddress}
         addressUpdate={addressUpdate}
         setAddressUpdate={setAddressUpdate}

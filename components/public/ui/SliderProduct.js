@@ -1,22 +1,11 @@
-import { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper';
 import 'swiper/css';
 import 'swiper/css/bundle';
-import AllItemsProduct from '@/components/public/ui/AllItemsProduct'
+import AllItemsProduct from '@/components/public/ui/products/AllItemsProduct'
 import { Favorite, NewReleases } from "@material-ui/icons";
-import useWindowDimensions from "hooks/useWindowDimensions";
 
 const SliderProduct = ({ products, description, icon }) => {
-
-    //WIDTH OF SCREEN
-    const { width } = useWindowDimensions();
-    let slides = 5.3
-
-    if (width < 1890 && width > 1520) slides = 4.3
-    else if (width < 1521 && width > 970) slides = 3.3
-    else if (width < 971 && width > 670) slides = 2.3
-    else if (width < 671) slides = 1.3
 
     const information = {
         alignItems: 'center',
@@ -38,11 +27,29 @@ const SliderProduct = ({ products, description, icon }) => {
                 {svgIcon}{description}{svgIcon}
             </span>
             <Swiper
+                slidesPerView={1.3}
+                spaceBetween={10}
                 modules={[Navigation]}
-                slidesPerView={slides}
                 navigation
                 loop={true}
-                spaceBetween={30}
+                breakpoints={{
+                    750: {
+                        slidesPerView: 2,
+                        spaceBetween: 10,
+                    },
+                    900: {
+                        slidesPerView: 2.3,
+                        spaceBetween: 30,
+                    },
+                    1200: {
+                        slidesPerView: 3.3,
+                        spaceBetween: 40,
+                    },
+                    1550: {
+                        slidesPerView: 4.3,
+                        spaceBetween: 50,
+                    }
+                }}
             >
                 {products.map((product) => (
                     <SwiperSlide key={product._id}>

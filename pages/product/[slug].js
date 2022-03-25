@@ -10,9 +10,8 @@ import ErrorMessage from "@/components/public/ui/ErrorMessage";
 const Product = ({ product }) => {
 
     const [relatedProducts, setRelatedProducts] = useState([])
-    const { get, response, loading, error } = useFetch(`${process.env.url}`)
-
-    console.log(product)
+    const options = { cachePolicy: 'no-cache' }
+    const { get, response, loading, error } = useFetch(`${process.env.url}`, options)
 
     useEffect(async () => {
         const result = await get(`/category/${product.category.slug}`)

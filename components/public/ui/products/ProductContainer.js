@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import AllItemsProduct from "@/components/public/ui/AllItemsProduct";
+import AllItemsProduct from "@/components/public/ui/products/AllItemsProduct";
 import styles from "@/styles/ui/ProductContainer.module.css";
-import Pagination from "./Pagination";
+import Pagination from "../Pagination";
 
 const ProductContainer = ({ data, title, setDeleteFav, url }) => {
 

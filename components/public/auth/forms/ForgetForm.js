@@ -1,4 +1,6 @@
 import styles from '@/styles/ui/Form.module.css';
+import { useRouter } from 'next/router'
+import useFetch from 'use-http'
 import useInput from 'hooks/useInput';
 import Swal from 'sweetalert2';
 import ErrorMessage from '../../ui/ErrorMessage';
@@ -6,6 +8,8 @@ import Loading from '../../ui/Loading';
 import Modal from '../../ui/Modal';
 
 const ForgetForm = ({ onClose }) => {
+
+    const router = useRouter()
 
     //REGEX
     const regexEmail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
@@ -36,15 +40,16 @@ const ForgetForm = ({ onClose }) => {
         //CHECK
         if (!formIsValid) return;
         const email = e.target.email.value
+        console.log(email)
 
-        await post(`/auth/password-reset`, email)
+        await post(`/auth/password-reset`, { email })
         if (response.ok) {
             //MODAL
             Swal.fire(
                 'Good job!', 'Check your email to continue with the process of recovering your account', 'success'
             )
             //REDIRECT
-            router.push('/')
+            // router.push('/')
 
         } else {
             Swal.fire({

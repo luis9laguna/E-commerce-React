@@ -32,7 +32,7 @@ const TableUsers = (props) => {
         //MODAL CONFIRMATION
         Swal.fire({
             title: 'Are you sure?',
-            text: "Once deleted, you will not be able to recover this Address!",
+            text: "Once deleted, you will not be able to recover this user!",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -41,7 +41,7 @@ const TableUsers = (props) => {
 
         }).then(async (result) => {
             if (result.isConfirmed) {
-                const deleted = await del(`/admin/${id}`)
+                await del(`/admin/${id}`)
                 if (response.ok) {
                     Swal.fire(
                         'Deleted!',

@@ -6,8 +6,8 @@ import { useAuth } from "context/auth/authContext";
 import { useCart } from "context/cart/cartContext";
 import { FavoriteBorderOutlined, SearchOutlined, ShoppingBasketOutlined } from "@material-ui/icons";
 import styles from '@/styles/ui/AllItemsProduct.module.css'
-import Loading from "./Loading";
-import ErrorMessage from "./ErrorMessage";
+import Loading from "../Loading";
+import ErrorMessage from "../ErrorMessage";
 
 const AllItemsProduct = ({ product, setDeleteFav }) => {
 
@@ -53,18 +53,22 @@ const AllItemsProduct = ({ product, setDeleteFav }) => {
             slug: product.slug,
             quantity: 1,
             name: product.name,
-            image: product.image,
+            image: product.images[0],
             price: product.price
         })
         setItemStock(prev => prev - 1)
     }
 
-    return (
+    const transform = 'c_scale,w_350'
+    const imageArray = product.images[0].split('/')
+    imageArray.splice(6, 0, transform)
+    const transformImage = imageArray.join('/')
 
+    return (
         <div className={styles.container}>
             {itemStock === 0 && <div className={styles.noStock}>Sold Out</div>}
             <Link href={`/product/${product.slug}`}>
-                <img className={`${styles.image} ${itemStock === 0 ? styles.noStockImg : ''}`} src='https://d2r9epyceweg5n.cloudfront.net/stores/001/064/802/products/dscn5121-011-63ea8aaaee2ca1bbaa16114183468496-640-0.jpeg' />
+                <img className={`${styles.image} ${itemStock === 0 ? styles.noStockImg : ''}`} src={transformImage} />
             </Link>
             <div className={styles.info}>
                 <h1 className={styles.title}>{product.name}</h1>

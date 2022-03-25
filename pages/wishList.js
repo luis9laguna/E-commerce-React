@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import useFetch from 'use-http'
 import Layout from "@/components/public/layout/Layout";
-import ProductContainer from "@/components/public/ui/ProductContainer";
+import ProductContainer from "@/components/public/ui/products/ProductContainer";
 import Meta from "@/components/public/ui/Meta";
 import { useAuth } from "context/auth/authContext";
 import Loading from "@/components/public/ui/Loading";
@@ -44,6 +44,8 @@ const WishList = () => {
     if (deleteFav) setDeleteFav(false)
   }, [page, sort, deleteFav, isLoggedIn])
 
+  console.log(data.length)
+
   return (
     <Layout>
       <Meta title='WishList' />
@@ -57,7 +59,7 @@ const WishList = () => {
             </h2>
             :
             <>
-              {data.length !== 0 ?
+              {data.length !== undefined ?
                 <ProductContainer setDeleteFav={setDeleteFav} data={data} title={'Your WishList'} url={url} />
                 :
                 <>

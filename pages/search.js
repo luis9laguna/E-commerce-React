@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import useFetch from 'use-http'
 import Layout from "@/components/public/layout/Layout";
-import ProductContainer from "@/components/public/ui/ProductContainer";
+import ProductContainer from "@/components/public/ui/products/ProductContainer";
 import Meta from "@/components/public/ui/Meta";
 import Loading from "@/components/public/ui/Loading";
 import ErrorMessage from '@/components/public/ui/ErrorMessage'
@@ -26,7 +26,7 @@ const Search = () => {
     const { get, response, loading, error } = useFetch(`${process.env.url}`, options)
 
     const getSearchProducts = async () => {
-        const products = await get(`/search/product/${search}?page=${page}&limit=15&sort=${sort}`)
+        const products = await get(`/search/${search}?page=${page}&limit=15&sort=${sort}`)
         if (response.ok) setResultProducts(products)
     }
 

@@ -30,8 +30,8 @@ const Upload = ({ images, setImages, limit }) => {
         //APPEND FORM DATA
         const data = new FormData()
         arrayImages.map(image => {
-            if (image.size > 1024000) {
-                setErrorInput("Limit size of an image is 1024")
+            if (image.size > 4024000) {
+                setErrorInput("Limit size of an image is 4mb")
                 errorReturn = true
             }
             data.append('images', image, image.name)

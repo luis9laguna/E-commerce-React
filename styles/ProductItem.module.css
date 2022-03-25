@@ -1,11 +1,7 @@
 .productContainer {
   padding: 3rem;
   display: flex;
-  justify-content: center;
-}
-
-.imgContainer {
-  width: 70%;
+  justify-content: space-evenly;
 }
 
 .image {

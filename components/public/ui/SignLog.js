@@ -6,7 +6,6 @@ const SignLog = () => {
 
     const { isLoggedIn, logOut, userName } = useAuth()
 
-
     return (
         <div className='containerLogSign'>
             {isLoggedIn ?

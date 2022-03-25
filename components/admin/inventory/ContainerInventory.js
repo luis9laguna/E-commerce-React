@@ -12,19 +12,22 @@ import ErrorMessage from '@/components/public/ui/ErrorMessage'
 
 const ContainerInventory = () => {
 
-    //PAGINATION
+    //PAGINATION AND SORT
     const [page, setPage] = useState(1)
     const [pages, setPages] = useState(1)
+    const [sort, setSort] = useState('true');
 
     //DBINVENTORY
     const [dbInventory, setDbInventory] = useState([]);
     const [inventoryUpdate, setInventoryUpdate] = useState(null);
     const [selectCategories, setSelectCategories] = useState([]);
+    const [selectedCategory, setSelectedCategory] = useState('');
+    const [actualGet, setActualGet] = useState('');
     const [search, setSearch] = useState('a');
 
     //USEFETCH
     const options = { cachePolicy: 'no-cache', headers: { 'Authorization': localStorage.getItem('token') } }
-    const { get, response, loading, error } = useFetch(`${process.env.url}`, options)
+    const { get, response, loading, error } = useFetch(`${process.env.url}/dashboard`, options)
 
     //CATEGORIES OR PRODUCTS OR FORM
     const [inCategories, setInCategories] = useState(false);
@@ -44,44 +47,63 @@ const ContainerInventory = () => {
         };
     }, [search]);
 
+    //CHANGE PAGINATION AND SORT
+    useEffect(() => {
+        if (actualGet === 'products') {
+            getProducts(page)
+        } else if (actualGet === 'bycategory') {
+            if (selectedCategory === 'all') getProducts(page)
+            else getProductsCategory(selectedCategory, page)
+        } else if (actualGet === 'search') {
+            getSearchProducts(page)
+        }
+    }, [page, sort])
 
-    const getCategories = async () => {
-        const allCategories = await get('category')
+
+    //GETS
+    const getCategories = async (inside) => {
+        const allCategories = await get('categories')
         if (response.ok) {
-            setDbInventory(allCategories.categories)
-            setInProducts(false)
-            setInCategories(true)
+
+            if (inside) setSelectCategories(allCategories.categories)
+            else {
+                setDbInventory(allCategories.categories)
+                setInProducts(false)
+                setInCategories(true)
+            }
         }
     }
 
     const getProducts = async (page) => {
-        const allProducts = await get(`product?page=${page}`)
+        const allProducts = await get(`products?page=${page}&sort=${sort}`)
         if (response.ok) {
             setDbInventory(allProducts.products)
             setPage(allProducts.page)
             setPages(allProducts.pages)
             setInProducts(true)
             setInCategories(false)
+            setActualGet("products")
 
             //GETTING CATEGORIES FOR THE FORM
-            const allCategories = await get('category')
-            if (response.ok) setSelectCategories(allCategories.categories)
+            getCategories(true)
         }
     }
 
-    const getProductsCategory = async (slug, page) => {
-        const productsByCategory = await get(`/category/${slug}?page=${page}`)
+    const getProductsCategory = async (id, page) => {
+        const productsByCategory = await get(`/productsbycategory/${id}?page=${page}&sort=${sort}`)
         if (response.ok) {
             setDbInventory(productsByCategory.products)
             setPage(productsByCategory.page)
             setPages(productsByCategory.pages)
             setInProducts(true)
             setInCategories(false)
+            setActualGet("bycategory")
+            setSelectedCategory(id)
         }
     }
 
-    const getSearchProducts = async (search, page) => {
-        const searchProducts = await get(`/search/product/${search}?page=${page}`)
+    const getSearchProducts = async (page) => {
+        const searchProducts = await get(`/search/${search}?page=${page}&sort=${sort}`)
 
         if (response.status === 200) {
             setDbInventory(searchProducts?.products)
@@ -89,12 +111,12 @@ const ContainerInventory = () => {
             setPages(searchProducts?.pages)
             setInProducts(true)
             setInCategories(false)
-        } else {
-            setDbInventory([])
-        }
+            setActualGet("search")
+
+        } else setDbInventory([])
     }
 
-
+    //BACK
     const goback = () => {
         setInCategories(false)
         setInProducts(false)
@@ -106,21 +128,21 @@ const ContainerInventory = () => {
         setInForm(!inForm)
     }
 
-    const handlePageClick = e => {
-        const selectedPage = e.selected
-        setPage(selectedPage + 1)
-        getProducts(selectedPage + 1)
-    }
-
+    //HANDLER SELECT CATEGORY
     const selectCategory = e => {
-        const slug = e.target.value
-        if (slug === 'all') {
-            getProducts(1)
-        } else {
-            getProductsCategory(slug, 1)
-        }
+        const id = e.target.value
+        if (id === 'all') getProducts(1)
+        else getProductsCategory(id, 1)
     }
 
+    //HANDLER SELECT SORT
+    const selectSort = e => setSort(e.target.value)
+
+    //HANDLE PAGINATION    
+    const handlePageClick = e => setPage(e.selected + 1)
+
+    console.log(dbInventory)
+    console.log(dbInventory?.length === 0)
 
     return (
         <div className={styles.container}>
@@ -144,13 +166,12 @@ const ContainerInventory = () => {
                                     <select id="category" onChange={selectCategory}>
                                         <option value='all'>All</option>
                                         {selectCategories.map((category, i) => (
-                                            <option key={i} value={category.slug}>{category.name}</option>
+                                            <option key={i} value={category._id}>{category.name}</option>
                                         ))}
                                     </select>
                                 </div><div>
-                                    <span>Status</span>
-                                    <select id="status" onChange={selectCategory}>
-                                        <option value='all'>All</option>
+                                    <span>Order</span>
+                                    <select id="status" onChange={selectSort}>
                                         <option value='true'>True</option>
                                         <option value='false'>False</option>
                                     </select>
@@ -179,7 +200,7 @@ const ContainerInventory = () => {
                         <>
                             {error ? <ErrorMessage message={response.data.message} /> :
                                 <>
-                                    {loading && !error ? <Loading space={true} />
+                                    {loading ? <Loading space={true} />
                                         :
                                         <TableInventory
                                             setInForm={() => setInForm(!inForm)}
@@ -187,9 +208,10 @@ const ContainerInventory = () => {
                                             dbInventory={dbInventory}
                                             setInventoryUpdate={setInventoryUpdate}
                                             inCategories={inCategories}
-                                            inProducts={inProducts} />
+                                            inProducts={inProducts}
+                                            getCategories={getCategories} />
                                     }
-                                    {dbInventory?.length === 0 || dbInventory === undefined && <h2 style={{ textAlign: 'center' }}>Sorry but we couldn't find what you were looking for.</h2>}
+                                    {dbInventory?.length === 0 || dbInventory === undefined ? <h2 style={{ textAlign: 'center' }}>Sorry but we couldn't find what you were looking for.</h2> : ''}
                                 </>
                             }
                         </>
@@ -197,7 +219,7 @@ const ContainerInventory = () => {
                 </>
                 :
                 <div className={styles.containerButtonAU}>
-                    <button onClick={getCategories}> <Category /> Categories</button>
+                    <button onClick={() => getCategories(false)}> <Category /> Categories</button>
                     <button onClick={() => getProducts(1)}> < Filter /> Products</button>
                 </div>
             }

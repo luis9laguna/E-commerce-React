@@ -15,16 +15,21 @@ const ProductItem = ({ product }) => {
             slug: product.slug,
             quantity,
             name: product.name,
-            image: product.image,
+            image: product.images[0],
             price: product.price
         })
     }
+    const transform = 'c_scale,w_900'
+    const imageArray = product.images[0].split('/')
+    imageArray.splice(6, 0, transform)
+    const transformImage = imageArray.join('/')
+
 
     return (
         <div className={styles.productContainer}>
-            <div className={styles.ImgContainer}>
+            <div className={styles.imgContainer}>
                 <Zoom>
-                    <img className={styles.image} src={product.image} />
+                    <img className={styles.image} src={transformImage} />
                 </Zoom>
             </div>
             <div className={styles.infoContainer}>

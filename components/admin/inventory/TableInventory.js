@@ -12,6 +12,7 @@ const TableInventory = (props) => {
     const {
         setInForm,
         dbInventory,
+        getCategories,
         getProducts,
         inProducts,
         setInventoryUpdate
@@ -19,7 +20,7 @@ const TableInventory = (props) => {
 
     //USEFETCH
     const options = { cachePolicy: 'no-cache', headers: { 'Authorization': localStorage.getItem('token') } }
-    const { put, response, loading, error } = useFetch(`${process.env.url}`, options)
+    const { del, put, response, loading, error } = useFetch(`${process.env.url}`, options)
 
     //USESTATES
     const [showStock, setShowStock] = useState(false);
@@ -28,13 +29,45 @@ const TableInventory = (props) => {
     //SHOW OR HIDE MODAL ABOUT US
     const handlerShowStock = () => setShowStock(!showStock);
 
-    const editSelect = user => {
-        setInventoryUpdate(user)
+    const editSelect = item => {
+        setInventoryUpdate(item)
         setInForm()
     }
 
     const deleteSelect = id => {
-        console.log(id)
+        let route = "category"
+        if (inProducts) route = "product"
+        //MODAL CONFIRMATION
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "Once deleted, you will not be able to recover this item!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                await del(`/${route}/${id}`)
+                if (response.ok) {
+                    Swal.fire(
+                        'Deleted!',
+                        response.data.message,
+                        'success'
+                    )
+                    //FETCH NEW DATA
+                    if (inProducts) getProducts(1)
+                    else getCategories()
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: response.data.message
+                    })
+                }
+            }
+        })
     }
 
     //STOCK
@@ -64,7 +97,6 @@ const TableInventory = (props) => {
         const stock = e.target.stock.value
         updateStock(stock)
     }
-    console.log(dbInventory)
 
     return (
 
@@ -89,13 +121,20 @@ const TableInventory = (props) => {
                 <tbody>
                     {dbInventory?.map((item, i) => (
                         <tr key={i}>
-                            <td className={styles.tableProduct}>
-                                {inProducts ? '' : <img src={item.image} />}
-                                <span>{item.name}</span>
+                            <td>
+                                <div className={styles.tableProduct}>
+                                    <img src={inProducts ? item.images[0] : item.image} />
+                                    <span>{item.name}</span>
+                                </div>
                             </td>
                             {inProducts &&
                                 <>
-                                    <td>{item.category[0].name}</td>
+                                    <td>
+                                        <div className={styles.tableCategory}>
+                                            <span>{item.category.name}</span>
+                                            <span className={styles.status}>{item.category.status.toString()}</span>
+                                        </div>
+                                    </td>
                                     <td>{item.price}</td>
                                     <td>{item.cost}</td>
                                     <td>{item.stock}</td>

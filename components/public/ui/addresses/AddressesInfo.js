@@ -6,7 +6,7 @@ import Swal from 'sweetalert2';
 import Loading from '@/components/public/ui/Loading';
 import ErrorMessage from '@/components/public/ui/ErrorMessage';
 
-const AddressesInfo = ({ showModal, setAddressUpdate, reFetchAddress, setReFetchAddress }) => {
+const AddressesInfo = ({ showModal, setAddressUpdate, reFetchAddress, setReFetchAddress, setAddressId, getUser }) => {
 
     const [addresses, setAddresses] = useState([])
     const [userAddress, setUserAddress] = useState('')
@@ -15,12 +15,16 @@ const AddressesInfo = ({ showModal, setAddressUpdate, reFetchAddress, setReFetch
     const options = { cachePolicy: 'no-cache', headers: { 'Authorization': localStorage.getItem('token') } }
     const { get, del, put, response, loading, error } = useFetch(`${process.env.url}`, options)
 
+    const getUserAddress = async () => {
+        const userResp = await get(`/user`)
+        if (response.ok) setUserAddress(userResp.user.address)
+    }
 
     const getAllAddresses = async () => {
         const allAddresses = await get(`/address`)
         if (response.ok) {
             setAddresses(allAddresses.addresses)
-            setUserAddress(allAddresses.addresses[0].user.address)
+            getUserAddress()
         }
     }
 
@@ -64,6 +68,9 @@ const AddressesInfo = ({ showModal, setAddressUpdate, reFetchAddress, setReFetch
                     )
                     //DELETE ADDRESS FROM THE VIEW
                     setReFetchAddress(true)
+
+                    //ACTION IF USER ISNT LOGGED
+                    if (getUser) getUser()
                 } else {
                     Swal.fire({
                         icon: 'error',
@@ -88,8 +95,11 @@ const AddressesInfo = ({ showModal, setAddressUpdate, reFetchAddress, setReFetch
             Swal.fire(
                 'Good job!', 'Your default address has been updated', 'success'
             )
-            //DELETE ADDRESS FROM THE VIEW
+            //SHOW DEFAULT ADDRESS ON THE VIEW
             setReFetchAddress(true)
+
+            //ACTION IF USER ISNT LOGGED
+            if (setAddressId) setAddressId(id)
         } else {
             Swal.fire({
                 icon: 'error',
@@ -98,9 +108,6 @@ const AddressesInfo = ({ showModal, setAddressUpdate, reFetchAddress, setReFetch
             })
         }
     }
-
-
-
 
     return (
         <div className={styles.container}>

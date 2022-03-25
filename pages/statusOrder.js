@@ -2,6 +2,7 @@ import { useState } from "react";
 import Layout from "@/components/public/layout/Layout";
 import StatusOrderForm from "@/components/public/StatusOrderForm";
 import DetailOrder from "@/components/public/ui/orders/DetailOrder";
+import Meta from "@/components/public/ui/Meta";
 
 const statusPackage = () => {
 

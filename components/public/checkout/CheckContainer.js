@@ -1,16 +1,81 @@
-import styles from '@/styles/CheckContainer.module.css'
+import { useState, useEffect } from 'react'
+import { useRouter } from "next/router";
+import Cookies from 'js-cookie'
+import useFetch from 'use-http'
+import Swal from 'sweetalert2'
 import { useAuth } from 'context/auth/authContext'
 import { useCart } from 'context/cart/cartContext'
+import BarAddress from './BarAddress'
+import AddressesInfo from '../ui/addresses/AddressesInfo'
+import FormAddress from '../ui/addresses/FormAddress'
+import ErrorMessage from '../ui/ErrorMessage'
+import Loading from '../ui/Loading'
+import ModalForm from '../ui/addresses/ModalForm'
+import styles from '@/styles/CheckContainer.module.css'
 
 
-const CheckContainer = ({ children, userHasAddress }) => {
+const CheckContainer = () => {
 
     const { items } = useCart()
     const { isLoggedIn } = useAuth()
 
+    const router = useRouter()
 
-    const goToPay = () => {
-        console.log('paying...')
+    //MODAL FORM
+    const [modalFormAddress, setModalFormAddress] = useState(false);
+    const [addressUpdate, setAddressUpdate] = useState('');
+    const [reFetchAddress, setReFetchAddress] = useState(false)
+
+    //HANDLER OF MODAL FORM ADDRESS
+    const handlerShowFormAddress = () => setModalFormAddress(!modalFormAddress);
+
+    //USEFETCH
+    const storage = typeof localStorage !== 'undefined';
+    let token
+    if (storage) token = localStorage.getItem('token')
+    const options = { cachePolicy: 'no-cache', headers: { 'Authorization': token } }
+    const { get, post, response, loading, error } = useFetch(`${process.env.url}`, options)
+
+    //MODAL ADDRESS
+    const [actionAddress, setActionAddress] = useState(false);
+    const [addressUser, setAddressUser] = useState('');
+    const [addressId, setAddressId] = useState('');
+
+    useEffect(() => { if (addressId) getAddress() }, [addressId])
+
+    useEffect(() => {
+        const cookiesAddress = Cookies.get('awl')
+        if (cookiesAddress && !isLoggedIn) setAddressId(cookiesAddress)
+        else if (isLoggedIn) getUser()
+    }, [isLoggedIn])
+
+    const getAddress = async () => {
+        const addressResp = await get(`address/${addressId}`)
+        if (response.ok) setAddressUser(addressResp.address)
+    }
+
+    const getUser = async () => {
+        const userResp = await get(`/user`)
+        if (response.ok) setAddressId(userResp.user.address)
+        if (userResp.address === undefined) setAddressUser('')
+    }
+
+    const goToPay = async () => {
+        let orderItems = new Array
+        for (const item of items) {
+            const orderItem = { product: item.id, quantity: item.quantity }
+            orderItems.push(orderItem)
+        }
+        const order = { orderItems, address: addressId }
+
+        await post('order', order)
+        if (response.ok) {
+            Swal.fire(
+                'Good job!',
+                'Your order has been created',
+                'success'
+            )
+        }
     }
 
     const total = () => {
@@ -22,43 +87,72 @@ const CheckContainer = ({ children, userHasAddress }) => {
 
     return (
         <div className={styles.container}>
-
-            {isLoggedIn ?
-                <h1>Please select an address</h1> :
-                <h1>Please create an address</h1>
-            }
-            <div>
-                <div className={styles.addresses}>
-                    {children}
-                </div>
-                <div className={styles.summary}>
-                    <h2>ORDER SUMMARY</h2>
-                    <div className={styles.containerDetailProduct}>
-                        {items.map((item, i) => (
-                            <div key={i} className={styles.productDetail}>
-                                <div>
-                                    <img src={item.image} />
-                                    <div>
-                                        <b>{item.name}</b>
-                                        <span>{item.quantity} un.</span>
+            {loading ? <Loading space={true} /> :
+                <>
+                    <BarAddress setActionAddress={setActionAddress} addressUser={addressUser} />
+                    <div>
+                        <div className={styles.addresses}>
+                            {
+                                actionAddress &&
+                                <>
+                                    {isLoggedIn ?
+                                        <AddressesInfo
+                                            showModal={handlerShowFormAddress}
+                                            setAddressUpdate={setAddressUpdate}
+                                            reFetchAddress={reFetchAddress}
+                                            setReFetchAddress={setReFetchAddress}
+                                            setAddressId={setAddressId}
+                                            getUser={getUser}
+                                        />
+                                        : <FormAddress setActionAddress={setActionAddress} setAddressId={setAddressId} notLogged={true} />
+                                    }
+                                </>
+                            }
+                        </div>
+                        <div className={styles.summary}>
+                            <h2>ORDER SUMMARY</h2>
+                            <div className={styles.containerDetailProduct}>
+                                {items.map((item, i) => (
+                                    <div key={i} className={styles.productDetail}>
+                                        <div>
+                                            <img src={item.image} />
+                                            <div>
+                                                <b>{item.name}</b>
+                                                <span>{item.quantity} un.</span>
+                                            </div>
+                                        </div>
+                                        <span>${item.price}</span>
                                     </div>
-                                </div>
-                                <span>${item.price}</span>
+                                ))}
                             </div>
-                        ))}
+                            <hr />
+                            <div>
+                                <span>Subtotal</span>
+                                <b>$ {total()}</b>
+                            </div>
+                            <div>
+                                <span>Estimated Shipping</span>
+                                <b>$ 15</b>
+                            </div>
+                            <div>
+                                <span>Total</span>
+                                <b>$ {total() + 15}</b>
+                            </div>
+                            <button disabled={!addressId} className={styles.button} onClick={goToPay}>
+                                {loading ? <Loading light={true} /> : 'CHECKOUT NOW'}
+                            </button>
+                            {error && <ErrorMessage message={response.data.message} />}
+                        </div>
                     </div>
-                    <hr />
-                    <div>
-                        <span>Estimated Shipping</span>
-                        <b>$ 15</b>
-                    </div>
-                    <div>
-                        <span>Total</span>
-                        <b>$ {total() + 15}</b>
-                    </div>
-                    <button disabled={!userHasAddress} className={styles.button} onClick={goToPay}>CHECKOUT NOW</button>
-                </div>
-            </div>
+                </>
+            }
+            {error && <ErrorMessage />}
+            {modalFormAddress && <ModalForm
+                hideModal={handlerShowFormAddress}
+                addressUpdate={addressUpdate}
+                setReFetchAddress={setReFetchAddress}
+                setActionAddress={setActionAddress}
+                setAddressId={setAddressId} />}
         </div>
     )
 }

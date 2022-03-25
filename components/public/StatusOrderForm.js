@@ -8,7 +8,7 @@ import ErrorMessage from './ui/ErrorMessage';
 const StatusOrderForm = ({ showModal, setDetailOrder }) => {
 
     //USEFETCH
-    const { post, response, loading, error } = useFetch(`${process.env.url}`, options)
+    const { post, response, loading, error } = useFetch(`${process.env.url}`)
 
     const {
         value: enteredCode,

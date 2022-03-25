@@ -22,7 +22,7 @@ export default function FormCategory({ inventoryUpdate, setInForm, getCategories
         if (inventoryUpdate !== null) {
             const { name, image } = inventoryUpdate
             nameFillEdit(name)
-            setImages(prev => [...prev, image])
+            setImages([image])
         }
     }, [inventoryUpdate]);
 

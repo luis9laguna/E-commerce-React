@@ -96,6 +96,7 @@ const ContainerUsers = () => {
                                     inAdmin={inAdmin}
                                     users={users} />
                             }
+                            {users?.length === 0 || users === undefined ? <h2 style={{ textAlign: 'center' }}>Sorry but we couldn't find what you were looking for.</h2> : ''}
                             {error && <ErrorMessage />}
                             <Pagination pages={pages} page={page} handlePageClick={handlePageClick} />
                         </>

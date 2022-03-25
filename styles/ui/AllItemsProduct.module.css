@@ -135,12 +135,6 @@
   opacity: 0.5;
 }
 
-@media (max-width: 1200px) {
-  .container {
-    width: 300px;
-  }
-}
-
 @media (max-width: 768px) {
   .container {
     flex-direction: column;
@@ -173,7 +167,7 @@
   }
 }
 
-@media (max-width: 450px) {
+@media (max-width: 500px) {
   .container {
     width: 220px;
     height: 450px;
