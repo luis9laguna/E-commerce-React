@@ -40,7 +40,7 @@ const MiddleNav = ({ setIsOpen, isOpen }) => {
                 <Link href='/'>SHOOP.</Link>
             </h1>
             <form className={styles.searchContainer} onSubmit={searchForm}>
-                <input value={search} className={styles.input} placeholder="Search" onChange={e => setSearch(e.target.value)} />
+                <input value={search} className={styles.input} placeholder="Buscar" onChange={e => setSearch(e.target.value)} />
                 <button type='submit'><Search style={{ color: "black" }} /></button>
             </form>
             <div className={styles.cartFavContainer}>
@@ -56,9 +56,9 @@ const MiddleNav = ({ setIsOpen, isOpen }) => {
                         </Link>
                     </Badge>
                 </div>
-                <div className={`${styles.burguer} ${isOpen ? styles.open : ''}`} onClick={setIsOpen}>
-                    <div></div>
-                </div>
+                <button className={`${styles.burguer} ${isOpen ? styles.open : ''}`} onClick={setIsOpen}>
+                    <div />
+                </button>
             </div>
         </div>
     )

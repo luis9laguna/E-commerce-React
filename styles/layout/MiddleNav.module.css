@@ -82,6 +82,9 @@
   align-items: center;
   justify-content: center;
   z-index: 15;
+  background-color: transparent;
+  border: none;
+  text-align: initial;
 }
 
 .burguer > div {

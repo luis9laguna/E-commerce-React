@@ -4,12 +4,12 @@ import styles from '@/styles/ui/Form.module.css';
 const ResetForm = () => {
     return (
         <div className={styles.container}>
-            <h2 className={styles.title}>RESET PASSWORD</h2>
+            <h2 className={styles.title}>RESETEAR CONTRASEÑA</h2>
             <form className={styles.form}>
-                <input placeholder="password"></input>
-                <input placeholder="confirm password"></input>
-                <button>CHANGE PASSWORD</button>
-                <span>Wait ... to send another email</span>
+                <input placeholder="Contraseña"></input>
+                <input placeholder="Confirme contraseña"></input>
+                <button>CAMBIAR CONTRASEÑA</button>
+                <span>Espere ... para enviar otro email.</span>
             </form>
         </div>
     )

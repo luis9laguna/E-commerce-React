@@ -31,21 +31,21 @@ const TableUsers = (props) => {
     const deleteAdmin = id => {
         //MODAL CONFIRMATION
         Swal.fire({
-            title: 'Are you sure?',
-            text: "Once deleted, you will not be able to recover this user!",
+            title: '¿Estas seguro?',
+            text: "¡Una vez eliminado, no seras capaz de recuperar este usuario!",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
+            confirmButtonText: '¡Si, eliminar!'
 
         }).then(async (result) => {
             if (result.isConfirmed) {
                 await del(`/admin/${id}`)
                 if (response.ok) {
                     Swal.fire(
-                        'Deleted!',
-                        response.data.message,
+                        '¡Eliminado!',
+                        'Admin eliminado correctamente.',
                         'success'
                     )
                     //FETCH NEW DATA
@@ -54,7 +54,7 @@ const TableUsers = (props) => {
                     Swal.fire({
                         icon: 'error',
                         title: 'Oops...',
-                        text: response.data.message
+                        text: 'Ha ocurrido un error, intente mas tarde.'
                     })
                 }
             }
@@ -74,10 +74,10 @@ const TableUsers = (props) => {
                 <table className={styles.table}>
                     <thead>
                         <tr className={styles.tr}>
-                            <th>Name</th>
+                            <th>Nombre</th>
                             <th>Email</th>
-                            <th>createdAt</th>
-                            {inAdmin && <th>options</th>}
+                            <th>Creado</th>
+                            {inAdmin && <th>Opciones</th>}
                         </tr>
                     </thead>
                     <tbody>

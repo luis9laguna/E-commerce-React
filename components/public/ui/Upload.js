@@ -24,14 +24,14 @@ const Upload = ({ images, setImages, limit }) => {
 
         if (!inputImages) return
         if (arrayImages.length > limit || images.length >= limit) {
-            setErrorInput(`The limit of images is ${limit}`)
+            setErrorInput(`El limite es de ${limit}`)
             errorReturn = true
         }
         //APPEND FORM DATA
         const data = new FormData()
         arrayImages.map(image => {
             if (image.size > 4024000) {
-                setErrorInput("Limit size of an image is 4mb")
+                setErrorInput("Limite del archivo es de 4mb")
                 errorReturn = true
             }
             data.append('images', image, image.name)
@@ -78,7 +78,7 @@ const Upload = ({ images, setImages, limit }) => {
         <>
             <input ref={fileInputRef} hidden type='file' id="files" accept="image/png, image/jpeg" multiple onChange={imageHandlerChange} />
             <div className={styles.buttonInput} onClick={() => fileInputRef.current.click()}>
-                {loading ? <Loading /> : 'Pick File'}
+                {loading ? <Loading /> : 'Seleccione Archivo'}
             </div>
             {error && <ErrorMessage />}
             {errorInput && errorInput}
@@ -107,7 +107,7 @@ const Upload = ({ images, setImages, limit }) => {
                                     )}
                                 </Draggable>
                             ))}
-                            {checkedImages.length !== 0 && <div className={styles.selectedImages} onClick={deleteSelected}>deleteSelected</div>}
+                            {checkedImages.length !== 0 && <div className={styles.selectedImages} onClick={deleteSelected}>Eliminar seleccionada</div>}
                             {provided.placeholder}
                         </ul>
                     )}

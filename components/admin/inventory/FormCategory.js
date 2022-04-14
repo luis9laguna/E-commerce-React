@@ -72,8 +72,8 @@ export default function FormCategory({ inventoryUpdate, setInForm, getCategories
         //MODAL
         if (response.ok) {
             Swal.fire(
-                'Good job!',
-                'The category has been created/edit successfully',
+                '¡Excelente!',
+                'La categoria ha sido creada/editada exitosamente.',
                 'success'
             )
             getCategories()
@@ -82,7 +82,7 @@ export default function FormCategory({ inventoryUpdate, setInForm, getCategories
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: response.data.message
+                text: 'Ha ocurrido un error, intente mas tarde'
             })
         }
 
@@ -95,21 +95,22 @@ export default function FormCategory({ inventoryUpdate, setInForm, getCategories
 
     return (
         <>
-            <h1 className={styles.title}>{inventoryUpdate === null ? 'CREATE' : 'EDIT'}</h1>
+            <h1 className={styles.title}>{inventoryUpdate === null ? 'CREAR' : 'EDITAR'}</h1>
             <form className={styles.form} onSubmit={formSubmissionHandler} style={{ minWidth: '280px' }}>
                 <input
-                    placeholder="Name*"
+                    placeholder="Nombre*"
                     type="text"
                     id="name"
                     name="name"
                     value={enteredName}
                     onChange={nameChangedHandler}
                     onBlur={nameBlurHandler}
+                    className={emailInputHasError ? styles.invalidInput : ''}
                 />
-                {nameInputHasError && <p className={styles.invalidText}>Name need to has at least 3 characters</p>}
+                {nameInputHasError && <p className={styles.invalidText}>El nombre debe tener al menos 3 caracteres.</p>}
                 <Upload images={images} setImages={setImages} limit={1} />
                 <button disabled={!formIsValid}>
-                    {loading ? <Loading light={true} /> : (inventoryUpdate === null ? 'CREATE' : 'EDIT')}
+                    {loading ? <Loading light={true} /> : (inventoryUpdate === null ? 'CREAR' : 'EDITAR')}
                 </button>
                 {error && <ErrorMessage />}
             </form>

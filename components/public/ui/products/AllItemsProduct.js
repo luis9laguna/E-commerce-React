@@ -66,7 +66,7 @@ const AllItemsProduct = ({ product, setDeleteFav }) => {
 
     return (
         <div className={styles.container}>
-            {itemStock === 0 && <div className={styles.noStock}>Sold Out</div>}
+            {itemStock === 0 && <div className={styles.noStock}>Agotado</div>}
             <Link href={`/product/${product.slug}`}>
                 <img className={`${styles.image} ${itemStock === 0 ? styles.noStockImg : ''}`} src={transformImage} />
             </Link>
@@ -92,7 +92,7 @@ const AllItemsProduct = ({ product, setDeleteFav }) => {
                         {loading ? <Loading light={true} /> : <FavoriteBorderOutlined style={{ margin: 'auto' }} />}
                     </button>
                 </div>
-                {itemStock !== 0 && <button onClick={addCartHandler}>ADD TO CART</button>}
+                {itemStock !== 0 && <button onClick={addCartHandler}>AGREGAR AL CARRITO</button>}
                 <button
                     className={`${styles.fav} ${likeOrDislike ? styles.hasLike : ''} `}
                     onClick={() => favButton(product.slug)}

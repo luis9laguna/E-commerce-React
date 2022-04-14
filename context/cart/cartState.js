@@ -42,7 +42,7 @@ const CartState = ({ children }) => {
         if (!product.cart) {
             Swal.fire({
                 title: product.name,
-                text: `'${product.quantity}' has been added succesfully to your cart`,
+                text: `Han sido añadidos '${product.quantity}'`,
                 imageUrl: product.image,
                 imageWidth: 300,
                 imageHeight: 300,

@@ -71,9 +71,9 @@ const Form = ({ showModal }) => {
                 value={enteredEmail}
                 className={emailInputHasError ? styles.invalidInput : ''}
             />
-            {emailInputHasError && <p className={styles.invalidText}>It must be a valid email.</p>}
+            {emailInputHasError && <p className={styles.invalidText}>Debe ser un email valido.</p>}
             <input
-                placeholder="Password*"
+                placeholder="Contraseña*"
                 type="password"
                 id="password"
                 onChange={passwordChangedHandler}
@@ -81,9 +81,9 @@ const Form = ({ showModal }) => {
                 value={enteredPassword}
                 className={passwordInputHasError ? styles.invalidInput : ''}
             />
-            {passwordInputHasError && <p className={styles.invalidText}>Password must be at least 8 characters, 1 uppercase, 1 lowercase and 1 number.</p>}
-            <button disabled={!formIsValid}>LOGIN</button>
-            <button onClick={showModal}>DONT REMEMBER THE PASSWORD?</button>
+            {passwordInputHasError && <p className={styles.invalidText}>La contraseña debe ser 8 caracteres, 1 en mayuscula, 1 en miniscula y 1 numero.</p>}
+            <button disabled={!formIsValid}>INGRESAR</button>
+            <button onClick={showModal}>¿OLVIDO CONTRASEÑA?</button>
         </form>
     )
 }

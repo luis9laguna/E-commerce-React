@@ -71,11 +71,11 @@ const ProductContainer = ({ data, title, setDeleteFav, url }) => {
                 <div className={styles.sort}>
                     <span className={styles.sortText}>Sort Products: </span>
                     <select className={styles.select} onChange={handlerSortProducts}>
-                        <option value='name'>Name</option>
-                        <option value='popularity'>Popularity</option>
-                        <option value='newest'>Newest</option>
-                        <option value='priceAsc'>Price(asc)</option>
-                        <option value='priceDesc'>Price(desc)</option>
+                        <option value='name'>Nombre</option>
+                        <option value='popularity'>Popularidad</option>
+                        <option value='newest'>Mas nuevo</option>
+                        <option value='priceAsc'>Precio(asc)</option>
+                        <option value='priceDesc'>Precio(desc)</option>
                     </select>
                 </div>
             </div>

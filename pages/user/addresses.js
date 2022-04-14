@@ -16,7 +16,7 @@ const Addresses = () => {
 
   return (
     <Layout>
-      <Meta title='Addresses' />
+      <Meta title='Direcciones' />
       <UserLayout>
         <AddressesInfo
           showModal={handlerShowFormAddress}

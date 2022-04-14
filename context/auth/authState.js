@@ -45,7 +45,7 @@ const AuthState = ({ children }) => {
             })
             //MODAL
             Swal.fire(
-                'Good job!', 'Your registration is completed!', 'success'
+                '¡Excelente!', '¡Tu registro ha sido completado!', 'success'
             )
             //REDIRECT
             router.replace('/')
@@ -53,7 +53,7 @@ const AuthState = ({ children }) => {
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: response.data.message,
+                text: 'Ha ocurrido un error, intente mas tarde'
             })
         }
     }
@@ -75,7 +75,7 @@ const AuthState = ({ children }) => {
             })
             //MODAL
             Swal.fire(
-                'Good job!', 'LogIn succesfull!', 'success'
+                '¡Excelente!', '¡Tu ingreso ha sido exitoso!', 'success'
             )
             //REDIRECT
             if (role === 'USER_ROLE') {
@@ -87,7 +87,7 @@ const AuthState = ({ children }) => {
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: response.data.message,
+                text: 'Ha ocurrido un error, intente mas tarde'
             })
         }
     }
@@ -107,7 +107,7 @@ const AuthState = ({ children }) => {
             })
             //MODAL
             Swal.fire(
-                'Good job!', 'LogIn successful!', 'success'
+                '¡Excelente!', '¡Tu ingreso ha sido exitoso!', 'success'
             )
             //REDIRECT
             router.replace('/')
@@ -115,7 +115,7 @@ const AuthState = ({ children }) => {
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: response.data.message,
+                text: 'Ha ocurrido un error, intente mas tarde'
             })
         }
     }

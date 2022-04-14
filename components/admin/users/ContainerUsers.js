@@ -72,14 +72,14 @@ const ContainerUsers = () => {
     return (
         <div className={styles.container}>
             <h1>{inAdmin && 'Admins'}</h1>
-            <h1>{inUser && 'Users'}</h1>
+            <h1>{inUser && 'Usuarios'}</h1>
             {inAdmin || inUser ?
                 <>
                     <div className={styles.containerButtonBC}>
-                        {!inForm && <button onClick={goBack}><ArrowBack /> Back</button>}
+                        {!inForm && <button onClick={goBack}><ArrowBack />Volver</button>}
                         {inAdmin &&
                             <button onClick={createBack}>
-                                {inForm ? 'Back' : 'Create'}
+                                {inForm ? 'Volver' : 'Crear'}
                             </button>
                         }
                     </div>
@@ -96,7 +96,7 @@ const ContainerUsers = () => {
                                     inAdmin={inAdmin}
                                     users={users} />
                             }
-                            {users?.length === 0 || users === undefined ? <h2 style={{ textAlign: 'center' }}>Sorry but we couldn't find what you were looking for.</h2> : ''}
+                            {users?.length === 0 || users === undefined ? <h2 style={{ textAlign: 'center' }}>Lo siento no pudimos encontrar lo que estabas buscando.</h2> : ''}
                             {error && <ErrorMessage />}
                             <Pagination pages={pages} page={page} handlePageClick={handlePageClick} />
                         </>
@@ -105,8 +105,8 @@ const ContainerUsers = () => {
                 :
                 <div className={styles.containerButtonAU}>
                     {inForm}
-                    <button onClick={() => getAdmins(1)}> <VerifiedUserOutlined /> Admins</button>
-                    <button onClick={() => getUsers(1)}> <PersonOutlined /> Users</button>
+                    <button onClick={() => getAdmins(1)}> <VerifiedUserOutlined />Admins</button>
+                    <button onClick={() => getUsers(1)}> <PersonOutlined />Usuarios</button>
                 </div>
             }
         </div >

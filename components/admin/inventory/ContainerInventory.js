@@ -141,39 +141,36 @@ const ContainerInventory = () => {
     //HANDLE PAGINATION    
     const handlePageClick = e => setPage(e.selected + 1)
 
-    console.log(dbInventory)
-    console.log(dbInventory?.length === 0)
-
     return (
         <div className={styles.container}>
-            <h1>{inCategories && 'Categories'}</h1>
-            <h1>{inProducts && 'Products'}</h1>
+            <h1>{inCategories && 'Categorias'}</h1>
+            <h1>{inProducts && 'Productos'}</h1>
             {inCategories || inProducts ?
                 <>
                     <div className={styles.containerOptions}>
-                        {!inForm && <button onClick={goback}><ArrowBack />Back</button>}
+                        {!inForm && <button onClick={goback}><ArrowBack />Volver</button>}
                         <button onClick={createBack}>
-                            {inForm ? 'Back' : 'Create'}
+                            {inForm ? 'Volver' : 'Crear'}
                         </button>
                         {inProducts && !inForm &&
                             <>
                                 <div>
-                                    <span>Search</span>
+                                    <span>Buscar</span>
                                     <input onChange={e => setSearch(e.target.value)} />
                                 </div>
                                 <div>
-                                    <span>Category</span>
+                                    <span>Categoria</span>
                                     <select id="category" onChange={selectCategory}>
-                                        <option value='all'>All</option>
+                                        <option value='all'>Todos</option>
                                         {selectCategories.map((category, i) => (
                                             <option key={i} value={category._id}>{category.name}</option>
                                         ))}
                                     </select>
                                 </div><div>
-                                    <span>Order</span>
+                                    <span>Orden</span>
                                     <select id="status" onChange={selectSort}>
-                                        <option value='true'>True</option>
-                                        <option value='false'>False</option>
+                                        <option value='true'>Activo</option>
+                                        <option value='false'>Inactivo</option>
                                     </select>
                                 </div>
                             </>
@@ -211,7 +208,7 @@ const ContainerInventory = () => {
                                             inProducts={inProducts}
                                             getCategories={getCategories} />
                                     }
-                                    {dbInventory?.length === 0 || dbInventory === undefined ? <h2 style={{ textAlign: 'center' }}>Sorry but we couldn't find what you were looking for.</h2> : ''}
+                                    {dbInventory?.length === 0 || dbInventory === undefined ? <h2 style={{ textAlign: 'center' }}>Lo siento no pudimos encontrar lo que estabas buscando.</h2> : ''}
                                 </>
                             }
                         </>
@@ -219,8 +216,8 @@ const ContainerInventory = () => {
                 </>
                 :
                 <div className={styles.containerButtonAU}>
-                    <button onClick={() => getCategories(false)}> <Category /> Categories</button>
-                    <button onClick={() => getProducts(1)}> < Filter /> Products</button>
+                    <button onClick={() => getCategories(false)}> <Category />Categorias</button>
+                    <button onClick={() => getProducts(1)}> < Filter />Productos</button>
                 </div>
             }
             {inProducts && dbInventory?.length > 0 && !inForm && <Pagination page={page} pages={pages} handlePageClick={handlePageClick} />}

@@ -19,9 +19,9 @@ const UserDataForm = ({ userInfo }) => {
     //FILL FORM EDIT
     useEffect(() => {
         if (userInfo !== '') {
-            const { name, surname } = userInfo
+            const { name, lastname } = userInfo
             nameFillEdit(name)
-            surnameFillEdit(surname)
+            lastNameFillEdit(lastname)
         }
     }, [userInfo]);
 
@@ -36,21 +36,20 @@ const UserDataForm = ({ userInfo }) => {
         reset: resetNameInput
     } = useInput(value => value.trim().length >= 3)
 
-    //SURNAME
+    //LASTNAME
     const {
-        value: enteredSurName,
-        isValid: enteredSurNameIsValid,
-        hasError: surNameInputHasError,
-        valueChangeHandler: surNameChangedHandler,
-        inputBlurHandler: surNameBlurHandler,
-        fillEdit: surnameFillEdit,
-        reset: resetSurNameInput
+        value: enteredLastName,
+        isValid: enteredLastNameIsValid,
+        hasError: lastNameInputHasError,
+        valueChangeHandler: lastNameChangedHandler,
+        inputBlurHandler: lastNameBlurHandler,
+        fillEdit: lastNameFillEdit,
+        reset: resetLastNameInput
     } = useInput(value => value.trim().length >= 3)
-
 
     //FORMVALID?
     let formIsValid = false;
-    if (enteredNameIsValid && enteredSurNameIsValid) {
+    if (enteredNameIsValid && enteredLastNameIsValid) {
         formIsValid = true;
     }
 
@@ -62,22 +61,22 @@ const UserDataForm = ({ userInfo }) => {
         if (!formIsValid) return;
 
         //VALUES
-        const name = e.target.name.value
-        const surname = e.target.surname.value
+        const name = enteredName
+        const lastname = enteredLastName
 
         //SEND
-        const infoUpdatedUser = await put(`/user/update`, { name, surname })
+        const infoUpdatedUser = await put(`/user/update`, { name, lastname })
         if (response.ok) {
             updateUser(infoUpdatedUser.user.name)
             //MODAL
             Swal.fire(
-                'Good job!', 'Update completed!', 'success'
+                '¡Excelente!', '¡Actualización completada!', 'success'
             )
         } else {
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: response.data.message
+                text: 'Ha ocurrido un error, por favor intente mas tarde.'
             })
         }
     }
@@ -86,13 +85,13 @@ const UserDataForm = ({ userInfo }) => {
     return (
         <div className={styles.container}>
             <h2 className={styles.title}>
-                User Information
+                Informacion del usuario
             </h2>
             <form className={styles.form} onSubmit={formSubmissionHandler}>
-                <label className={styles.labelInfo} htmlFor='name'>Name</label>
+                <label className={styles.labelInfo} htmlFor='name'>Nombre</label>
                 <input
                     name='name'
-                    placeholder="Name"
+                    placeholder="Nombre"
                     value={enteredName}
                     type="text"
                     id="name"
@@ -100,25 +99,25 @@ const UserDataForm = ({ userInfo }) => {
                     onBlur={nameBlurHandler}
                     className={styles.userInput}
                 />
-                {nameInputHasError ? <p className={styles.invalidText}>Name need to has at least 3 characters</p> : ''}
+                {nameInputHasError ? <p className={styles.invalidText}>El nombre necesita tener al menos 3 caracteres</p> : ''}
 
-                <label className={styles.labelInfo} htmlFor='surName'>Sur Name</label>
+                <label className={styles.labelInfo} htmlFor='lastname'>Apellido</label>
                 <input
-                    name='surname'
-                    placeholder="SurName"
-                    value={enteredSurName}
+                    name='lastname'
+                    placeholder="Apellido"
+                    value={enteredLastName}
                     type="text"
-                    id="surname"
-                    onChange={surNameChangedHandler}
-                    onBlur={surNameBlurHandler}
+                    id="lastname"
+                    onChange={lastNameChangedHandler}
+                    onBlur={lastNameBlurHandler}
                     className={styles.userInput}
                 />
-                {surNameInputHasError ? <p className={styles.invalidText}>SurName need to has at least 3 characters</p> : ''}
+                {lastNameInputHasError ? <p className={styles.invalidText}>El apellido necesita tener al menos 3 caracteres</p> : ''}
 
                 <label className={styles.labelInfo} htmlFor='email'>Email (<span>{userInfo.email}</span>)</label>
 
                 <button className={styles.userButton} disabled={!formIsValid}>
-                    {loading ? <Loading light={true} /> : 'Save'}
+                    {loading ? <Loading light={true} /> : 'Guardar'}
                 </button>
                 {error && <ErrorMessage />}
             </form >

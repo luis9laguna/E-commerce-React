@@ -1,7 +1,6 @@
 import { useRouter } from 'next/router';
 import useInput from 'hooks/useInput';
 import useFetch from 'use-http'
-import { resetPassword } from 'helpers/api-util';
 import styles from 'styles/ui/Form.module.css';
 import Loading from './ui/Loading';
 import ErrorMessage from './ui/ErrorMessage';
@@ -47,13 +46,13 @@ const RecoveryForm = () => {
         if (response) {
             //MODAL
             Swal.fire(
-                'Good job!', 'Password changed successfully!', 'success'
+                '¡Excelente!', '¡La contraseña ha sido cambiada exitosamente!', 'success'
             )
         } else {
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: response.data.message,
+                text: 'Ha ocurrido un error, intente mas tarde.'
             })
         }
 
@@ -66,7 +65,7 @@ const RecoveryForm = () => {
             <h2 className={styles.title}>Status Order</h2>
             <form style={{ width: '50%' }} className={styles.form} onSubmit={formSubmissionHandler}>
                 <input
-                    placeholder="Password*"
+                    placeholder="Contraseña*"
                     type="password"
                     id="password"
                     onChange={passwordChangedHandler}
@@ -74,9 +73,9 @@ const RecoveryForm = () => {
                     value={enteredPassword}
                     className={passwordInputHasError ? styles.invalidInput : ''}
                 />
-                {passwordInputHasError && <p className={styles.invalidText}>Password must be at least 8 characters, 1 uppercase, 1 lowercase and 1 number.</p>}
+                {passwordInputHasError && <p className={styles.invalidText}>La contraseña debe tener al menos 8 caracteres, 1 mayuscula, 1 miniscula y 1 numero.</p>}
                 <button disabled={!formIsValid}>
-                    {loading ? <Loading light={true} /> : 'CHANGE PASSWORD'}
+                    {loading ? <Loading light={true} /> : 'CAMBIAR CONTRASEÑA'}
                 </button>
                 {error && <ErrorMessage />}
             </form>

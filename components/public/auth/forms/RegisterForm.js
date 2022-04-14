@@ -23,14 +23,14 @@ const RegisterForm = () => {
     } = useInput(value => value.trim().length >= 3)
 
 
-    //SURNAME
+    //LASTNAME
     const {
-        value: enteredSurName,
-        isValid: enteredSurNameIsValid,
-        hasError: surNameInputHasError,
-        valueChangeHandler: surNameChangedHandler,
-        inputBlurHandler: surNameBlurHandler,
-        reset: resetSurNameInput
+        value: enteredLastName,
+        isValid: enteredLastNameIsValid,
+        hasError: lastNameInputHasError,
+        valueChangeHandler: lastNameChangedHandler,
+        inputBlurHandler: lastNameBlurHandler,
+        reset: resetLastNameInput
     } = useInput(value => value.trim().length >= 3)
 
     //EMAIL
@@ -68,7 +68,7 @@ const RegisterForm = () => {
     let formIsValid = false;
     if (
         enteredNameIsValid &&
-        enteredSurNameIsValid &&
+        enteredLastNameIsValid &&
         enteredEmailIsValid &&
         enteredPasswordIsValid &&
         enteredPasswordConfirmIsValid
@@ -84,22 +84,19 @@ const RegisterForm = () => {
         if (!formIsValid) return;
 
         //VALUES
-        const name = e.target.name.value
-        const surname = e.target.surname.value
-        const email = e.target.email.value
-        const password = e.target.password.value
+        const values = {
+            name: e.target.name.value,
+            lastname: e.target.lastname.value,
+            email: e.target.email.value,
+            password: e.target.password.value
+        }
 
         //SEND
-        userRegister({
-            name,
-            surname,
-            email,
-            password
-        })
+        userRegister(values)
 
         //RESET VALUES
         resetNameInput()
-        resetSurNameInput()
+        resetLastNameInput()
         resetEmailInput()
         resetPasswordInput()
         resetPasswordConfirmInput()
@@ -108,23 +105,25 @@ const RegisterForm = () => {
     return (
         <form className={styles.form} onSubmit={formSubmissionHandler}>
             <input
-                placeholder="Name*"
+                placeholder="Nombre*"
                 type="text"
                 id="name"
                 value={enteredName}
                 onChange={nameChangedHandler}
                 onBlur={nameBlurHandler}
+                className={nameInputHasError ? styles.invalidInput : ''}
             />
-            {nameInputHasError && <p className={styles.invalidText}>Name need to has at least 3 characters</p>}
+            {nameInputHasError && <p className={styles.invalidText}>El nombre necesita tener al menos 3 caracteres.</p>}
             <input
-                placeholder="Sur Name*"
+                placeholder="Apellido*"
                 type="text"
-                id="surname"
-                value={enteredSurName}
-                onChange={surNameChangedHandler}
-                onBlur={surNameBlurHandler}
+                id="lastname"
+                value={enteredLastName}
+                onChange={lastNameChangedHandler}
+                onBlur={lastNameBlurHandler}
+                className={lastNameInputHasError ? styles.invalidInput : ''}
             />
-            {surNameInputHasError && <p className={styles.invalidText}>SurName need to has at least 3 characters</p>}
+            {lastNameInputHasError && <p className={styles.invalidText}>El apellido necesita tener al menos 3 caracteres.</p>}
             <input
                 placeholder="Email*"
                 type="email"
@@ -132,30 +131,33 @@ const RegisterForm = () => {
                 value={enteredEmail}
                 onChange={emailChangedHandler}
                 onBlur={emailBlurHandler}
+                className={emailInputHasError ? styles.invalidInput : ''}
             />
-            {emailInputHasError && <p className={styles.invalidText}>It must be a valid email.</p>}
+            {emailInputHasError && <p className={styles.invalidText}>Debe ser un correo valido.</p>}
             <input
-                placeholder="Password*"
+                placeholder="Contraseña*"
                 type="password"
                 id="password"
                 value={enteredPassword}
                 onChange={passwordChangedHandler}
                 onBlur={passwordBlurHandler}
+                className={passwordInputHasError ? styles.invalidInput : ''}
             />
-            {passwordInputHasError && <p className={styles.invalidText}>Password must be at least 8 characters, 1 uppercase, 1 lowercase and 1 number.</p>}
+            {passwordInputHasError && <p className={styles.invalidText}>La contraseña debe tener al menos 8 caracteres, 1 mayuscula, 1 miniscula y 1 numero.</p>}
             <input
-                placeholder="Confirm Password*"
+                placeholder="Confirmar contraseña*"
                 type="password"
                 id="passwordconfirm"
                 value={enteredPasswordConfirm}
                 onChange={passwordConfirmChangedHandler}
                 onBlur={passwordConfirmBlurHandler}
+                className={passwordConfirmInputHasError ? styles.invalidInput : ''}
             />
-            {passwordConfirmInputHasError && <p className={styles.invalidText}>Password are not matching</p>}
+            {passwordConfirmInputHasError && <p className={styles.invalidText}>Contraseñas no son iguales</p>}
             <span>
-                By creating an account, I consent to the processing of my personal data in accordance with the <b>PRIVACY POLICY</b>
+                Al crear la cuenta, se acepta el procesamiento de tus datos personales en acuerdo con la <b>POLITICA DE PRIVACIDAD</b>
             </span>
-            <button disabled={!formIsValid}>Create</button>
+            <button disabled={!formIsValid}>Crear</button>
         </form>
     )
 }

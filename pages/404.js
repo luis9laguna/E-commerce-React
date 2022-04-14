@@ -9,12 +9,12 @@ const Error = () => {
 
     return (
         <Layout >
-            <Meta title='Page not Found' />
+            <Meta title='Pagina no encontrada' />
             <div className={styles.errorContainer}>
-                <h1>Oops! Page not found.</h1>
+                <h1>Oops! Pagina no encontrada.</h1>
                 <span>404</span>
-                <p>We cant find the page you're looking for.</p>
-                <button onClick={() => router.back()}>Go back</button>
+                <p>No pudimos encontrar lo que estabas buscando.</p>
+                <button onClick={() => router.back()}>Volver</button>
             </div>
         </Layout>
     )

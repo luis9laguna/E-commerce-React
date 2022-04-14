@@ -30,19 +30,19 @@ const Footer = () => {
                     </div>
                 </div>
                 <div className={styles.center}>
-                    <div className={styles.title}>Useful Links</div>
+                    <div className={styles.title}>Paginas utiles</div>
                     <ul className={styles.list}>
-                        <li> <Link href='/'>Home</Link> </li>
-                        <li><Link href='/product/all'>All Products</Link></li>
-                        <li><Link href='/wishList'> WishList</Link></li>
-                        <li><Link href='/cart'>Cart</Link></li>
-                        <li><Link href='/login#register'>Register</Link></li>
-                        <li><Link href='/login#login'>Log In</Link></li>
-                        <li><Link href='/statusOrder'>Status of package</Link></li>
+                        <li> <Link href='/'>Inicio</Link> </li>
+                        <li><Link href='/product/all'>Productos</Link></li>
+                        <li><Link href='/wishList'> Lista de Deseados</Link></li>
+                        <li><Link href='/cart'>Carro</Link></li>
+                        <li><Link href='/login#register'>Registrar</Link></li>
+                        <li><Link href='/login#login'>Ingresar</Link></li>
+                        <li><Link href='/statusOrder'>Estado del envio</Link></li>
                     </ul>
                 </div>
                 <div className={styles.right}>
-                    <div className={styles.title}>Contact</div>
+                    <div className={styles.title}>Contacto</div>
                     <span>
                         <Map style={{ marginRight: '10px' }} /> 678, pathser, south bosttom 54615
                     </span>

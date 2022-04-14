@@ -20,9 +20,9 @@ const FormAdmin = ({ getAdmins, setInForm, userUpdate }) => {
     //FILL FORM EDIT
     useEffect(() => {
         if (userUpdate !== null) {
-            const { name, surname, email } = userUpdate
+            const { name, lastname, email } = userUpdate
             nameFillEdit(name)
-            surnameFillEdit(surname)
+            lastnameFillEdit(lastname)
             emailFillEdit(email)
         }
     }, [userUpdate]);
@@ -39,15 +39,14 @@ const FormAdmin = ({ getAdmins, setInForm, userUpdate }) => {
     } = useInput(value => value.trim().length >= 3)
 
 
-    //SURNAME
+    //LASTNAME
     const {
-        value: enteredSurName,
-        isValid: enteredSurNameIsValid,
-        hasError: surNameInputHasError,
-        valueChangeHandler: surNameChangedHandler,
-        inputBlurHandler: surNameBlurHandler,
-        fillEdit: surnameFillEdit,
-        reset: resetSurNameInput
+        value: enteredLastName,
+        isValid: enteredLastNameIsValid,
+        hasError: lastNameInputHasError,
+        valueChangeHandler: lastNameChangedHandler,
+        inputBlurHandler: lastNameBlurHandler,
+        reset: resetLastNameInput
     } = useInput(value => value.trim().length >= 3)
 
     //EMAIL
@@ -88,7 +87,7 @@ const FormAdmin = ({ getAdmins, setInForm, userUpdate }) => {
 
         if (
             enteredNameIsValid &&
-            enteredSurNameIsValid &&
+            enteredLastNameIsValid &&
             enteredEmailIsValid &&
             enteredPasswordIsValid &&
             enteredPasswordConfirmIsValid
@@ -96,7 +95,7 @@ const FormAdmin = ({ getAdmins, setInForm, userUpdate }) => {
     } else {
         if (
             enteredNameIsValid &&
-            enteredSurNameIsValid &&
+            enteredLastNameIsValid &&
             enteredEmailIsValid
         ) formIsValid = true;
     }
@@ -111,7 +110,7 @@ const FormAdmin = ({ getAdmins, setInForm, userUpdate }) => {
 
         //VALUES
         const name = e.target.name.value
-        const surname = e.target.surname.value
+        const lastname = e.target.lastname.value
         const email = e.target.email.value
         const password = e.target.password?.value
 
@@ -120,14 +119,14 @@ const FormAdmin = ({ getAdmins, setInForm, userUpdate }) => {
         if (userUpdate === null) {
             await post('/admin', {
                 name,
-                surname,
+                lastname,
                 email,
                 password
             })
         } else {
             await put(`/admin/${userUpdate._id}`, {
                 name,
-                surname,
+                lastname,
                 email
             })
         }
@@ -135,8 +134,8 @@ const FormAdmin = ({ getAdmins, setInForm, userUpdate }) => {
         //MODAL
         if (response.ok) {
             Swal.fire(
-                'Good job!',
-                'The Admin has been created/edit successfully',
+                '¡Excelente!',
+                'El admin ha sido creado/editado exitosamente.',
                 'success'
             )
             //GET NEW DATA ADMINS
@@ -146,13 +145,13 @@ const FormAdmin = ({ getAdmins, setInForm, userUpdate }) => {
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: response.data.message
+                text: 'Ha ocurrido un error, intente mas tarde'
             })
         }
 
         //RESET VALUES
         resetNameInput()
-        resetSurNameInput()
+        resetLastNameInput()
         resetEmailInput()
         resetPasswordInput()
         resetPasswordConfirmInput()
@@ -160,26 +159,28 @@ const FormAdmin = ({ getAdmins, setInForm, userUpdate }) => {
 
     return (
         <>
-            <h1 className={styles.title}>{userUpdate === null ? 'CREATE' : 'EDIT'}</h1>
+            <h1 className={styles.title}>{userUpdate === null ? 'CREAR' : 'EDITAR'}</h1>
             <form className={styles.form} onSubmit={formSubmissionHandler} style={{ minWidth: '280px' }}>
                 <input
-                    placeholder="Name*"
+                    placeholder="Nombre*"
                     type="text"
                     id="name"
                     value={enteredName}
                     onChange={nameChangedHandler}
                     onBlur={nameBlurHandler}
+                    className={emailInputHasError ? styles.invalidInput : ''}
                 />
-                {nameInputHasError && <p className={styles.invalidText}>Name need to has at least 3 characters</p>}
+                {nameInputHasError && <p className={styles.invalidText}>El nombre debe tener al menos 3 caracteres.</p>}
                 <input
-                    placeholder="Sur Name*"
+                    placeholder="Apellido*"
                     type="text"
-                    id="surname"
-                    value={enteredSurName}
-                    onChange={surNameChangedHandler}
-                    onBlur={surNameBlurHandler}
+                    id="lastname"
+                    value={enteredLastName}
+                    onChange={lastNameChangedHandler}
+                    onBlur={lastNameBlurHandler}
+                    className={lastNameInputHasError ? styles.invalidInput : ''}
                 />
-                {surNameInputHasError && <p className={styles.invalidText}>SurName need to has at least 3 characters</p>}
+                {lastNameInputHasError && <p className={styles.invalidText}>El apellido debe tener al menos 3 caracteres.</p>}
                 <input
                     placeholder="Email*"
                     type="email"
@@ -187,34 +188,37 @@ const FormAdmin = ({ getAdmins, setInForm, userUpdate }) => {
                     value={enteredEmail}
                     onChange={emailChangedHandler}
                     onBlur={emailBlurHandler}
+                    className={emailInputHasError ? styles.invalidInput : ''}
                 />
-                {emailInputHasError && <p className={styles.invalidText}>It must be a valid email.</p>}
+                {emailInputHasError && <p className={styles.invalidText}>Debe ser un email valido.</p>}
 
                 {userUpdate === null && (
                     <>
                         <input
-                            placeholder="Password*"
+                            placeholder="Contraseña*"
                             type="password"
                             id="password"
                             value={enteredPassword}
                             onChange={passwordChangedHandler}
                             onBlur={passwordBlurHandler}
+                            className={emailInputHasError ? styles.invalidInput : ''}
                         />
-                        {passwordInputHasError && <p className={styles.invalidText}>Password must be at least 8 characters, 1 uppercase, 1 lowercase and 1 number.</p>}
+                        {passwordInputHasError && <p className={styles.invalidText}>El pasaporte debe ser 8 caracteres, 1 en mayuscula, 1 en miniscula y 1 numero.</p>}
                         <input
-                            placeholder="Confirm Password*"
+                            placeholder="Confirmar Contraseña*"
                             type="password"
                             id="passwordconfirm"
                             value={enteredPasswordConfirm}
                             onChange={passwordConfirmChangedHandler}
                             onBlur={passwordConfirmBlurHandler}
+                            className={emailInputHasError ? styles.invalidInput : ''}
                         />
-                        {passwordConfirmInputHasError && <p className={styles.invalidText}>Password are not matching</p>}
+                        {passwordConfirmInputHasError && <p className={styles.invalidText}>Las contraseñas no coinciden.</p>}
                     </>
                 )}
 
                 <button disabled={!formIsValid}>
-                    {loading ? <Loading light={true} /> : (userUpdate === null ? 'CREATE' : 'EDIT')}
+                    {loading ? <Loading light={true} /> : (userUpdate === null ? 'CREAR' : 'EDITAR')}
                 </button>
                 {error && <ErrorMessage />}
             </form>

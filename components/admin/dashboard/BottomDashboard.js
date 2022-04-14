@@ -24,17 +24,17 @@ const BottomDashboard = () => {
                 asdads
             </div>
             <div className={styles.containerProducts}>
-                <h2>Top 5 products more liked</h2>
+                <h2>Top 5 productos mas gustados</h2>
                 {error && <ErrorMessage />}
                 {loading && !error ? <Loading space={true} />
                     :
                     <table className={styles.table}>
                         <thead>
                             <tr className={styles.tr}>
-                                <th>Name</th>
+                                <th>Nombre</th>
                                 <th>Stock</th>
-                                <th>Likes</th>
-                                <th>Status</th>
+                                <th>Me gusta</th>
+                                <th>Estado</th>
                             </tr>
                         </thead>
                         <tbody>

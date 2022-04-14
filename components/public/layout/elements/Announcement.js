@@ -1,7 +1,7 @@
 const Announcement = () => {
     return (
         <span className='announcement'>
-            BIG NEWS!!! Free shipping on Orders Over $50!
+            ATENCION!!! Envio gratis en ordenes sobre $30.000!
         </span>
     )
 }

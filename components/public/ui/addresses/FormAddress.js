@@ -29,7 +29,7 @@ const FormAddress = ({ hideModal, addressUpdate, setReFetchAddress, setActionAdd
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: response.data.message
+                text: 'Ha ocurrido un error, intente mas tarde.'
             })
         }
     }
@@ -220,7 +220,7 @@ const FormAddress = ({ hideModal, addressUpdate, setReFetchAddress, setActionAdd
             if (response.ok) {
                 //MODAL
                 Swal.fire(
-                    'Good job!', 'Your Address has been created succesfully!', 'success'
+                    '¡Excelente!', '¡Has actualizado tu direccion correctamente!', 'success'
                 )
                 //REFETCH ADDRESS
                 if (setReFetchAddress) setReFetchAddress(true)
@@ -233,7 +233,7 @@ const FormAddress = ({ hideModal, addressUpdate, setReFetchAddress, setActionAdd
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
-                    text: response.message,
+                    text: 'Ha ocurrido un error, intente mas tarde.'
                 })
             }
         } else {
@@ -241,7 +241,7 @@ const FormAddress = ({ hideModal, addressUpdate, setReFetchAddress, setActionAdd
             if (response.ok) {
                 //MODAL
                 Swal.fire(
-                    'Good job!', 'Your Address has been updated succesfully!', 'success'
+                    '¡Excelente!', '¡Has creado tu direccion correctamente!', 'success'
                 )
                 //REFETCH ADDRESS
                 setReFetchAddress(true)
@@ -253,7 +253,7 @@ const FormAddress = ({ hideModal, addressUpdate, setReFetchAddress, setActionAdd
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
-                    text: resp.message,
+                    text: 'Ha ocurrido un error, intente mas tarde.'
                 })
             }
         }
@@ -294,111 +294,118 @@ const FormAddress = ({ hideModal, addressUpdate, setReFetchAddress, setActionAdd
 
     return (
         <form className={styles.form} onSubmit={formSubmissionHandler}>
-            <h1 style={{ margin: '0rem' }} className={styles.title}>{editAddress ? 'Edit Address' : 'Create a new Address'}</h1>
+            <h1 style={{ margin: '0rem' }} className={styles.title}>{editAddress ? 'Editar dirección' : 'Crear nueva dirección'}</h1>
             <input
-                placeholder="Name*"
+                placeholder="Nombre*"
                 type="text"
                 id="name"
                 value={enteredName}
                 onChange={nameChangedHandler}
                 onBlur={nameBlurHandler}
+                className={passwordInputHasError ? styles.invalidInput : ''}
             />
-            {nameInputHasError && <p className={styles.invalidText}>Name need to has at least 3 characters</p>}
+            {nameInputHasError && <p className={styles.invalidText}>El nombre necesita tener al menos 3 caracteres.</p>}
             <input
-                placeholder="Phone*"
+                placeholder="Telefono*"
                 type="number"
                 id="phone"
                 value={enteredPhone}
                 onChange={phoneChangedHandler}
                 onBlur={phoneBlurHandler}
+                className={passwordInputHasError ? styles.invalidInput : ''}
             />
-            {phoneInputHasError && <p className={styles.invalidText}>Phone is needed</p>}
+            {phoneInputHasError && <p className={styles.invalidText}>Telefono es necesario.</p>}
             <input
-                placeholder="ID*"
+                placeholder="RUT*"
                 type="text"
                 id="id"
                 value={enteredId}
                 onChange={idChangedHandler}
                 onBlur={idBlurHandler}
+                className={passwordInputHasError ? styles.invalidInput : ''}
             />
-            {idInputHasError && <p className={styles.invalidText}>It has to be a valid ID</p>}
+            {idInputHasError && <p className={styles.invalidText}>Tiene que ser un RUT valido.</p>}
 
             <select id="state" value={enteredState} onChange={stateChangedHandler} onBlur={stateBlurHandler} style={{ margin: '1rem 0' }}>
-                <option disabled="disabled" value="">Select Region</option>
+                <option disabled="disabled" value="">Selecciona Region</option>
                 {regions.map((region, i) => (
                     <option key={i} value={
                         region.nombre
                     }>{region.nombre}</option>
                 ))}
             </select>
-            {stateInputHasError && <p className={styles.invalidText}>You need to choose a State</p>}
+            {stateInputHasError && <p className={styles.invalidText}>Necesitas elegir una region.</p>}
 
             {enteredState !== '' &&
                 <>
                     <select id="city" value={enteredCity} onChange={cityChangedHandler} onBlur={cityBlurHandler} style={{ margin: '0px' }}>
-                        <option disabled="disabled" value="">Select City</option>
+                        <option disabled="disabled" value="">Selecciona Provicina</option>
                         {provinces.map((province, i) => (
                             <option key={i} value={
                                 province.nombre
                             }>{province.nombre}</option>
                         ))}
                     </select>
-                    {cityInputHasError && <p className={styles.invalidText}>You need to choose a City</p>}
+                    {cityInputHasError && <p className={styles.invalidText}>Necesitas elegir una provincia.</p>}
                 </>
             }
 
             {enteredCity !== '' &&
                 <>
                     <select id="province" value={enteredProvince} onChange={provinceChangedHandler} onBlur={provinceBlurHandler} style={{ margin: '1rem 0' }}>
-                        <option disabled="disabled" value="">Select Province</option>
+                        <option disabled="disabled" value="">Selecciona Comuna</option>
                         {comunas.map((comuna, i) => (
                             <option key={i} value={
                                 comuna.nombre
                             }>{comuna.nombre}</option>
                         ))}
                     </select>
-                    {provinceInputHasError && <p className={styles.invalidText}>You need to choose a Province</p>}
+                    {provinceInputHasError && <p className={styles.invalidText}>Necesitas elegir una comuna.</p>}
                 </>
             }
             <input
-                placeholder="Street*"
+                placeholder="Calle*"
                 type="text"
                 id="street"
                 value={enteredStreet}
                 onChange={streetChangedHandler}
                 onBlur={streetBlurHandler}
+                className={passwordInputHasError ? styles.invalidInput : ''}
             />
-            {streetInputHasError && <p className={styles.invalidText}>Street need to has at least 3 characters</p>}
+            {streetInputHasError && <p className={styles.invalidText}>El calle necesita tener al menos 3 caracteres.</p>}
             <input
-                placeholder="NumStreet*"
+                placeholder="Numero*"
                 type="number"
                 id="numstreet"
                 value={enteredNumStreet}
                 onChange={numStreetChangedHandler}
                 onBlur={numStreetBlurHandler}
+                className={passwordInputHasError ? styles.invalidInput : ''}
             />
-            {numStreetInputHasError && <p className={styles.invalidText}>NumStreet is needed</p>}
+            {numStreetInputHasError && <p className={styles.invalidText}>Numero de la calle es necesario.</p>}
             <input
-                placeholder="Apartment"
+                placeholder="Departamento"
                 type="number"
                 id="apartment"
                 value={enteredApartment}
                 onChange={apartmentChangedHandler}
                 onBlur={apartmentBlurHandler}
+                className={passwordInputHasError ? styles.invalidInput : ''}
             />
             <>
                 <input
-                    placeholder="Address Name*"
+                    placeholder="Apodo de la direccion*"
                     type="text"
                     id="addressname"
                     value={enteredAddressName}
                     onChange={addressNameChangedHandler}
                     onBlur={addressNameBlurHandler}
+                    className={passwordInputHasError ? styles.invalidInput : ''}
                 />
-                {addressNameInputHasError && <p className={styles.invalidText}>Street need to has at least 3 characters</p>}
+                {addressNameInputHasError && <p className={styles.invalidText}>Apodo de la dirección necesita al menos 3 caracteres.</p>}
             </>
             <button disabled={!formIsValid}>
-                {loading ? <Loading light={true} /> : (editAddress ? 'Edit' : 'Create')}
+                {loading ? <Loading light={true} /> : (editAddress ? 'Editar' : 'Crear')}
             </button>
             {error && <ErrorMessage />}
         </form>

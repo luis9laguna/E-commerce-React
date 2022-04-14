@@ -16,7 +16,7 @@ const MyOrders = () => {
 
   return (
     <Layout>
-      <Meta title='My Orders' />
+      <Meta title='Mis ordenes' />
       <UserLayout>
         <ContainerOrders showModal={handlerShowDetailOrder} setDetailOrder={setDetailOrder} />
       </UserLayout>

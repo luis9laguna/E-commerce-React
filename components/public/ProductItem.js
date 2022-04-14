@@ -40,11 +40,11 @@ const ProductItem = ({ product }) => {
                     </p>
                     <span className={styles.price}>$ {product.price}</span>
                 </div>
-                {product.stock === 0 ? <div>No stock available</div>
+                {product.stock === 0 ? <div>No hay stock disponible</div>
                     : <div className={styles.addContainer}>
                         <form className={styles.form} onSubmit={submitHandler}>
                             <div className={styles.amountContainer}>
-                                <span>Amount</span>
+                                <span>Cantidad</span>
                                 <input
                                     className={styles.amount}
                                     id='amount'
@@ -53,7 +53,7 @@ const ProductItem = ({ product }) => {
                                     max='5'
                                     defaultValue='1' />
                             </div>
-                            <button className={styles.button}>ADD TO CART</button>
+                            <button className={styles.button}>AGREGAR AL CARRITO</button>
                         </form>
                     </div>}
             </div>

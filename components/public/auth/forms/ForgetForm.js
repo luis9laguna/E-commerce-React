@@ -46,16 +46,16 @@ const ForgetForm = ({ onClose }) => {
         if (response.ok) {
             //MODAL
             Swal.fire(
-                'Good job!', 'Check your email to continue with the process of recovering your account', 'success'
+                'Buen trabajo!', 'Dirigite a tu correo para progresar con la recuperacion de tu cuenta.', 'success'
             )
             //REDIRECT
-            // router.push('/')
+            router.push('/')
 
         } else {
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: response.data.message
+                text: 'Ha habido un error intente mas tarde.'
             })
         }
         onClose()
@@ -65,7 +65,7 @@ const ForgetForm = ({ onClose }) => {
 
     return (
         <Modal onClose={onClose}>
-            <h2 className={styles.title}>FORGOT PASSWORD</h2>
+            <h2 className={styles.title}>RECUPERAR CUENTA</h2>
             <form className={styles.form} style={{ boxShadow: 'initial', minWidth: '250px' }} onSubmit={formSubmissionHandler}>
                 <input
                     placeholder="Email*"
@@ -76,7 +76,7 @@ const ForgetForm = ({ onClose }) => {
                     value={enteredEmail}
                     className={emailInputHasError ? styles.invalidInput : ''}
                 />
-                {emailInputHasError && <p className={styles.invalidText}>It must be a valid email.</p>}
+                {emailInputHasError && <p className={styles.invalidText}>Debe ser un email valido.</p>}
 
                 <button disabled={!formIsValid}>
                     {loading ? <Loading light={true} /> : 'SEND'}

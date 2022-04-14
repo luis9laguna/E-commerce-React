@@ -11,7 +11,7 @@ const InfoHome = () => {
                     <CheckCircle style={{ color: "black", fontSize: "5rem" }} />
                 </span>
                 <p>
-                    We have one of the best quality on the market, you can rest assure that you will received a HQ Product.
+                    En Faisca siempre trabajamos con la mayor calidad del mercado, puedes estar seguro que recibiras alta calidad en cada una de tus compras.
                 </p>
             </div>
             <div>
@@ -19,7 +19,7 @@ const InfoHome = () => {
                     <LocalShippingOutlined style={{ color: "black", fontSize: "5rem" }} />
                 </span>
                 <p>
-                    Shippings to all the country, we secured your order.
+                    Envios a todo el pais, aseguramos tu orden.
                 </p>
             </div>
             <div>
@@ -27,7 +27,7 @@ const InfoHome = () => {
                     <CreditCardOutlined style={{ color: "black", fontSize: "5rem" }} />
                 </span>
                 <p>
-                    You can pay with CreditCard and DebitCart, the most confiable way of buying.
+                    Puedes cancelar con tarjeta de credito o debito, la forma mas confiable de comprar.
                 </p>
             </div>
 

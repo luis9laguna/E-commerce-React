@@ -30,7 +30,7 @@ const TableOrders = (props) => {
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: 'there was an error try again later',
+                text: 'Ha habido un error, intente mas tarde.',
             })
         }
     }
@@ -50,7 +50,7 @@ const TableOrders = (props) => {
         await put(`/order/${id}`, value)
         if (response.ok) {
             Swal.fire(
-                'Good job!',
+                '¡Excelente!',
                 response.data.message,
                 'success'
             )
@@ -59,7 +59,7 @@ const TableOrders = (props) => {
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: 'there was an error try again later',
+                text: 'Ha habido un error, intente mas tarde.',
             })
         }
 
@@ -71,7 +71,7 @@ const TableOrders = (props) => {
             {dbInfo?.map((order, i) => (
                 <div className={styles.order} key={i}>
                     <div>
-                        <span className={styles.titleInside}>Order Date</span>
+                        <span className={styles.titleInside}>Fecha de orden</span>
                         <span className={styles.information}>{getDate(order.createdAt)}</span>
                     </div>
                     <div>
@@ -79,15 +79,15 @@ const TableOrders = (props) => {
                         <span className={styles.information}>${order.total}</span>
                     </div>
                     <div>
-                        <span className={styles.titleInside}>Status</span>
+                        <span className={styles.titleInside}>Estado</span>
 
                         {inAdmin ?
                             (
                                 <select value={order.status} id="status" onChange={(e) => updatingOrder(order._id, e)}>
-                                    <option value="pending">Pending</option>
-                                    <option value="processing">Processing</option>
-                                    <option value="shipping">Shipping</option>
-                                    <option value="delivered">Delivered</option>
+                                    <option value="pending">Pendiente</option>
+                                    <option value="processing">Procesando</option>
+                                    <option value="shipping">Enviado</option>
+                                    <option value="delivered">Entregado</option>
                                 </select>
                             ) :
                             <span className={styles.information}>{order.status}</span>
@@ -95,9 +95,9 @@ const TableOrders = (props) => {
 
                     </div>
                     <button className={styles.button} onClick={() => handlerModalDetails(order.code)}>
-                        {loading ? <Loading light={true} /> : 'Details'}
+                        {loading ? <Loading light={true} /> : 'Detalles'}
                     </button>
-                    {error && "There was an error try again later."}
+                    {error && "Ha habido un error, intente mas tarde."}
                 </div>
             ))}
         </div>

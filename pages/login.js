@@ -16,7 +16,7 @@ const Login = () => {
   if (isLoggedIn) return <div></div>
   return (
     <Layout>
-      <Meta title='Auth' description='Sign in or create an account' />
+      <Meta title='Autenticar' description='Ingresa o crea una cuenta' />
       <Auth />
     </Layout>
   )

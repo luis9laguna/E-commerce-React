@@ -6,7 +6,7 @@ const statusPackage = () => {
 
     return (
         <Layout>
-            <Meta title='Recovery Account' />
+            <Meta title='Recuperar cuenta' />
             <RecoveryForm />
         </Layout>
     )

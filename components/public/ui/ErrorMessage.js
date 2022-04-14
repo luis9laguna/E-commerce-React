@@ -17,7 +17,7 @@ const ErrorMessage = ({ message }) => {
 }
 
 ErrorMessage.defaultProps = {
-    message: 'There was an error please try again later.'
+    message: 'Ha habido un error, intente mas tarde.'
 }
 
 export default ErrorMessage

@@ -11,24 +11,21 @@ const DetailOrder = ({ hideModal, detailOrder }) => {
         day: "2-digit"
     }).format(date)
 
-    console.log(detailOrder)
-
-
     const address = detailOrder.address
 
     return (
         <Modal onClose={hideModal}>
             <div className={styles.top}>
-                <span>Status</span>
+                <span>Estado</span>
                 <span className={styles.status}>{detailOrder.status}</span>
                 <span >{formattedDate}</span>
             </div>
             <table className={styles.table}>
                 <thead>
                     <tr className={styles.tr}>
-                        <th>Product</th>
-                        <th>Quantity</th>
-                        <th>Price</th>
+                        <th>Producto</th>
+                        <th>Cantidad</th>
+                        <th>Precio</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -47,8 +44,8 @@ const DetailOrder = ({ hideModal, detailOrder }) => {
             </table>
             <div className={styles.extraInfo}>
                 <div className={styles.address}>
-                    <div className={styles.infoTitle}>Address</div>
-                    <span>Luis Laguna(fix)</span>
+                    <div className={styles.infoTitle}>Dirección</div>
+                    <span>{address.name}</span>
                     <span>{address.rut}</span>
                     <span>{address.phone}</span>
                     <span>{address.street}, {address.numstreet}</span>
@@ -56,15 +53,15 @@ const DetailOrder = ({ hideModal, detailOrder }) => {
                     <span>{address.state}</span>
                 </div>
                 <div className={styles.bill}>
-                    <div className={styles.infoTitle}>Bill details</div>
+                    <div className={styles.infoTitle}>Detalles de pago</div>
                     <div>Subtotal: <span>${detailOrder.total - detailOrder.shipping}</span></div>
-                    <div>Shipping: <span>${detailOrder.shipping}</span></div>
+                    <div>Envio: <span>${detailOrder.shipping}</span></div>
                     <div className={styles.total}>TOTAL: <span>${detailOrder.total}</span></div>
                 </div>
 
             </div>
             <div className={styles.containerButton}>
-                <button className={styles.button} onClick={hideModal}>Close</button>
+                <button className={styles.button} onClick={hideModal}>Cerrar</button>
             </div>
         </Modal>
     )

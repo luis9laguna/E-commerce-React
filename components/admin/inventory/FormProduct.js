@@ -137,8 +137,8 @@ export default function FormProduct({ inventoryUpdate, selectCategories, getProd
         //MODAL
         if (response.ok) {
             Swal.fire(
-                'Good job!',
-                'The Product has been created/edit successfully',
+                '¡Excelente!',
+                'El producto ha sido creada/editada exitosamente.',
                 'success'
             )
             getProducts(1)
@@ -147,7 +147,7 @@ export default function FormProduct({ inventoryUpdate, selectCategories, getProd
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: response.data.message
+                text: 'Ha ocurrido un error, intente mas tarde'
             })
         }
 
@@ -163,54 +163,54 @@ export default function FormProduct({ inventoryUpdate, selectCategories, getProd
 
     return (
         <>
-            <h1 className={styles.title}>{inventoryUpdate === null ? 'CREATE' : 'EDIT'}</h1>
+            <h1 className={styles.title}>{inventoryUpdate === null ? 'CREAR' : 'EDITAR'}</h1>
             <form className={styles.form} onSubmit={formSubmissionHandler} style={{ minWidth: '280px', width: '50%' }}>
                 <input
-                    placeholder="Name*"
+                    placeholder="Nombre*"
                     type="text"
                     id="name"
                     value={enteredName}
                     onChange={nameChangedHandler}
                     onBlur={nameBlurHandler}
                 />
-                {nameInputHasError && <p className={styles.invalidText}>Name need to has at least 3 characters</p>}
+                {nameInputHasError && <p className={styles.invalidText}>El nombre debe tener al menos 3 caracteres.</p>}
 
                 <Upload images={images} setImages={setImages} limit={5} />
 
                 <select id="category" value={enteredCategory} onChange={categoryChangedHandler} onBlur={categoryBlurHandler}>
-                    <option disabled="disabled" value=""> Select Category</option>
+                    <option disabled="disabled" value="">Seleccionar Categoria</option>
                     {selectCategories.map((category, i) => (
                         <option key={i} value={category._id}>{category.name}</option>
                     ))}
                 </select>
-                {categoryInputHasError && <p className={styles.invalidText}>You need to choose a category</p>}
+                {categoryInputHasError && <p className={styles.invalidText}>Necesitas escoger una categoria.</p>}
                 <textarea
-                    placeholder="Description*"
+                    placeholder="Descripción*"
                     type="text"
                     id="description"
                     value={enteredDescription}
                     onChange={descriptionChangedHandler}
                     onBlur={descriptionBlurHandler}
                 />
-                {descriptionInputHasError && <p className={styles.invalidText}>Description need to has at least 5 characters</p>}
+                {descriptionInputHasError && <p className={styles.invalidText}>La descripción debe tener al menos 5 caracteres</p>}
                 <input
-                    placeholder="Price*"
+                    placeholder="Precio*"
                     type="number"
                     id="price"
                     value={enteredPrice}
                     onChange={priceChangedHandler}
                     onBlur={priceBlurHandler}
                 />
-                {priceInputHasError && <p className={styles.invalidText}>It must be a valid price.</p>}
+                {priceInputHasError && <p className={styles.invalidText}>Debe ser un precio válido.</p>}
                 <input
-                    placeholder="Cost*"
+                    placeholder="Costo*"
                     type="number"
                     id="cost"
                     value={enteredCost}
                     onChange={costChangedHandler}
                     onBlur={costBlurHandler}
                 />
-                {costInputHasError && <p className={styles.invalidText}>It must be a valid cost.</p>}
+                {costInputHasError && <p className={styles.invalidText}>Debe ser un costo válido.</p>}
                 <input
                     placeholder="Stock*"
                     type="number"
@@ -219,10 +219,10 @@ export default function FormProduct({ inventoryUpdate, selectCategories, getProd
                     onChange={stockChangedHandler}
                     onBlur={stockBlurHandler}
                 />
-                {stockInputHasError && <p className={styles.invalidText}>Stock must be higher than 0</p>}
+                {stockInputHasError && <p className={styles.invalidText}>El stock debe ser mayor a 0.</p>}
 
                 <button disabled={!formIsValid}>
-                    {loading ? <Loading light={true} /> : (inventoryUpdate === null ? 'CREATE' : 'EDIT')}
+                    {loading ? <Loading light={true} /> : (inventoryUpdate === null ? 'CREAR' : 'EDITAR')}
                 </button>
                 {error && <ErrorMessage />}
             </form>

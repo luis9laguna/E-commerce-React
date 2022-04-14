@@ -5,7 +5,7 @@ import Meta from "@/components/public/ui/Meta";
 const Cart = () => {
   return (
     <Layout>
-      <Meta title='Cart' />
+      <Meta title='Carrito' />
       <CartItems />
     </Layout>
   )

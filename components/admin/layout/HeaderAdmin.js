@@ -10,7 +10,7 @@ const HeaderAdmin = ({ setOpenNav, openNav }) => {
         <div className={styles.HeaderAdmin}>
             <div className={styles.menu} onClick={() => setOpenNav(!openNav)}><Menu /></div>
             <div>
-                <span>Hi, {userName}</span>
+                <span>Hola, {userName}</span>
                 <button onClick={logOut}>
                     <ExitToAppSharp />
                 </button>

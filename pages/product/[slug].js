@@ -23,7 +23,7 @@ const Product = ({ product }) => {
             <Meta title={product.name} description={product.description} />
             <ProductItem product={product} />
             {loading ? <Loading space={true} /> :
-                <SliderProduct products={relatedProducts} description='Some products that you may like' icon='favs' />
+                <SliderProduct products={relatedProducts} description='Algunos productos que te podrian gustar' icon='favs' />
             }
             {error && <ErrorMessage />}
         </Layout>

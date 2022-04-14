@@ -6,7 +6,7 @@ const Checkout = () => {
 
     return (
         <Layout>
-            <Meta title='Checkout' />
+            <Meta title='Pago' />
             <CheckContainer />
         </Layout>
     )

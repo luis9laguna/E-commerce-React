@@ -39,21 +39,21 @@ const TableInventory = (props) => {
         if (inProducts) route = "product"
         //MODAL CONFIRMATION
         Swal.fire({
-            title: 'Are you sure?',
-            text: "Once deleted, you will not be able to recover this item!",
+            title: '¿Estas seguro?',
+            text: "¡Una vez eliminado, no seras capaz de recuperarlo!",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
+            confirmButtonText: '¡Si, eliminar!'
 
         }).then(async (result) => {
             if (result.isConfirmed) {
                 await del(`/${route}/${id}`)
                 if (response.ok) {
                     Swal.fire(
-                        'Deleted!',
-                        response.data.message,
+                        '¡Eliminado!',
+                        'Eliminado correctamente',
                         'success'
                     )
                     //FETCH NEW DATA
@@ -63,7 +63,7 @@ const TableInventory = (props) => {
                     Swal.fire({
                         icon: 'error',
                         title: 'Oops...',
-                        text: response.data.message
+                        text: 'Ha ocurrido un error, intente mas tarde.'
                     })
                 }
             }
@@ -72,10 +72,7 @@ const TableInventory = (props) => {
 
     //STOCK
     const stockSelect = (id, name) => {
-        setProductStock({
-            id,
-            name
-        })
+        setProductStock({ id, name })
         handlerShowStock()
     }
 
@@ -83,8 +80,8 @@ const TableInventory = (props) => {
         await put(`product/stock/${productStock.id}`, { stock })
         if (response.ok) {
             Swal.fire(
-                'Good job!',
-                'The stock has been updated Succesfully',
+                '¡Excelente!',
+                'El stock ha sido actualizado correctamente',
                 'success'
             )
             getProducts(1)
@@ -104,18 +101,18 @@ const TableInventory = (props) => {
             <table className={styles.table}>
                 <thead>
                     <tr className={styles.tr}>
-                        <th>Name</th>
+                        <th>Nombre</th>
                         {inProducts &&
                             <>
-                                <th>Category</th>
-                                <th>Price</th>
-                                <th>Cost</th>
+                                <th>Categoria</th>
+                                <th>Precio</th>
+                                <th>Costo</th>
                                 <th>Stock</th>
-                                <th>Likes</th>
+                                <th>Me gusta</th>
                             </>
                         }
-                        <th>Status</th>
-                        <th>Options</th>
+                        <th>Estado</th>
+                        <th>Opciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -156,14 +153,14 @@ const TableInventory = (props) => {
             {showStock &&
                 <Modal onClose={handlerShowStock}>
                     <form onSubmit={handlerFormSubmit} className={styles.form}>
-                        <h2>Add or substract stock from </h2>
+                        <h2>Agregar o restar stock de</h2>
                         <h1>"{productStock.name}"</h1>
                         <input
                             type='number'
                             id='stock'
                         />
                         <button>
-                            {loading ? <Loading light={true} /> : 'Update Stock'}
+                            {loading ? <Loading light={true} /> : 'Actualizar Stock'}
                         </button>
                         {error && <ErrorMessage />}
                     </form>

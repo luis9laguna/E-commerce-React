@@ -60,7 +60,7 @@ const ChangePasswordForm = () => {
         if (response.ok) {
             //MODAL
             Swal.fire(
-                'Good job!', 'Your Password has been changed succesfully!', 'success'
+                '¡Excelente!', '¡La contraseña ha sido cambiada exitosamente!', 'success'
             )
             //REDIRECT
             router.push('/')
@@ -68,7 +68,7 @@ const ChangePasswordForm = () => {
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: response.data.message
+                text: 'Ha ocurrido un error, intente mas tarde.'
             })
         }
 
@@ -80,11 +80,11 @@ const ChangePasswordForm = () => {
     return (
         <div className={styles.container}>
             <h2 className={styles.title}>
-                Change Password
+                Cambiar contraseña
             </h2>
             <form className={styles.form} onSubmit={formSubmissionHandler}>
                 <input
-                    placeholder="Old Password*"
+                    placeholder="Antigua Contraseña*"
                     type="password"
                     id="oldPassword"
                     value={enteredOldPassword}
@@ -92,9 +92,9 @@ const ChangePasswordForm = () => {
                     onBlur={oldPasswordBlurHandler}
                     className={styles.userInput}
                 ></input>
-                {oldPasswordInputHasError ? <p className={styles.invalidText}>Password must be at least 8 characters, 1 uppercase, 1 lowercase and 1 number.</p> : ''}
+                {oldPasswordInputHasError ? <p className={styles.invalidText}>La contraseña debe tener al menos 8 caracteres, 1 mayuscula, 1 miniscula y 1 numero.</p> : ''}
                 <input
-                    placeholder="New Password*"
+                    placeholder="Nueva Contraseña*"
                     type="password"
                     id="newPassword"
                     value={enteredNewPassword}
@@ -102,9 +102,9 @@ const ChangePasswordForm = () => {
                     onBlur={newPasswordBlurHandler}
                     className={styles.userInput}
                 ></input>
-                {newPasswordInputHasError ? <p className={styles.invalidText}>Password must be at least 8 characters, 1 uppercase, 1 lowercase and 1 number.</p> : ''}
+                {newPasswordInputHasError ? <p className={styles.invalidText}>La contraseña debe tener al menos 8 caracteres, 1 mayuscula, 1 miniscula y 1 numero.</p> : ''}
                 <button className={styles.userButton} disabled={!formIsValid}>
-                    {loading ? <Loading light={true} /> : 'Change Password'}
+                    {loading ? <Loading light={true} /> : 'Cambiar Contraseña'}
                 </button>
                 {error && <ErrorMessage />}
             </form>

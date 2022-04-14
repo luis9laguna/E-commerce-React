@@ -49,13 +49,13 @@ const AddressesInfo = ({ showModal, setAddressUpdate, reFetchAddress, setReFetch
 
         //MODAL CONFIRMATION
         Swal.fire({
-            title: 'Are you sure?',
-            text: "Once deleted, you will not be able to recover this Address!",
+            title: '¿Estas seguro?',
+            text: "Una vez elimnado, no seras capaz de recuperar la dirección",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
+            confirmButtonText: 'Si, eliminar'
 
         }).then(async result => {
             if (result.isConfirmed) {
@@ -64,7 +64,7 @@ const AddressesInfo = ({ showModal, setAddressUpdate, reFetchAddress, setReFetch
                 await del(`/address/${id}`)
                 if (response.ok) {
                     Swal.fire(
-                        'Deleted!', 'The Address has been deleted.', 'success'
+                        '¡Eliminado!', 'La dirección ha sido eliminada', 'success'
                     )
                     //DELETE ADDRESS FROM THE VIEW
                     setReFetchAddress(true)
@@ -75,7 +75,7 @@ const AddressesInfo = ({ showModal, setAddressUpdate, reFetchAddress, setReFetch
                     Swal.fire({
                         icon: 'error',
                         title: 'Oops...',
-                        text: response.data.message
+                        text: "Ha ocurrido un error, intente mas tarde."
                     })
                 }
             }
@@ -93,7 +93,7 @@ const AddressesInfo = ({ showModal, setAddressUpdate, reFetchAddress, setReFetch
         await put(`/address/default/${id}`)
         if (response.ok) {
             Swal.fire(
-                'Good job!', 'Your default address has been updated', 'success'
+                '¡Buen trabajo!', 'Tu dirección por defecto ha sido actualizada', 'success'
             )
             //SHOW DEFAULT ADDRESS ON THE VIEW
             setReFetchAddress(true)
@@ -104,7 +104,7 @@ const AddressesInfo = ({ showModal, setAddressUpdate, reFetchAddress, setReFetch
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: 'there was an error try again later',
+                text: 'Ha ocurrido un error, intente mas tarde.',
             })
         }
     }
@@ -113,8 +113,8 @@ const AddressesInfo = ({ showModal, setAddressUpdate, reFetchAddress, setReFetch
         <div className={styles.container}>
             <div className={styles.buttonContainer}>
                 {addresses.length >= 3 ?
-                    <h2>You can't create more than 3 addresses</h2>
-                    : <button onClick={buttonAddAddress}>Add address</button>
+                    <h2>No puedes crear mas de 3 direcciones</h2>
+                    : <button onClick={buttonAddAddress}>Crear dirección</button>
                 }
             </div>
 
@@ -125,20 +125,20 @@ const AddressesInfo = ({ showModal, setAddressUpdate, reFetchAddress, setReFetch
                         <div className={styles.address} key={i}>
                             <h3 className={styles.name}>{address.address.addressname}</h3>
                             <div className={styles.info}>
-                                <div>Name: <span>{address.address.name}</span></div>
-                                <div>Phone: <span>{address.address.phone}</span></div>
-                                <div>ID: <span>{address.address.id}</span></div>
-                                <div>State: <span>{address.address.state}</span></div>
-                                <div>City: <span>{address.address.city}</span></div>
-                                <div>Province: <span>{address.address.province}</span></div>
-                                <div>Street: <span>{address.address.street}, {address.address.numstreet}</span></div>
-                                <div>Apartment: <span>{address.address.apartment || 'none'}</span></div>
+                                <div>Nombre: <span>{address.address.name}</span></div>
+                                <div>Telefono: <span>{address.address.phone}</span></div>
+                                <div>Rut: <span>{address.address.id}</span></div>
+                                <div>Region: <span>{address.address.state}</span></div>
+                                <div>Provincia: <span>{address.address.city}</span></div>
+                                <div>Comuna: <span>{address.address.province}</span></div>
+                                <div>Calle: <span>{address.address.street}, {address.address.numstreet}</span></div>
+                                <div>Departamento/Bloque: <span>{address.address.apartment || 'none'}</span></div>
                             </div>
                             <hr />
                             <div className={styles.containerDefault}>
                                 {address._id === userAddress
-                                    ? <div className={styles.default}><CheckCircleOutlined /> Default Address</div>
-                                    : <button onClick={() => handlerMakeDefault(address._id)}>Make Default</button>}
+                                    ? <div className={styles.default}><CheckCircleOutlined />Dirección por defecto.</div>
+                                    : <button onClick={() => handlerMakeDefault(address._id)}>Defecto</button>}
                             </div>
                             <div className={styles.options}>
                                 <button onClick={() => handlerEdit(address._id)}>
@@ -151,7 +151,7 @@ const AddressesInfo = ({ showModal, setAddressUpdate, reFetchAddress, setReFetch
                         </div>
                     ))
                         :
-                        <h1>You haven't created any address yet</h1>
+                        <h1>No has creado ninguna dirección aun.</h1>
                     }
                 </div>
             }

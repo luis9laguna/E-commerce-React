@@ -43,7 +43,7 @@ const StatusOrderForm = ({ showModal, setDetailOrder }) => {
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: response.data.message,
+                text: 'Ha ocurrido, un error intente mas tarde.'
             })
         }
         //RESET VALUES
@@ -52,19 +52,19 @@ const StatusOrderForm = ({ showModal, setDetailOrder }) => {
 
     return (
         <div className={styles.container} style={{ margin: '4rem 0' }}>
-            <h2 className={styles.title}>Status Order</h2>
+            <h2 className={styles.title}>Estado de la orden</h2>
             <form className={styles.form} style={{ width: '50%' }} onSubmit={formSubmissionHandler}>
                 <input
-                    placeholder="Code Package*"
+                    placeholder="Codigo de la orden*"
                     type="text"
                     id="code"
                     value={enteredCode}
                     onChange={codeChangedHandler}
                     onBlur={codeBlurHandler}
                 />
-                {codeInputHasError && <p className={styles.invalidText}>Code has to be of at least 36 characters</p>}
+                {codeInputHasError && <p className={styles.invalidText}>El codigo tiene que ser de 36 digitos</p>}
                 <button disabled={!formIsValid}>
-                    {loading ? <Loading light={true} /> : 'Look Status'}
+                    {loading ? <Loading light={true} /> : 'Mirar Estado'}
                 </button>
                 {error && <ErrorMessage />}
             </form>

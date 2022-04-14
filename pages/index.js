@@ -11,8 +11,8 @@ const Home = ({ categories, newestProducts, likesProducts }) => {
       <Slider />
       <InfoHome />
       <SliderCategory categories={categories} />
-      <SliderProduct products={newestProducts} description='Take a look to our new Products' icon='news' />
-      <SliderProduct products={likesProducts} description='Check The Favorite Products of our users' icon='favs' />
+      <SliderProduct products={newestProducts} description='Echa un vistazo a nuestros nuevos productos' icon='news' />
+      <SliderProduct products={likesProducts} description='Mira los productos mas queridos por nuestros clientes' icon='favs' />
     </Layout>
   )
 }

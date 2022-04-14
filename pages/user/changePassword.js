@@ -6,7 +6,7 @@ import Form from "@/components/public/user/userOptions/ChangePasswordForm";
 const ChangePassword = () => {
   return (
     <Layout>
-      <Meta title='Change Password' />
+      <Meta title='Cambiar contraseña' />
       <UserLayout>
         <Form />
       </UserLayout>

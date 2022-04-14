@@ -12,7 +12,10 @@ const UserInformation = () => {
   const [userInfo, setUserInfo] = useState('')
 
   //USEFETCH
-  const options = { cachePolicy: 'no-cache', headers: { 'Authorization': localStorage.getItem('token') } }
+  const storage = typeof localStorage !== 'undefined';
+  let token
+  if (storage) token = localStorage.getItem('token')
+  const options = { cachePolicy: 'no-cache', headers: { 'Authorization': token } }
   const { get, response, loading, error } = useFetch(`${process.env.url}`, options)
 
   const getUser = async () => {
@@ -23,7 +26,7 @@ const UserInformation = () => {
 
   return (
     <Layout>
-      <Meta title='UserInfo' />
+      <Meta title='Info del usuario' />
       <UserLayout>
         {loading ? <Loading space={true} /> :
           <UserDataForm userInfo={userInfo} />

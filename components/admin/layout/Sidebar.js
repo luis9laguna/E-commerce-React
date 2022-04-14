@@ -52,28 +52,28 @@ const Sidebar = ({ children }) => {
                         <Link href="/admin/users">
                             <div className={router.pathname === '/admin/users' ? styles.active : ''}>
                                 <PersonOutlined className={styles.icon} />
-                                <span className={styles.linksName}>Users</span>
+                                <span className={styles.linksName}>Usuarios</span>
                             </div>
                         </Link>
-                        <span className={styles.tooltip}>Users</span>
+                        <span className={styles.tooltip}>Usuarios</span>
                     </li>
                     <li>
                         <Link href="/admin/orders">
                             <div className={router.pathname === '/admin/orders' ? styles.active : ''}>
                                 <ShoppingCartOutlined className={styles.icon} />
-                                <span className={styles.linksName}>Orders</span>
+                                <span className={styles.linksName}>Ordenes</span>
                             </div>
                         </Link>
-                        <span className={styles.tooltip}>Orders</span>
+                        <span className={styles.tooltip}>Ordenes</span>
                     </li>
                     <li>
                         <Link href="/admin/inventory">
                             <div className={router.pathname === '/admin/inventory' ? styles.active : ''}>
                                 <ArchiveOutlined className={styles.icon} />
-                                <span className={styles.linksName}>Inventory</span>
+                                <span className={styles.linksName}>Inventario</span>
                             </div>
                         </Link>
-                        <span className={styles.tooltip}>Inventory</span>
+                        <span className={styles.tooltip}>Inventario</span>
                     </li>
                 </ul>
             </div>

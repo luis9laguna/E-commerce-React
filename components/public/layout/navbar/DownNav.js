@@ -22,9 +22,9 @@ const DownNav = ({ statusOpen, showContactForm, showAboutUs }) => {
 
     return (
         <div className={`${styles.containerNavDown} ${statusOpen ? styles.show : ''}`} >
-            <div className={styles.home}><Link href='/'>Home</Link></div >
+            <div className={styles.home}><Link href='/'>Inicio</Link></div >
             <div className={`${styles.category} ${dropCategory ? styles.dropActive : ''}`} onClick={() => setDropCategory(!dropCategory)}>
-                <div className={styles.cateArrow}> Categories<ArrowDropDown /></div>
+                <div className={styles.cateArrow}>Categorias<ArrowDropDown /></div>
                 <div className={styles.dropDown}>
                     {error && <ErrorMessage />}
                     {loading ? <Loading light={true} /> :
@@ -40,9 +40,9 @@ const DownNav = ({ statusOpen, showContactForm, showAboutUs }) => {
                     }
                 </div>
             </div>
-            <div><Link href='/product/all'>All Products</Link></div>
-            <div><a href='#' onClick={showAboutUs}>About us</a></div>
-            <div><a href='#' onClick={showContactForm}>Contact us</a></div>
+            <div><Link href='/product/all'>Productos</Link></div>
+            <div><a href='#' onClick={showAboutUs}>Acerca</a></div>
+            <div><a href='#' onClick={showContactForm}>Contacto</a></div>
             {statusOpen && <SignLog />}
         </div >
     )

@@ -11,11 +11,11 @@ const SignLog = () => {
             {isLoggedIn ?
                 <>
                     <Link href='/user/userInformation'>
-                        <span className={`${styles.auth} ${styles.register}`} style={{ textTransform: 'capitalize' }}>Hi, {userName}</span>
+                        <span className={`${styles.auth} ${styles.register}`} style={{ textTransform: 'capitalize' }}>Hola, {userName}</span>
                     </Link>
                     <button className={styles.logout} onClick={logOut}>
                         <span className={`${styles.auth} ${styles.login}`}>
-                            LogOut
+                            Cerrar Sesión
                         </span>
                     </button>
                 </>
@@ -23,12 +23,12 @@ const SignLog = () => {
                 <>
                     <Link href='/login#register'>
                         <span className={`${styles.auth} ${styles.register}`}>
-                            Sing Up
+                            Registrar
                         </span>
                     </Link>
                     <Link href='/login#login'>
                         <span className={`${styles.auth} ${styles.login}`}>
-                            Log In
+                            Ingresar
                         </span>
                     </Link>
                 </>

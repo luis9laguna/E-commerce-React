@@ -63,26 +63,26 @@ const ContainerOrders = ({ showModal, setDetailOrder }) => {
         <div className={styles.container}>
             {inAdmin &&
                 <div className={styles.sortContainer}>
-                    <span>Sort By</span>
+                    <span>Ordenar Por:</span>
                     <select id="status" onChange={sortOrders}>
-                        <option value='all'>All</option>
-                        <option value="pending">Pending</option>
-                        <option value="processing">Processing</option>
-                        <option value="shipping">Shipping</option>
-                        <option value="delivered">Delivered</option>
+                        <option value='all'>Todos</option>
+                        <option value="pending">Pendientes</option>
+                        <option value="processing">Procesando</option>
+                        <option value="shipping">Enviando</option>
+                        <option value="delivered">Entregado</option>
                     </select>
                 </div>
             }
 
             <div className={styles.orderHeader}>
-                <span className={styles.title}>Order Date</span>
+                <span className={styles.title}>Fecha de Orden</span>
                 <span className={styles.title}>Total</span>
-                <span className={styles.title}>Status</span>
-                <span className={styles.title}>Detail</span>
+                <span className={styles.title}>Estado</span>
+                <span className={styles.title}>Detalle</span>
 
             </div>
 
-            {error && <h2 style={{ textAlign: 'center' }}>Sorry but we couldn't find what you were looking for.</h2>}
+            {error && <h2 style={{ textAlign: 'center' }}>Lo siento, no pudimos encontrar lo que estabas buscando.</h2>}
             {loading && !error ? <Loading space={true} />
                 :
                 <TableOrders

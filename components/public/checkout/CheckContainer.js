@@ -71,8 +71,8 @@ const CheckContainer = () => {
         await post('order', order)
         if (response.ok) {
             Swal.fire(
-                'Good job!',
-                'Your order has been created',
+                'Excelente!',
+                'Tu orden ha sido creada.',
                 'success'
             )
         }
@@ -110,7 +110,7 @@ const CheckContainer = () => {
                             }
                         </div>
                         <div className={styles.summary}>
-                            <h2>ORDER SUMMARY</h2>
+                            <h2>RESUMEN DE LA ORDEN</h2>
                             <div className={styles.containerDetailProduct}>
                                 {items.map((item, i) => (
                                     <div key={i} className={styles.productDetail}>
@@ -131,7 +131,7 @@ const CheckContainer = () => {
                                 <b>$ {total()}</b>
                             </div>
                             <div>
-                                <span>Estimated Shipping</span>
+                                <span>Envio estimado</span>
                                 <b>$ 15</b>
                             </div>
                             <div>
@@ -139,7 +139,7 @@ const CheckContainer = () => {
                                 <b>$ {total() + 15}</b>
                             </div>
                             <button disabled={!addressId} className={styles.button} onClick={goToPay}>
-                                {loading ? <Loading light={true} /> : 'CHECKOUT NOW'}
+                                {loading ? <Loading light={true} /> : 'PAGAR AHORA'}
                             </button>
                             {error && <ErrorMessage message={response.data.message} />}
                         </div>

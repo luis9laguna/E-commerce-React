@@ -38,28 +38,28 @@ const Auth = () => {
         <>
             <div className={styles.container}>
                 <div>
-                    <h2>Sign in or create an account</h2>
+                    <h2>Ingresa o crea una nueva cuenta</h2>
                     <div className={styles.buttonContainer}>
-                        <button id='login' className={register ? '' : styles.current} onClick={getLoginForm}>Sign In</button>
-                        <button id='register' className={register ? styles.current : ''} onClick={getRegisterForm}>Create Account</button>
+                        <button id='login' className={register ? '' : styles.current} onClick={getLoginForm}>Ingresar</button>
+                        <button id='register' className={register ? styles.current : ''} onClick={getRegisterForm}>Crear cuenta</button>
                     </div>
                     {register ? <RegisterForm /> : <LoginForm showModal={handlerShowForgetPassword} />}
                 </div>
                 <div >
-                    <h2>Use another account</h2>
+                    <h2>Usa otra cuenta</h2>
                     <div className={styles.another}>
                         <GoogleLogin
                             clientId={process.env.GOOGLE_ID}
-                            buttonText="Log in with Google"
+                            buttonText="Ingresa con Google"
                             onSuccess={handleLogin}
                             onFailure={handleLogin}
                             cookiePolicy={'single_host_origin'}
                         />
-                        <p>Join and get all the benefits!</p>
+                        <p>Ingresa y obtén beneficios</p>
                         <ul>
-                            <li> <ShopOutlined /> Save time during checkout</li>
-                            <li><FavoriteBorderOutlined /> Manage your wish list</li>
-                            <li><HistoryOutlined /> Access your order history</li>
+                            <li> <ShopOutlined />Salva tiempo a la hora de pagar</li>
+                            <li><FavoriteBorderOutlined />Maneja tu lista de deseados</li>
+                            <li><HistoryOutlined />Accede a tu historial de ordenes</li>
                         </ul>
                     </div>
                 </div>

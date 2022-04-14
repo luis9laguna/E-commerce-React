@@ -33,12 +33,12 @@ const CartItems = () => {
 
     return (
         <div className={styles.container}>
-            <h1 className={styles.title}>YOUR BAG</h1>
+            <h1 className={styles.title}>TU BOLSA</h1>
             {items.length !== 0 ?
                 <div className={styles.order}>
                     <div className={styles.info}>
                         <div className={styles.cart}>
-                            <span>Cart (<b>{totalQuantityCart} products</b>)</span>
+                            <span>Carro (<b>{totalQuantityCart} Productos</b>)</span>
                         </div>
                         {items.map((product, i) => (
                             <div key={i} className={styles.product}>
@@ -53,31 +53,31 @@ const CartItems = () => {
                                         <span>{product.quantity}</span>
                                         <button onClick={() => subtractQuantity(product.id)}> <Remove /></button>
                                     </div>
-                                    <span className={styles.delete} onClick={() => deleteItem(product.id)}><DeleteOutline /> Delete Product</span>
+                                    <span className={styles.delete} onClick={() => deleteItem(product.id)}><DeleteOutline />Eliminar producto</span>
                                 </div>
                             </div>
                         ))}
                     </div>
                     <div className={styles.summary}>
-                        <h2>ORDER SUMMARY</h2>
+                        <h2>RESUMEN DE LA ORDEN</h2>
                         <hr />
                         <div>
                             <span>Subtotal</span>
                             <b>$ {total()}</b>
                         </div>
                         <div>
-                            <span>Estimated Shipping</span>
+                            <span>Envio estimado</span>
                             <b>$ 15</b>
                         </div>
                         <div>
                             <span>Total</span>
                             <b>$ {total() + 15}</b>
                         </div>
-                        <button className={styles.button} onClick={() => router.push('/checkout')}>CHECKOUT NOW</button>
+                        <button className={styles.button} onClick={() => router.push('/checkout')}>Continuar</button>
                     </div>
                 </div>
                 :
-                <h2 className={styles.nothing}>You don't have any product in your cart yet, go and check some <Link href="/product/all"><span>products!</span></Link></h2>
+                <h2 className={styles.nothing}>¡No tienes productos en tu carro aun, ve y mira algunos <Link href="/product/all"><span>productos!</span></Link></h2>
             }
         </div>
     )

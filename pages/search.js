@@ -42,7 +42,7 @@ const Search = () => {
                         :
                         <>
                             {error ? <ErrorMessage /> :
-                                <h1 style={{ textAlign: 'center', margin: '5rem 0' }}>There aren't results with '{search || '????'}'</h1>
+                                <h1 style={{ textAlign: 'center', margin: '5rem 0' }}>No hay resultados con '{search || '????'}'</h1>
                             }
                         </>
                     }

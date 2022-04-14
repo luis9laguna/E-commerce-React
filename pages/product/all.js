@@ -8,7 +8,7 @@ const AllProducts = ({ data }) => {
 
     return (
         <Layout>
-            <Meta title='All Products' />
+            <Meta title='Productos' />
             <ProductContainer data={data} title={'All Products'} url={url} />
         </Layout>
     )

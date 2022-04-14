@@ -32,7 +32,6 @@ const WishList = () => {
   }
   const { get, response, loading, error } = useFetch(`${process.env.url}`, options)
 
-
   const getLikedProducts = async () => {
     const products = await get(`/like?page=${page}&limit=15&sort=${sort}`)
     if (response.ok) setData(products)
@@ -44,8 +43,6 @@ const WishList = () => {
     if (deleteFav) setDeleteFav(false)
   }, [page, sort, deleteFav, isLoggedIn])
 
-  console.log(data.length)
-
   return (
     <Layout>
       <Meta title='WishList' />
@@ -54,8 +51,8 @@ const WishList = () => {
         <>
           {!isLoggedIn ?
             <h2 style={{ textAlign: 'center', margin: '5rem 0' }}>
-              To get access to your saved products you must access to your
-              <Link href='/login#login'><span style={{ color: 'red', cursor: 'pointer' }}> account!</span></Link>
+              ¡Para tener acceso a los productos guardados debes acceder a tu
+              <Link href='/login#login'><span style={{ color: 'red', cursor: 'pointer' }}> cuenta!</span></Link>
             </h2>
             :
             <>
@@ -65,8 +62,8 @@ const WishList = () => {
                 <>
                   {error ? ErrorMessage :
                     <h2 style={{ textAlign: 'center', margin: '5rem 0' }}>
-                      You don't have any product added to yout wishlist, go and check some
-                      <Link href='/product/all'><span style={{ color: 'red', cursor: 'pointer' }}> products!</span></Link>
+                      No tienes ningun producto añadido a tu lista de deseado, ve y echa un vistazo a alguno de nuestros
+                      <Link href='/product/all'><span style={{ color: 'red', cursor: 'pointer' }}> productos!</span></Link>
                     </h2>
                   }
                 </>
