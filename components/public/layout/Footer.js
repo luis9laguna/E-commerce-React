@@ -1,13 +1,10 @@
 import { Facebook, Instagram, MailOutline, Map, Phone, Twitter, WhatsApp } from '@material-ui/icons';
 import styles from '@/styles/layout/Footer.module.css';
 import Link from "next/link";
-import Newsletter from './elements/Newsletter';
-import Whatsapp from './elements/Whatsapp';
 
 const Footer = () => {
     return (
         <>
-            <Newsletter />
             <div className={styles.container}>
                 <div className={styles.left}>
                     <h1 className={styles.logo}>SHOOP.</h1>
@@ -54,9 +51,6 @@ const Footer = () => {
                     </span>
                     <img className={styles.payment} src="https://i.ibb.co/Qfvn4z6/payment.png" />
                 </div>
-                <a href="https://www.whatsapp.com">
-                    <Whatsapp />
-                </a>
             </div>
         </>
     )

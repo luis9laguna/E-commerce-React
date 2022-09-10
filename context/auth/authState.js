@@ -1,15 +1,15 @@
 import { useRouter } from 'next/router'
-import { useReducer, useState } from "react";
+import { useEffect, useReducer } from "react";
+import Cookies from 'js-cookie'
 import useFetch from 'use-http'
 import authContext from "./authContext";
 import authReducer from "./authReducer";
 import Swal from 'sweetalert2'
 
-import { USER_AUTH, FORM_AUTH, LOG_OUT, UPDATE_USER } from "types";
+import { USER_AUTH, FORM_AUTH, LOG_OUT, UPDATE_USER, NO_TOKEN } from "types";
 
 const AuthState = ({ children }) => {
 
-    const [loadingUser, setLoadingUser] = useState(true)
 
     //ROUTER
     const router = useRouter()
@@ -19,28 +19,29 @@ const AuthState = ({ children }) => {
         userName: null,
         isLoggedIn: false,
         ref: null,
-        loading: false
+        isLoading: true
     }
     const [state, dispatch] = useReducer(authReducer, initialState)
 
 
     //USEFETCH
-    const storage = typeof localStorage !== 'undefined';
-    let token
-    if (storage) token = localStorage.getItem('token')
-    const options = { cachePolicy: 'no-cache', headers: { 'Authorization': token } }
+    const token = Cookies.get('token');
+    const options = { cachePolicy: 'no-cache', headers: { 'Authorization': token }, credentials: 'include' }
     const { get, post, response, loading, error } = useFetch(`${process.env.url}`, options)
 
+    //GET USER INFO
+    useEffect(() => { userAuth() }, [])
+
     const userRegister = async data => {
-        const resp = await post('user', data)
+        await post('user', data)
         if (response.ok) {
             dispatch({
                 type: FORM_AUTH,
                 payload: {
-                    role: resp.user.role,
-                    user: resp.user.name,
-                    ref: resp.user.ref,
-                    token: resp.token
+                    role: response.data.user.role,
+                    user: response.data.user.name,
+                    ref: response.data.user.ref,
+                    token: response.data.token
                 }
             })
             //MODAL
@@ -60,17 +61,17 @@ const AuthState = ({ children }) => {
 
 
     const logIn = async data => {
-        const resp = await post('auth/login', data)
+        await post('auth/login', data)
 
         if (response.ok) {
-            const role = resp.user.role
+            const role = response.data.user.role
             dispatch({
                 type: FORM_AUTH,
                 payload: {
                     role,
-                    user: resp.user.name,
-                    ref: resp.user.ref,
-                    token: resp.token
+                    user: response.data.user.name,
+                    ref: response.data.user.ref,
+                    token: response.data.token
                 }
             })
             //MODAL
@@ -93,16 +94,15 @@ const AuthState = ({ children }) => {
     }
 
     const logInGoogle = async token => {
-        const resp = await post('auth/google', token)
-
+        await post('auth/google', token)
         if (response.ok) {
             dispatch({
                 type: FORM_AUTH,
                 payload: {
-                    role: resp.user.role,
-                    user: resp.user.name,
-                    ref: resp.user.ref,
-                    token: resp.token
+                    role: response.data.user.role,
+                    user: response.data.user.name,
+                    ref: response.data.user.ref,
+                    token: response.data.token
                 }
             })
             //MODAL
@@ -121,24 +121,23 @@ const AuthState = ({ children }) => {
     }
 
     const userAuth = async () => {
-        let resp
-        if (token !== null) resp = await fetch(`${process.env.url}/user`, { headers: { 'Authorization': token } })
-        const data = await resp?.json()
-        if (data?.ok) {
+        if (!token) {
+            dispatch({ type: NO_TOKEN })
+            return
+        }
+        await get(`user`)
+        if (response.ok) {
             dispatch({
                 type: USER_AUTH,
                 payload: {
-                    role: data.user?.role,
-                    user: data.user?.name,
-                    ref: data.user?.ref,
+                    role: response.data.user.role,
+                    user: response.data.user.name,
+                    ref: response.data.user.ref,
                 }
             })
-        } else {
-            if (data?.message === 'Token Invalid') {
-                localStorage.removeItem('token')
-            }
+        } else if (response.data.message === 'Token Invalid') {
+            Cookies.remove('token')
         }
-        setLoadingUser(false)
     }
 
     const updateUser = (user) => {
@@ -162,13 +161,14 @@ const AuthState = ({ children }) => {
                 isLoggedIn: state.isLoggedIn,
                 role: state.role,
                 ref: state.ref,
+                isLoading: state.isLoading,
+                fetchLoading: loading,
                 userRegister,
                 logIn,
                 logInGoogle,
                 userAuth,
                 updateUser,
                 logOut,
-                loadingUser,
             }}>
             {children}
         </authContext.Provider>

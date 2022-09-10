@@ -1,24 +1,29 @@
-import { useEffect } from 'react';
 import Header from './Header';
 import Footer from './Footer';
 import Meta from '../ui/Meta';
 import { useAuth } from 'context/auth/authContext';
-import { useCart } from 'context/cart/cartContext';
+import { SyncLoader } from 'react-spinners';
+import { WhatsApp } from '@material-ui/icons';
 
 const Layout = ({ children }) => {
 
     //CONTEXT
-    const { userAuth } = useAuth()
-    const { getCartLocal } = useCart()
+    const { isLoading } = useAuth()
 
-    //GET USER IF THERE IS A VALID TOKEN
-    useEffect(() => {
-        userAuth()
-        const items = localStorage.getItem('cart')
-        if (items) {
-            getCartLocal()
-        }
-    }, []);
+    const style = {
+        width: '100&',
+        height: '100vh',
+        backgroundColor: '#f5f5f5',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
+    }
+
+    if (isLoading) return (
+        <div style={style}>
+            <SyncLoader color={'#303030'} loading={isLoading} size={100} />
+        </div>
+    )
 
     return (
         <>
@@ -27,8 +32,12 @@ const Layout = ({ children }) => {
             <main>
                 {children}
             </main>
+            <a href="https://www.whatsapp.com" className='whatsapp'>
+                <WhatsApp style={{ margin: 'auto' }} />
+            </a>
             <Footer />
         </>
+
     )
 }
 

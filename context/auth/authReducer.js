@@ -1,11 +1,12 @@
-import { USER_AUTH, FORM_AUTH, LOG_OUT, UPDATE_USER } from "types";
+import Cookies from 'js-cookie'
+import { USER_AUTH, FORM_AUTH, LOG_OUT, UPDATE_USER, NO_TOKEN } from "types";
 
 
 export default (state, action) => {
     switch (action.type) {
 
         case FORM_AUTH:
-            localStorage.setItem('token', action.payload.token)
+            Cookies.set('token', action.payload.token, { expires: 1 })
             return {
                 ...state,
                 userName: action.payload.user,
@@ -20,8 +21,13 @@ export default (state, action) => {
                 userName: action.payload.user,
                 ref: action.payload.ref,
                 role: action.payload.role,
-                isLoggedIn: true
-
+                isLoggedIn: true,
+                isLoading: false
+            }
+        case NO_TOKEN:
+            return {
+                ...state,
+                isLoading: false
             }
         case UPDATE_USER:
             return {
@@ -30,7 +36,7 @@ export default (state, action) => {
             }
 
         case LOG_OUT:
-            localStorage.removeItem('token')
+            Cookies.remove('token')
             return {
                 ...state,
                 userName: null,

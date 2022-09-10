@@ -22,10 +22,6 @@ body {
   color: var(--primary);
 }
 
-ul {
-  margin: 0;
-  padding: 0;
-}
 
 a {
   color: inherit;
@@ -34,6 +30,9 @@ a {
 
 * {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
 /*SWIPER*/
@@ -79,23 +78,6 @@ a {
 
 .whatsapp:hover {
   transform: scale(1.15);
-}
-
-/*ANNOUNCEMENT*/
-.announcement {
-  height: 30px;
-  background-color: var(--primary);
-  color: var(--secondary);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 1rem;
-}
-
-@media (max-width: 350px) {
-  .announcement {
-    font-size: 0.8rem;
-  }
 }
 
 /*INFOABOUT*/

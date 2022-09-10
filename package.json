@@ -10,7 +10,7 @@
   "dependencies": {
     "@material-ui/core": "^4.12.3",
     "@material-ui/icons": "^4.11.2",
-    "axios": "^0.25.0",
+    "formik": "^2.2.9",
     "js-cookie": "^3.0.1",
     "next": "^12.0.8",
     "node-fetch": "^3.2.0",
@@ -22,12 +22,16 @@
     "react-image-gallery": "^1.2.7",
     "react-medium-image-zoom": "^4.3.5",
     "react-paginate": "^8.1.0",
-    "sweetalert2": "^11.3.10",
+    "react-spinners": "^0.11.0",
+    "react-toastify": "^9.0.1",
+    "sweetalert2": "^11.4.29",
     "swiper": "^7.4.1",
-    "use-http": "^1.0.26"
+    "use-http": "^1.0.26",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "eslint": "8.7.0",
-    "eslint-config-next": "^12.0.8"
+    "eslint-config-next": "^12.0.8",
+    "sass": "^1.54.8"
   }
 }

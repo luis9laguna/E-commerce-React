@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { useAuth } from 'context/auth/authContext';
@@ -7,13 +6,11 @@ import { AddLocationOutlined, ArrowForwardIosOutlined, LockOutlined, PersonOutli
 
 const UserLayout = ({ children }) => {
 
-    const { isLoggedIn, loadingUser } = useAuth()
+    const { isLoggedIn } = useAuth()
     const router = useRouter()
 
-    useEffect(() => {
-        if (!loadingUser && !isLoggedIn) router.replace('/login#login')
-    }, [isLoggedIn, loadingUser]);
-    if (!isLoggedIn) return <div></div>
+
+    if (!isLoggedIn) router.push('/')
 
     return (
         <div className={styles.container}>

@@ -8,6 +8,7 @@ import FormProduct from './FormProduct'
 import FormCategory from './FormCategory'
 import Loading from '@/components/public/ui/Loading'
 import ErrorMessage from '@/components/public/ui/ErrorMessage'
+import Cookies from 'js-cookie'
 
 
 const ContainerInventory = () => {
@@ -26,7 +27,7 @@ const ContainerInventory = () => {
     const [search, setSearch] = useState('a');
 
     //USEFETCH
-    const options = { cachePolicy: 'no-cache', headers: { 'Authorization': localStorage.getItem('token') } }
+    const options = { cachePolicy: 'no-cache', headers: { 'Authorization': Cookies.get('token') }, credentials: 'include' }
     const { get, response, loading, error } = useFetch(`${process.env.url}/dashboard`, options)
 
     //CATEGORIES OR PRODUCTS OR FORM

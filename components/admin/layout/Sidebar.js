@@ -1,31 +1,38 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useAuth } from 'context/auth/authContext';
 import HeaderAdmin from './HeaderAdmin';
 import styles from './Sidebar.module.css'
 import { ArchiveOutlined, DashboardOutlined, Menu, PersonOutlined, ShoppingCartOutlined } from '@material-ui/icons';
+import { SyncLoader } from 'react-spinners';
 
 const Sidebar = ({ children }) => {
 
     const [openNav, setOpenNav] = useState(false);
 
-    //CONTEXT
-    const { userAuth, isLoggedIn, loadingUser, role } = useAuth()
-
     //ROUTER
     const router = useRouter()
 
-    //GET USER IF THERE IS A VALID TOKEN
-    useEffect(() => { userAuth() }, [])
+    //CONTEXT
+    const { isLoading, isLoggedIn, role } = useAuth()
 
-    useEffect(() => {
-        if (!loadingUser && !isLoggedIn || role === 'USER_ROLE') {
-            router.replace('/')
-        }
-    }, [isLoggedIn, loadingUser, role]);
+    const style = {
+        width: '100&',
+        height: '100vh',
+        backgroundColor: '#f5f5f5',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
+    }
 
-    if (!isLoggedIn) return <div></div>
+    if (isLoading) return (
+        <div style={style}>
+            <SyncLoader color={'#303030'} loading={isLoading} size={100} />
+        </div>
+    )
+
+    if (!isLoading && isLoggedIn && role === 'USER_ROLE') router.push('/')
 
     //OPEN NAVBAR
     const handlerOpenNav = () => { setOpenNav(!openNav) }
@@ -67,7 +74,7 @@ const Sidebar = ({ children }) => {
                         <span className={styles.tooltip}>Ordenes</span>
                     </li>
                     <li>
-                        <Link href="/admin/inventory">
+                        <Link href="/admin/inventory" passHref>
                             <div className={router.pathname === '/admin/inventory' ? styles.active : ''}>
                                 <ArchiveOutlined className={styles.icon} />
                                 <span className={styles.linksName}>Inventario</span>
