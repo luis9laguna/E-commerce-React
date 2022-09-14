@@ -3,7 +3,7 @@ import Footer from './Footer';
 import Meta from '../ui/Meta';
 import { useAuth } from 'context/auth/authContext';
 import { SyncLoader } from 'react-spinners';
-import { WhatsApp } from '@material-ui/icons';
+import { FaWhatsapp } from 'react-icons/fa';
 
 const Layout = ({ children }) => {
 
@@ -33,7 +33,7 @@ const Layout = ({ children }) => {
                 {children}
             </main>
             <a href="https://www.whatsapp.com" className='whatsapp'>
-                <WhatsApp style={{ margin: 'auto' }} />
+                <FaWhatsapp style={{ margin: 'auto', fontSize: '1.5rem' }} />
             </a>
             <Footer />
         </>

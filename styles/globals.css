@@ -87,3 +87,10 @@ a {
   font-weight: 300;
   text-align: center;
 }
+
+
+/*OVERLAYS*/
+#overlays{
+  display: flex;
+  justify-content: center;
+}

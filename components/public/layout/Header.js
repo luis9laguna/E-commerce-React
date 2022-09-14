@@ -1,12 +1,14 @@
 import { useState } from 'react';
-import Link from 'next/link';
-import { AccountCircleOutlined, FavoriteBorderOutlined, Search, ShoppingCartOutlined } from '@material-ui/icons';
-import { Badge } from '@material-ui/core';
-import { useCart } from 'context/cart/cartContext';
-import Modal from "@/components/public/ui/Modal"
-import styles from '@/styles/layout/Header.module.scss';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
+import { Badge } from '@material-ui/core';
+import Modal from "@/components/public/ui/Modal"
 import SideBar from './SideBar';
+import ContainerAuth from '../auth/ContainerAuth';
+import styles from '@/styles/layout/Header.module.scss';
+import { useCart } from 'context/cart/cartContext';
+import { FaSearch } from 'react-icons/fa';
+import { MdOutlineAccountCircle, MdOutlineFavoriteBorder, MdOutlineShoppingCart, MdSearch } from 'react-icons/md';
 
 const Header = () => {
 
@@ -15,6 +17,8 @@ const Header = () => {
     const [sideOpen, setSideOpen] = useState(false);
     const [userOpen, setUseOpen] = useState(false);
     const [openCategories, setOpenCategories] = useState(false);
+    const [authForm, setAuthForm] = useState(null)
+
 
     //CONTEXT
     const { totalQuantityCart } = useCart()
@@ -49,22 +53,22 @@ const Header = () => {
                     </div>
                     <form className={styles.searchContainer} onSubmit={searchForm}>
                         <input name="search" placeholder="Buscar" />
-                        <button type='submit'><Search /></button>
+                        <button type='submit'><MdSearch /></button>
                     </form>
                     <div className={styles.containerOptions}>
                         <Link href='/wishList' passHref>
-                            <a><FavoriteBorderOutlined /></a>
+                            <a><MdOutlineFavoriteBorder /></a>
                         </Link>
                         <Link href='/cart' passHref>
                             <a><Badge badgeContent={totalQuantityCart} color="secondary">
-                                <ShoppingCartOutlined />
+                                <MdOutlineShoppingCart />
                             </Badge></a>
                         </Link>
                         <button className={`${styles.accountCircle} ${userOpen ? styles.open : ''}`} onClick={() => setUseOpen(prev => !prev)}>
-                            <AccountCircleOutlined />
+                            <MdOutlineAccountCircle />
                             <ul>
-                                <li><a>Logear</a></li>
-                                <li><a>Registrar</a></li>
+                                <li><a onClick={() => setAuthForm('login')}>Ingresar</a></li>
+                                <li><a onClick={() => setAuthForm('register')}>Registrar</a></li>
                             </ul>
                         </button>
                     </div>
@@ -81,6 +85,8 @@ const Header = () => {
                                 </Link>
                             </li>
                         ))} */}
+
+
                         </ul>
                     </div>
                     <div><Link href='/product/all'>Productos</Link></div>
@@ -94,6 +100,11 @@ const Header = () => {
                     <p >
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna alinonostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolonostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolonostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolonostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure doloqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
                     </p>
+                </Modal>}
+
+            {authForm &&
+                <Modal onClose={() => setAuthForm(null)} bgNone={true}>
+                    <ContainerAuth authForm={authForm} setAuthForm={setAuthForm} />
                 </Modal>}
 
         </>

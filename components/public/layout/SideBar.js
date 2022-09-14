@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { Home, Info, Search, ViewCarousel, ViewModule } from '@material-ui/icons';
+import { MdHome, MdInfo, MdSearch, MdViewCarousel, MdViewModule } from 'react-icons/md';
+
 import Modal from "@/components/public/ui/Modal"
 import styles from '@/styles/layout/SideBar.module.scss';
 import { useRouter } from 'next/router';
@@ -30,11 +32,11 @@ const SideBar = ({ sideOpen, setSideOpen }) => {
             <div className={`${styles.sideBar} ${sideOpen ? styles.sideOpen : ''}`} >
                 <form className={styles.searchContainer} onSubmit={searchForm}>
                     <input name="search" placeholder="Buscar" />
-                    <button type='submit'><Search /></button>
+                    <button type='submit'><MdSearch /></button>
                 </form>
-                <div className={styles.home}><Home /><Link href='/'> Inicio</Link></div >
+                <div className={styles.home}><MdHome /><Link href='/'> Inicio</Link></div >
                 <div className={`${styles.category} ${openCategories ? styles.open : ''}`} onClick={() => setOpenCategories(prev => !prev)}>
-                    <a href='#'><ViewModule />  Categorias</a>
+                    <a href='#'><MdViewModule />  Categorias</a>
                     <ul>
                         {/* {categories.map(category => (
                             <li key={category._id}>
@@ -45,8 +47,8 @@ const SideBar = ({ sideOpen, setSideOpen }) => {
                         ))} */}
                     </ul>
                 </div>
-                <div><ViewCarousel /><Link href='/product/all'>Productos</Link></div>
-                <div><Info /><a href='#' onClick={() => setShowAboutUs(prev => !prev)}>Acerca</a></div>
+                <div><MdViewCarousel /><Link href='/product/all'>Productos</Link></div>
+                <div><MdInfo /><a href='#' onClick={() => setShowAboutUs(prev => !prev)}>Acerca</a></div>
             </div >
             {
                 showAboutUs &&

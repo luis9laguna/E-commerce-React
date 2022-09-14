@@ -1,0 +1,131 @@
+.formContainer {
+    width: 380px;
+    height: 500px;
+    background-color: var(--light);
+    border-radius: 1.5rem;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+    h1 {
+        margin-top: 1rem;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+
+        &>div {
+            margin: 1rem;
+
+            .containerInput {
+                display: flex;
+                align-items: center;
+
+                input {
+                    height: 2.5rem;
+                    border: 1px solid rgb(184, 170, 170);
+                    background-color: transparent;
+                    font-size: var(--size-1);
+                    padding-left: 15px;
+                    width: 230px;
+                }
+
+                .inputError {
+                    background-color: rgba(255, 0, 0, 0.281);
+
+                }
+
+                svg {
+                    margin-right: 0.5rem;
+                    font-size: var(--size-3);
+                }
+            }
+        }
+
+        .error {
+            overflow-wrap: break-word;
+            font-size: 0.8rem;
+            width: 230px;
+            color: red;
+            margin: 0 0 0 2rem;
+            text-align: center;
+            position: absolute;
+        }
+
+        span {
+            text-align: end;
+            margin-top: 0.5rem;
+            margin-bottom: 1rem;
+            font-size: var(--size-05);
+            cursor: pointer;
+        }
+
+        button {
+            width: 70%;
+            margin: auto;
+            height: 2.5rem;
+            font-size: var(--size-1);
+            font-weight: bold;
+            border-radius: 1rem;
+            background-color: var(--primary);
+            border: 3px solid var(--primary);
+            color: var(--light);
+            transition: all 0.3s ease-in-out;
+            cursor: pointer;
+
+            &:hover {
+                background-color: var(--light);
+                color: var(--primary);
+            }
+
+
+            &:disabled,
+            &:disabled:hover,
+            &:disabled:active {
+                background-color: rgb(148, 124, 124);
+                border-color: rgb(148, 124, 124);
+                color: var(--secondary);
+                cursor: not-allowed;
+            }
+        }
+
+    }
+
+    &>span {
+        margin: 1rem 0;
+        font-size: var(--size-05);
+
+        &:last-of-type {
+            cursor: pointer;
+        }
+    }
+
+    .google {
+        border-radius: 50%;
+        width: 2.5rem;
+        height: 2.5rem;
+        background-color: #DB4437;
+        color: var(--light);
+        cursor: pointer;
+        transition: all 0.3s ease-in-out;
+        border: 1px solid #0F9D58;
+        font-weight: bold;
+    }
+
+    .google:hover {
+        background-color: #0F9D58;
+        color: var(--light);
+        border-color: #DB4437;
+    }
+
+}
+
+
+@media (max-width: 768px) {
+    .formContainer {
+        width: 100%;
+        border-radius: 0;
+    }
+
+}

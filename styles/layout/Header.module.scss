@@ -55,6 +55,10 @@
                 border: none;
                 padding: 0;
                 cursor: pointer;
+
+                svg {
+                    font-size: 1.5rem;
+                }
             }
         }
 
@@ -66,6 +70,8 @@
                 border: none;
                 margin: 0;
                 background-color: initial;
+
+
             }
 
             a,
@@ -77,6 +83,10 @@
                 transition: all 0.3s ease-in-out;
                 display: flex;
                 justify-content: center;
+
+                svg {
+                    font-size: 1.5rem;
+                }
             }
 
             .accountCircle {
@@ -112,7 +122,6 @@
 
                     li {
                         color: var(--primary);
-                        padding: 1rem;
                         border: 1px solid var(--primary);
 
                         &:hover {
@@ -121,9 +130,11 @@
 
 
                         a {
+                            padding: 1rem;
                             font-size: var(--size-1);
                             font-weight: bold;
                             letter-spacing: 1px;
+                            margin: auto;
                         }
                     }
                 }
@@ -324,7 +335,7 @@
 
                 a,
                 button {
-                    margin: 0 0.5rem !important;
+                    margin: 0 0.5rem;
                 }
 
                 .accountCircle {

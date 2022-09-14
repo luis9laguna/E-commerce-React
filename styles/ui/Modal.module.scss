@@ -10,22 +10,31 @@
 
 .modal {
   position: fixed;
-  top: 20vh;
-  left: 5%;
-  width: 90%;
-  height: 65%;
-  background-color: var(--secondary);
-  padding: 1rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  margin-top: 8rem;
   z-index: 30;
   animation: slide-down 300ms ease-out forwards;
   overflow-x: auto;
+
+  &>svg {
+    position: absolute;
+    color: var(--primary);
+    right: 10px;
+    top: 10px;
+    font-size: var(--size-4);
+    cursor: pointer;
+  }
 }
 
-@media (min-width: 768px) {
+.bgNone {
+  padding: 0;
+  background-color: transparent;
+  width: initial;
+}
+
+@media (max-width: 768px) {
   .modal {
-    width: 40rem;
-    left: calc(50% - 20rem);
+    width: 100%;
+    margin-top: 5rem;
   }
 }
 
@@ -34,6 +43,7 @@
     opacity: 0;
     transform: translateY(-3rem);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);

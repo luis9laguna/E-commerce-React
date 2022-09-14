@@ -3,7 +3,7 @@ import { Navigation } from 'swiper';
 import 'swiper/css';
 import 'swiper/css/bundle';
 import AllItemsProduct from '@/components/public/ui/products/AllItemsProduct'
-import { Favorite, NewReleases } from "@material-ui/icons";
+import { MdNewReleases, MdFavorite } from 'react-icons/md';
 
 const SliderProduct = ({ products, description, icon }) => {
 
@@ -18,8 +18,8 @@ const SliderProduct = ({ products, description, icon }) => {
     }
 
     let svgIcon = ''
-    if (icon === 'favs') svgIcon = <Favorite />
-    else if (icon === 'news') svgIcon = <NewReleases />
+    if (icon === 'favs') svgIcon = <MdFavorite />
+    else if (icon === 'news') svgIcon = <MdNewReleases />
 
     return (
         <>

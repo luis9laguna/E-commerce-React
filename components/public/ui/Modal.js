@@ -1,13 +1,11 @@
 import reactDom from "react-dom";
-import styles from "@/styles/ui/Modal.module.css"
+import styles from "@/styles/ui/Modal.module.scss"
+import { MdClose } from "react-icons/md";
 
-const Backdrop = ({ onClose }) => {
-    return <div className={styles.backdrop} onClick={onClose} />
-}
-
-const ModalOverlay = ({ children }) => {
+const ModalOverlay = ({ children, onClose }) => {
     return <div className={styles.modal}>
-        <div>{children}</div>
+        <MdClose onClick={onClose} />
+        {children}
     </div>
 }
 
@@ -16,8 +14,8 @@ const Modal = ({ children, onClose }) => {
 
     return (
         <>
-            {reactDom.createPortal(<Backdrop onClose={onClose} />, document.getElementById('overlays'))}
-            {reactDom.createPortal(<ModalOverlay>{children}</ModalOverlay>, document.getElementById('overlays'))}
+            {reactDom.createPortal(<div className={styles.backdrop} onClick={onClose} />, document.getElementById('overlays'))}
+            {reactDom.createPortal(<ModalOverlay onClose={onClose}>{children}</ModalOverlay>, document.getElementById('overlays'))}
         </>
     )
 };
