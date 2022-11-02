@@ -10,7 +10,7 @@ import Cookies from 'js-cookie';
 const AddressForm = ({ closeForm, updateAddress, getAllAddresses, notLogged, setAddressNoUser }) => {
 
     //USEFETCH
-    const options = { cachePolicy: 'no-cache', credentials: 'include' }
+    const options = { cachePolicy: 'no-cache', credentials: 'include', headers: { 'Authorization': Cookies.get('token') } }
     const { post, put, response, loading } = useFetch(`${process.env.url}`, options)
 
 
@@ -99,7 +99,6 @@ const AddressForm = ({ closeForm, updateAddress, getAllAddresses, notLogged, set
         >
             {({ values, errors, touched, isSubmitting, isValid, dirty }) => {
                 return (
-
                     <Form className={styles.formContainer}>
                         <h1 className={styles.title}>{updateAddress ? 'Edición' : 'Creación'} de dirección</h1>
                         <div>

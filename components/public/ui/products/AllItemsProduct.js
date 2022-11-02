@@ -2,12 +2,13 @@ import { useEffect, useState } from "react";
 import useFetch from 'use-http'
 import { useAuth } from "context/auth/authContext";
 import { useCart } from "context/cart/cartContext";
-import styles from '@/styles/ui/AllItemsProduct.module.scss'
+import styles from '@/styles/ui/product/AllItemsProduct.module.scss'
 import { MdOutlineFavoriteBorder, MdOutlineShoppingBasket } from "react-icons/md";
 import { ClipLoader } from "react-spinners";
 import { toast } from "react-toastify";
 import { formatCurrency, formatImages } from 'utils/utils'
 import Link from "next/link";
+import Cookies from "js-cookie";
 
 const AllItemsProduct = ({ product, setDeleteFav }) => {
 
@@ -16,7 +17,8 @@ const AllItemsProduct = ({ product, setDeleteFav }) => {
     const { ref, isLoggedIn } = useAuth()
     const { addItem } = useCart()
 
-    const options = { cachePolicy: 'no-cache', credentials: 'include' }
+
+    const options = { cachePolicy: 'no-cache', credentials: 'include', headers: { 'Authorization': Cookies.get('token') } }
     const { post, response, loading } = useFetch(`${process.env.url}`, options)
 
     useEffect(() => {

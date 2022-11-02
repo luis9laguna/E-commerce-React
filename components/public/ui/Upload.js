@@ -3,6 +3,7 @@ import useFetch from 'use-http'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import styles from '@/styles/ui/Upload.module.scss'
 import { ClipLoader } from 'react-spinners'
+import Cookies from 'js-cookie'
 
 const Upload = ({ images, setImages, limit }) => {
 
@@ -11,8 +12,8 @@ const Upload = ({ images, setImages, limit }) => {
     const [errorInput, setErrorInput] = useState('')
 
     //USEFETCH
-    const options = { cachePolicy: 'no-cache', credentials: 'include' }
-    const { post, response, loading, error } = useFetch(`${process.env.url}/upload`, options)
+    const options = { cachePolicy: 'no-cache', credentials: 'include', headers: { 'Authorization': Cookies.get('token') } }
+    const { post, response, loading } = useFetch(`${process.env.url}/upload`, options)
 
     const fileInputRef = useRef();
 

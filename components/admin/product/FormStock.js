@@ -5,12 +5,15 @@ import { ClipLoader } from 'react-spinners'
 import { Field, Form, Formik, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
 import { toast } from 'react-toastify'
+import Cookies from 'js-cookie'
 
 
 const FormStock = ({ setShowStock, setProductUpdate, productUpdate, getProducts }) => {
 
     //USEFETCH
-    const options = { cachePolicy: 'no-cache', credentials: 'include' }
+    const options = {
+        cachePolicy: 'no-cache', credentials: 'include', headers: { 'Authorization': Cookies.get('token') }
+    }
     const { put, response, loading } = useFetch(`${process.env.url}/product/stock`, options)
 
     const closeForm = () => {
@@ -35,7 +38,7 @@ const FormStock = ({ setShowStock, setProductUpdate, productUpdate, getProducts 
     }
 
     return (
-        <Modal onClose={closeForm}>
+        <Modal onClose={closeForm} >
             <Formik
                 initialValues={{
                     stock: ''
@@ -70,7 +73,7 @@ const FormStock = ({ setShowStock, setProductUpdate, productUpdate, getProducts 
                     )
                 }}
             </Formik>
-        </Modal>
+        </Modal >
     )
 }
 

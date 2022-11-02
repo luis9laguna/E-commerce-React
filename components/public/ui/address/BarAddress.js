@@ -1,4 +1,4 @@
-import styles from './BarAddress.module.scss'
+import styles from '@/styles/ui/address/BarAddress.module.scss'
 import { getAddressMap } from 'utils/utils'
 
 const BarAddress = ({ addressesUser, addressNoUser, isLoggedIn }) => {

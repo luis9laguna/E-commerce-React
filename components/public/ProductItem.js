@@ -21,12 +21,6 @@ const ProductItem = ({ product }) => {
         })
     }
 
-    const formatImages = (image) => {
-        const imageArray = image.split('/')
-        imageArray.splice(6, 0, 'c_scale,w_350')
-        return imageArray.join('/')
-    }
-
     return (
         <div className={styles.productContainer}>
             <div >

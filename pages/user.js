@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import { useAuth } from 'context/auth/authContext';
-import styles from '@/styles/user/UserLayout.module.scss'
+import styles from '@/styles/pages/User.module.scss'
 import { MdLockOutline, MdOutlineAddLocation, MdOutlineArrowForwardIos, MdOutlineShoppingBasket, MdPersonOutline } from 'react-icons/md';
 import { useState } from 'react';
 import { SyncLoader } from 'react-spinners';
@@ -8,7 +8,8 @@ import Layout from '@/components/public/layout/Layout';
 import Meta from '@/components/public/ui/Meta';
 import UserDataForm from '@/components/public/user/UserDataForm';
 import ChangePasswordForm from '@/components/public/user/ChangePasswordForm';
-import AddressContainer from '@/components/public/user/AddressContainer';
+import AddressContainer from '@/components/public/ui/address/AddressContainer';
+import ContainerOrders from '@/components/public/ui/orders/ContainerOrders';
 
 const User = () => {
 
@@ -66,7 +67,7 @@ const User = () => {
                 <div className={styles.pageContainer}>
                     {page === 'info' && <UserDataForm />}
                     {page === 'change' && <ChangePasswordForm />}
-                    {page === 'order' && <AddressContainer />}
+                    {page === 'order' && <ContainerOrders />}
                     {page === 'address' && <AddressContainer />}
 
                 </div>

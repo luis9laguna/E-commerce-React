@@ -1,16 +1,16 @@
 import Layout from "@/components/public/layout/Layout";
 import Meta from "@/components/public/ui/Meta";
 import { useCallback, useEffect, useState } from "react";
-import BarAddress from "@/components/public/checkout/BarAddress";
+import BarAddress from "@/components/public/ui/address/BarAddress";
 import { SyncLoader } from "react-spinners";
 import useFetch from "use-http";
 import styles from '@/styles/pages/CheckOut.module.scss'
 import { useAuth } from "context/auth/authContext";
 import { useCart } from "context/cart/cartContext";
-import { totalCart, formatCurrency } from "utils/utils";
+import { totalCart, formatCurrency, formatImages } from "utils/utils";
 import Modal from "@/components/public/ui/Modal";
-import AddressForm from "@/components/public/user/AddressForm";
-import AddressCards from "@/components/public/user/AddressCards";
+import AddressForm from "@/components/public/ui/address/AddressForm";
+import AddressCards from "@/components/public/ui/address/AddressCards";
 import Cookies from "js-cookie";
 import { toast } from "react-toastify";
 
@@ -20,7 +20,7 @@ const Checkout = () => {
     const { isLoggedIn } = useAuth()
 
     //USEFETCH
-    const options = { cachePolicy: 'no-cache', credentials: 'include' }
+    const options = { cachePolicy: 'no-cache', credentials: 'include', headers: { 'Authorization': Cookies.get('token') } }
     const { get, post, response, loading } = useFetch(`${process.env.url}`, options)
 
     const [addressesUser, setAddressesUser] = useState([])
@@ -107,7 +107,7 @@ const Checkout = () => {
                             <div className={styles.containerDetailProduct}>
                                 {items.map((item, i) => (
                                     <div key={i} className={styles.productDetail}>
-                                        <img src={item.image} />
+                                        <img src={formatImages(item.image)} />
                                         <h3>{item.name}</h3>
                                         <div>
                                             <span>{formatCurrency(item.price)}</span>

@@ -2,9 +2,10 @@ import { useCallback, useEffect, useState } from 'react'
 import useFetch from 'use-http'
 import FormCategory from './FormCategory'
 import styles from './ContainerCategories.module.scss'
-import { MdModeEditOutline, MdOutlineArchive, MdRemoveCircleOutline } from 'react-icons/md'
+import { MdModeEditOutline, MdRemoveCircleOutline } from 'react-icons/md'
 import Swal from 'sweetalert2';
 import { SyncLoader } from 'react-spinners'
+import Cookies from 'js-cookie'
 
 
 const ContainerCategories = () => {
@@ -16,7 +17,9 @@ const ContainerCategories = () => {
     const [formActive, setFormActive] = useState(false);
 
     //USEFETCH
-    const options = { cachePolicy: 'no-cache', credentials: 'include' }
+    const options = {
+        cachePolicy: 'no-cache', credentials: 'include', headers: { 'Authorization': Cookies.get('token') }
+    }
     const { get, del, response, loading } = useFetch(`${process.env.url}`, options)
 
 

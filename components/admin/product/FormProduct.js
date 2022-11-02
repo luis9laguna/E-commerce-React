@@ -3,16 +3,18 @@ import useFetch from 'use-http'
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup'
 import styles from '@/styles/ui/FormCreation.module.scss'
-import Upload from '@/components/public/ui/upload'
+import Upload from '@/components/public/ui/Upload'
 import Modal from '@/components/public/ui/Modal'
-import { MdOutlineArchive } from 'react-icons/md';
 import { ClipLoader } from 'react-spinners';
 import { toast } from 'react-toastify';
+import Cookies from 'js-cookie';
 
 export default function FormProduct({ productUpdate, selectCategories, getProducts, setFormActive, setProductUpdate }) {
 
     //USEFETCH
-    const options = { cachePolicy: 'no-cache', credentials: 'include' }
+    const options = {
+        cachePolicy: 'no-cache', credentials: 'include', headers: { 'Authorization': Cookies.get('token') }
+    }
     const { post, put, response, loading } = useFetch(`${process.env.url}`, options)
 
     //IMAGES STATE

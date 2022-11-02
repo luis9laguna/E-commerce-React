@@ -6,11 +6,12 @@ import { ErrorMessage, Field, Form, Formik } from 'formik';
 import { ClipLoader } from 'react-spinners';
 import * as Yup from 'yup'
 import { toast } from 'react-toastify';
+import Cookies from 'js-cookie';
 
 const ChangePasswordForm = () => {
 
     //USEFETCH
-    const options = { cachePolicy: 'no-cache', credentials: 'include' }
+    const options = { cachePolicy: 'no-cache', credentials: 'include', headers: { 'Authorization': Cookies.get('token') } }
     const { put, response, loading } = useFetch(`${process.env.url}/auth`, options)
 
     const newClientSchema = Yup.object().shape({

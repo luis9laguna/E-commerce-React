@@ -1,17 +1,20 @@
 import { useEffect, useState } from 'react'
 import useFetch from 'use-http'
-import Upload from '@/components/public/ui/upload'
+import Upload from '@/components/public/ui/Upload'
 import styles from '@/styles/ui/FormCreation.module.scss'
 import Modal from '@/components/public/ui/Modal'
 import { Field, Form, Formik, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
 import { toast } from 'react-toastify'
 import { ClipLoader } from 'react-spinners'
+import Cookies from 'js-cookie'
 
 export default function FormCategory({ categoryUpdate, setFormActive, getCategories, setCategoryUpdate }) {
 
     //USEFETCH
-    const options = { cachePolicy: 'no-cache', credentials: 'include' }
+    const options = {
+        cachePolicy: 'no-cache', credentials: 'include', headers: { 'Authorization': Cookies.get('token') }
+    }
     const { post, put, response, loading } = useFetch(`${process.env.url}`, options)
 
     const [images, setImages] = useState([])

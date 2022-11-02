@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import Layout from "@/components/public/layout/Layout";
 import Meta from "@/components/public/ui/Meta";
-import { totalCart, formatCurrency } from "utils/utils";
+import { totalCart, formatCurrency, formatImages } from "utils/utils";
 
 const Cart = () => {
 
@@ -40,7 +40,7 @@ const Cart = () => {
               {items.map((product, i) => (
                 <div key={i} className={styles.product}>
                   <div className={styles.productDetail}>
-                    <img src={product.image} />
+                    <img src={formatImages(product.image)} />
                     <h2>{product.name}</h2>
                   </div>
                   <span className={styles.productPrice}>{formatCurrency(product.price)}</span>
@@ -72,7 +72,7 @@ const Cart = () => {
             </div>
           </div>
           :
-          <h2 className={styles.nothing}>¡No tienes productos en tu carro aun, ve y mira algunos <Link href="/product/all"><span>productos!</span></Link></h2>
+          <h2 className={styles.nothing}>¡No tienes productos en tu carro aun, ve y mira algunos <Link href="/product/all" passHref><span>productos!</span></Link></h2>
         }
       </div>
     </Layout>

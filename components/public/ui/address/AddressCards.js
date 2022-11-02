@@ -1,14 +1,15 @@
 import React from 'react'
 import { AiOutlinePlusCircle } from 'react-icons/ai';
 import { MdEdit, MdDelete } from 'react-icons/md';
-import styles from '@/styles/ui/AddressCards.module.scss'
+import styles from '@/styles/ui/address/AddressCards.module.scss'
 import { getAddressMap } from 'utils/utils'
 import useFetch from 'use-http';
 import Swal from 'sweetalert2';
 import { toast } from 'react-toastify';
+import Cookies from 'js-cookie';
 const AddressCards = ({ openForm, addressesUser, setUpdateAddress, getAllAddresses }) => {
 
-    const options = { cachePolicy: 'no-cache', credentials: 'include' }
+    const options = { cachePolicy: 'no-cache', credentials: 'include', headers: { 'Authorization': Cookies.get('token') } }
     const { put, del, response } = useFetch(`${process.env.url}`, options)
 
 

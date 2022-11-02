@@ -34,6 +34,15 @@ const totalCart = (items, withShipping) => {
     else return formatCurrency(total)
 }
 
+const getDate = (data) => {
+    const date = new Date(data)
+    return new Intl.DateTimeFormat("es-MX", {
+        year: "numeric",
+        month: "long",
+        day: "2-digit"
+    }).format(date)
+}
+
 const decryptJWT = (data) => {
     const dataDecrypted = jwt.verify(data, process.env.SECRET_DATA_KEY);
     return dataDecrypted;
@@ -49,6 +58,4 @@ const encryptJWT = (data) => {
 
 
 
-
-
-export { formatImages, formatCurrency, getAddressMap, totalCart, decryptJWT, encryptJWT }
+export { formatImages, formatCurrency, getAddressMap, totalCart, getDate, decryptJWT, encryptJWT }

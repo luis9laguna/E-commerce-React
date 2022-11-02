@@ -18,7 +18,7 @@ const Slider = () => {
         >
             {sliderItems.map((item) => (
                 <SwiperSlide key={item.id}>
-                    <img loading="lazy" src={item.img} style={{ width: '100%' }} />
+                    <img src={item.img} style={{ width: '100%' }} />
                 </SwiperSlide>
             ))}
         </Swiper>

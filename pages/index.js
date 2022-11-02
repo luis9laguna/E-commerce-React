@@ -1,7 +1,7 @@
 import Layout from "@/components/public/layout/Layout";
-import Slider from "@/components/public/home/Slider";
+import Slider from "@/components/public/ui/Slider";
 import SliderCategory from "@/components/public/home/SliderCategory";
-import SliderProduct from "@/components/public/ui/SliderProduct";
+import SliderProduct from "@/components/public/ui/products/SliderProduct";
 import InfoHome from "@/components/public/home/InfoHome";
 
 const Home = ({ categories, newestProducts, likesProducts }) => {

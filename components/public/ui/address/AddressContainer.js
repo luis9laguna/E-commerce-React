@@ -1,18 +1,18 @@
 import { useAuth } from 'context/auth/authContext'
 import { useCallback, useEffect, useState } from 'react'
 import { SyncLoader } from 'react-spinners'
-import { Autoplay } from 'swiper'
 import useFetch from 'use-http'
-import BarAddress from '../checkout/BarAddress'
-import Modal from '../ui/Modal'
+import BarAddress from "@/components/public/ui/address/BarAddress";
+import Modal from '../Modal'
 import AddressCards from './AddressCards'
 import AddressForm from './AddressForm'
+import Cookies from 'js-cookie';
 
 const AddressContainer = () => {
 
     const { isLoggedIn } = useAuth()
 
-    const options = { cachePolicy: 'no-cache', credentials: 'include' }
+    const options = { cachePolicy: 'no-cache', credentials: 'include', headers: { 'Authorization': Cookies.get('token') } }
     const { get, response, loading } = useFetch(`${process.env.url}`, options)
 
     const [showForm, setShowForm] = useState(false)

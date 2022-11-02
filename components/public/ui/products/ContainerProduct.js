@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import AllItemsProduct from "@/components/public/ui/products/AllItemsProduct";
-import styles from "@/styles/ui/ProductContainer.module.scss";
+import styles from "@/styles/ui/product/ProductContainer.module.scss";
 import Pagination from "../Pagination";
 
 const ContainerProduct = ({ data, title, setDeleteFav, search }) => {

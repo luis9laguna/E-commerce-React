@@ -8,11 +8,14 @@ import { SyncLoader } from 'react-spinners'
 import Swal from 'sweetalert2'
 import FormStock from './FormStock'
 import { toast } from 'react-toastify'
+import Cookies from 'js-cookie'
 
 const ContainerProducts = () => {
 
     //USEFETCH
-    const options = { cachePolicy: 'no-cache', credentials: 'include' }
+    const options = {
+        cachePolicy: 'no-cache', credentials: 'include', headers: { 'Authorization': Cookies.get('token') }
+    }
     const { get, del, response, loading } = useFetch(`${process.env.url}`, options)
 
     const [data, setData] = useState({
@@ -36,7 +39,6 @@ const ContainerProducts = () => {
 
     //CHANGE PAGINATION AND SORT
     useEffect(() => {
-
         if (search !== '') {
 
             if (search.length > 3) {
@@ -52,13 +54,12 @@ const ContainerProducts = () => {
             getProducts(data.page, data.sort)
         }
 
-
     }, [data.page, data.selectedCategory, data.sort, search, getProducts, getProductsCategory, getSearchProducts])
 
 
     const getCategories = useCallback(async () => {
 
-        const resp = await fetch('http://localhost:4000/api/dashboard/categories', { credentials: 'include' })
+        const resp = await fetch(`${process.env.url}/dashboard/categories`, { credentials: 'include', headers: { 'Authorization': Cookies.get('token') } })
         const result = await resp.json()
 
         if (result.ok) {

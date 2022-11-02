@@ -5,11 +5,12 @@ import { ErrorMessage, Field, Form, Formik } from 'formik'
 import { toast } from 'react-toastify'
 import { ClipLoader } from 'react-spinners'
 import styles from '@/styles/ui/FormCreation.module.scss'
+import Cookies from 'js-cookie'
 
 const FormAdmin = ({ getAdmins, adminUpdate, setFormActive, setAdminUpdate }) => {
 
     //USEFETCH
-    const options = { cachePolicy: 'no-cache', credentials: 'include' }
+    const options = { cachePolicy: 'no-cache', credentials: 'include', headers: { 'Authorization': Cookies.get('token') } }
     const { post, put, response, loading } = useFetch(`${process.env.url}`, options)
 
     const closeForm = () => {

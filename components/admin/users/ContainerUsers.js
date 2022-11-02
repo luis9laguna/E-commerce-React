@@ -6,6 +6,7 @@ import styles from '../category/ContainerCategories.module.scss'
 import FormAdmin from './FormAdmin'
 import { SyncLoader } from 'react-spinners'
 import Swal from 'sweetalert2'
+import Cookies from 'js-cookie'
 
 const ContainerUsers = ({ admins }) => {
 
@@ -19,7 +20,7 @@ const ContainerUsers = ({ admins }) => {
     const [adminUpdate, setAdminUpdate] = useState(null);
 
     //USEFETCH
-    const options = { cachePolicy: 'no-cache', credentials: 'include' }
+    const options = { cachePolicy: 'no-cache', credentials: 'include', headers: { 'Authorization': Cookies.get('token') } }
     const { get, del, response, loading } = useFetch(`${process.env.url}`, options)
 
     const getAdmins = useCallback(async (pageP) => {

@@ -20,10 +20,11 @@ const AuthState = ({ children }) => {
         ref: null,
         isLoading: true
     }
+
     const [state, dispatch] = useReducer(authReducer, initialState)
 
     //USEFETCH
-    const options = { cachePolicy: 'no-cache', credentials: 'include' }
+    const options = { cachePolicy: 'no-cache', credentials: 'include', headers: { 'Authorization': Cookies.get('token') } }
     const { get, post, response, loading } = useFetch(`${process.env.url}`, options)
 
     const userAuth = useCallback(async () => {
@@ -32,6 +33,8 @@ const AuthState = ({ children }) => {
             logOut();
             return;
         }
+
+        console.log(Cookies.get('token'))
 
         await get(`user`)
         if (response.ok) {
@@ -85,6 +88,7 @@ const AuthState = ({ children }) => {
                     token: response.data.token
                 }
             })
+            Cookies.set('tokensfdsdfs', response.data.token, { expires: 1 })
 
             toast.success('Has ingresado exitosamente!')
             //REDIRECT

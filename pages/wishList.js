@@ -9,11 +9,12 @@ import { useAuth } from "context/auth/authContext";
 import { SyncLoader } from "react-spinners";
 import styles from '@/styles/pages/WishList.module.scss'
 import { toast } from "react-toastify";
+import Cookies from "js-cookie";
 
 const WishList = () => {
 
   //USEFETCH
-  const options = { cachePolicy: 'no-cache', credentials: 'include' }
+  const options = { cachePolicy: 'no-cache', credentials: 'include', headers: { 'Authorization': Cookies.get('token') } }
   const { get, response, loading } = useFetch(`${process.env.url}`, options)
 
   //DATA

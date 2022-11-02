@@ -5,13 +5,14 @@ import useFetch from 'use-http';
 import ClipLoader from "react-spinners/ClipLoader";
 import { toast } from "react-toastify"
 import { MdArrowBack, MdEmail } from 'react-icons/md';
+import Cookies from 'js-cookie';
 
 
 
 const ForgotForm = ({ setAuthForm }) => {
 
     //FETCH CONFIGURATION
-    const options = { cachePolicy: 'no-cache', credentials: 'include' }
+    const options = { cachePolicy: 'no-cache', credentials: 'include', headers: { 'Authorization': Cookies.get('token') } }
     const { post, response, loading } = useFetch(`${process.env.url}`, options)
 
     const newClientSchema = Yup.object().shape({

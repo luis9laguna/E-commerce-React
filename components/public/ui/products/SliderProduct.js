@@ -1,9 +1,9 @@
-import { Swiper, SwiperSlide } from 'swiper/react';
+import AllItemsProduct from '@/components/public/ui/products/AllItemsProduct'
 import { Navigation } from 'swiper';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { MdNewReleases, MdFavorite } from 'react-icons/md';
 import 'swiper/css';
 import 'swiper/css/bundle';
-import AllItemsProduct from '@/components/public/ui/products/AllItemsProduct'
-import { MdNewReleases, MdFavorite } from 'react-icons/md';
 
 const SliderProduct = ({ products, description, icon }) => {
 
