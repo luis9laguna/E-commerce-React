@@ -1,19 +1,18 @@
 import { useRouter } from 'next/router'
-import { useEffect, useReducer } from "react";
-import Cookies from 'js-cookie'
+import { useCallback, useEffect, useReducer } from "react";
 import useFetch from 'use-http'
 import authContext from "./authContext";
 import authReducer from "./authReducer";
-import Swal from 'sweetalert2'
+import Cookies from 'js-cookie';
+import { toast } from 'react-toastify'
 
-import { USER_AUTH, FORM_AUTH, LOG_OUT, UPDATE_USER, NO_TOKEN } from "types";
+import { USER_AUTH, FORM_AUTH, LOG_OUT, UPDATE_USER } from "utils/types";
 
 const AuthState = ({ children }) => {
 
 
     //ROUTER
     const router = useRouter()
-
     const initialState = {
         role: null,
         userName: null,
@@ -23,14 +22,34 @@ const AuthState = ({ children }) => {
     }
     const [state, dispatch] = useReducer(authReducer, initialState)
 
-
     //USEFETCH
-    const token = Cookies.get('token');
-    const options = { cachePolicy: 'no-cache', headers: { 'Authorization': token }, credentials: 'include' }
-    const { get, post, response, loading, error } = useFetch(`${process.env.url}`, options)
+    const options = { cachePolicy: 'no-cache', credentials: 'include' }
+    const { get, post, response, loading } = useFetch(`${process.env.url}`, options)
+
+    const userAuth = useCallback(async () => {
+
+        if (!Cookies.get('token')) {
+            logOut();
+            return;
+        }
+
+        await get(`user`)
+        if (response.ok) {
+            dispatch({
+                type: USER_AUTH,
+                payload: {
+                    role: response.data.user.role,
+                    user: response.data.user.name,
+                    ref: response.data.user.ref,
+                }
+            })
+        } else logOut()
+
+    }, [response, get])
 
     //GET USER INFO
-    useEffect(() => { userAuth() }, [])
+    useEffect(() => { userAuth() }, [userAuth])
+
 
     const userRegister = async data => {
         await post('user', data)
@@ -44,18 +63,10 @@ const AuthState = ({ children }) => {
                     token: response.data.token
                 }
             })
-            //MODAL
-            Swal.fire(
-                '¡Excelente!', '¡Tu registro ha sido completado!', 'success'
-            )
-            //REDIRECT
-            router.replace('/')
+            toast.success('¡Te has registrado exitosamente!')
+            router.push('/')
         } else {
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Ha ocurrido un error, intente mas tarde'
-            })
+            toast.error('Ha ocurrido un error, intente mas tarde')
         }
     }
 
@@ -74,22 +85,14 @@ const AuthState = ({ children }) => {
                     token: response.data.token
                 }
             })
-            //MODAL
-            Swal.fire(
-                '¡Excelente!', '¡Tu ingreso ha sido exitoso!', 'success'
-            )
+
+            toast.success('Has ingresado exitosamente!')
             //REDIRECT
-            if (role === 'USER_ROLE') {
-                router.replace('/')
-            } else if (role === 'ADMIN_ROLE' || 'SUPER_ROLE') {
-                router.replace('/admin/dashboard')
+            if (role === 'ADMIN_ROLE' || role === 'SUPER_ROLE') {
+                router.push('/admin')
             }
         } else {
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Ha ocurrido un error, intente mas tarde'
-            })
+            toast.error('Ha ocurrido un error, intente mas tarde')
         }
     }
 
@@ -105,40 +108,14 @@ const AuthState = ({ children }) => {
                     token: response.data.token
                 }
             })
-            //MODAL
-            Swal.fire(
-                '¡Excelente!', '¡Tu ingreso ha sido exitoso!', 'success'
-            )
-            //REDIRECT
-            router.replace('/')
+            toast.success('Has ingresado exitosamente!')
+            router.push('/')
         } else {
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Ha ocurrido un error, intente mas tarde'
-            })
+            toast.error('Ha ocurrido un error, intente mas tarde')
         }
     }
 
-    const userAuth = async () => {
-        if (!token) {
-            dispatch({ type: NO_TOKEN })
-            return
-        }
-        await get(`user`)
-        if (response.ok) {
-            dispatch({
-                type: USER_AUTH,
-                payload: {
-                    role: response.data.user.role,
-                    user: response.data.user.name,
-                    ref: response.data.user.ref,
-                }
-            })
-        } else if (response.data.message === 'Token Invalid') {
-            Cookies.remove('token')
-        }
-    }
+
 
     const updateUser = (user) => {
         dispatch({
@@ -147,11 +124,8 @@ const AuthState = ({ children }) => {
         })
     }
 
-    const logOut = () => {
-        dispatch({
-            type: LOG_OUT
-        })
-    }
+    const logOut = () => dispatch({ type: LOG_OUT });
+
 
 
     return (

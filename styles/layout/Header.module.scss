@@ -89,8 +89,45 @@
                 }
             }
 
+            .cart {
+                position: relative;
+
+                span {
+                    position: absolute;
+                    background-color: red;
+                    top: -7px;
+                    right: -5px;
+                    width: 15px;
+                    height: 17px;
+                    border-radius: 50%;
+                    color: var(--secondary);
+                    font-size: var(--size-1);
+                    text-align: center;
+                }
+            }
+
             .accountCircle {
                 position: relative;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                span {
+                    display: flex;
+                    align-items: center;
+                    font-size: var(--size-2);
+                    text-transform: capitalize;
+
+                    &::after {
+                        content: "";
+                        border-right: 2px solid var(--primary);
+                        border-bottom: 2px solid var(--primary);
+                        margin: 5px;
+                        transform: rotate(45deg);
+                        width: 5px;
+                        height: 5px;
+                    }
+                }
 
                 &.open ul {
                     display: flex;
@@ -361,5 +398,31 @@
         .announcement {
             font-size: 0.8rem;
         }
+    }
+}
+
+.about {
+    margin: auto;
+    background-color: var(--secondary);
+    width: 700px;
+    height: auto;
+
+    h1 {
+        text-align: center;
+        padding: 2rem 0;
+        display: block;
+    }
+
+    p {
+        width: 85%;
+        margin: auto;
+        padding-bottom: 2rem;
+    }
+
+    @media (max-width:768px) {
+        width: 100%;
+        min-width: 300px;
+
+
     }
 }

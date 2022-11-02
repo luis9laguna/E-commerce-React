@@ -1,0 +1,49 @@
+.errorContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  h1 {
+    margin: 4rem 0 0 0;
+  }
+
+  span {
+    font-size: 20rem;
+    font-weight: 900;
+  }
+
+  p {
+    font-size: var(--size-2);
+  }
+
+  button {
+    width: 30%;
+    border-radius: 2rem;
+    border-color: var(--primary);
+    padding: 1rem 1.5rem;
+    background-color: var(--primary);
+    color: var(--secondary);
+    margin: 3rem 0;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+
+    &:hover {
+      background-color: var(--secondary);
+      color: var(--primary);
+    }
+  }
+}
+
+
+
+@media (max-width: 450px) {
+  .errorContainer {
+    span {
+      font-size: 10rem;
+    }
+
+    button {
+      width: 50%;
+    }
+  }
+}

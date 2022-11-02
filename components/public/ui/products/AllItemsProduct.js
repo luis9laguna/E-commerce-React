@@ -1,106 +1,90 @@
 import { useEffect, useState } from "react";
-import Link from "next/link";
-import { useRouter } from "next/router";
 import useFetch from 'use-http'
 import { useAuth } from "context/auth/authContext";
 import { useCart } from "context/cart/cartContext";
-import { FavoriteBorderOutlined, SearchOutlined, ShoppingBasketOutlined } from "@material-ui/icons";
-import styles from '@/styles/ui/AllItemsProduct.module.css'
-import Loading from "../Loading";
-import ErrorMessage from "../ErrorMessage";
+import styles from '@/styles/ui/AllItemsProduct.module.scss'
+import { MdOutlineFavoriteBorder, MdOutlineShoppingBasket } from "react-icons/md";
+import { ClipLoader } from "react-spinners";
+import { toast } from "react-toastify";
+import { formatCurrency, formatImages } from 'utils/utils'
+import Link from "next/link";
 
 const AllItemsProduct = ({ product, setDeleteFav }) => {
 
-    const [likeOrDislike, setLikeOrDislike] = useState(null);
+    const [likeOrDislike, setLikeOrDislike] = useState(false);
     const [itemStock, setItemStock] = useState(0);
     const { ref, isLoggedIn } = useAuth()
     const { addItem } = useCart()
-    const router = useRouter()
 
-    //USEFETCH
-    const storage = typeof localStorage !== 'undefined';
-    let options
-    if (storage) {
-        options = { cachePolicy: 'no-cache', headers: { 'Authorization': localStorage.getItem('token') } }
-    }
-    const { post, response, loading, error } = useFetch(`${process.env.url}`, options)
+    const options = { cachePolicy: 'no-cache', credentials: 'include' }
+    const { post, response, loading } = useFetch(`${process.env.url}`, options)
 
-    //GET LIKES GIVEN BY USER TO SHOW FEEDBACK
-    const hasLike = product.likes?.includes(ref)
+    useEffect(() => {
+        const hasLike = product.likes.includes(ref)
+        setItemStock(product.stock)
+        setLikeOrDislike(hasLike)
+    }, [product, ref])
 
-    useEffect(() => { setLikeOrDislike(hasLike) }, [hasLike]);
-    useEffect(() => { setItemStock(product.stock) }, [])
-
-    //BUTTON FAV
     const favButton = async (id) => {
-        //SEND LIKE TO DB
-        if (!isLoggedIn) router.push('/login#login')
-        //SEND
         await post(`/like/${id}`)
         if (response.ok) {
-            //FEEDBACK USER
             setLikeOrDislike(!likeOrDislike)
+
+            if (!likeOrDislike) {
+                toast.success('¡El producto ha sido agregado a tu lista de favoritos!')
+            } else {
+                toast.success('¡El producto ha sido eliminado a tu lista de favoritos!')
+            }
 
             //IF WE WANNA DISLIKE IN THE WISHLIST PAGE
             if (setDeleteFav) setDeleteFav(true)
+        } else {
+            if (!isLoggedIn) {
+                if (!isLoggedIn) document.querySelector('#login').click()
+                toast.error('¡Ingrese en su cuenta para poder agregar a su lista de favoritos!')
+            }
+            else toast.error('¡Ha ocurrido un error, por favor intente luego!')
         }
     }
 
-    //HANDLER ADD CART
     const addCartHandler = () => {
         addItem({
             id: product._id,
-            slug: product.slug,
             quantity: 1,
             name: product.name,
-            image: product.images[0],
-            price: product.price
+            price: product.price,
+            image: product.images[0]
         })
         setItemStock(prev => prev - 1)
     }
 
-    const transform = 'c_scale,w_350'
-    const imageArray = product.images[0].split('/')
-    imageArray.splice(6, 0, transform)
-    const transformImage = imageArray.join('/')
-
     return (
         <div className={styles.container}>
-            {itemStock === 0 && <div className={styles.noStock}>Agotado</div>}
-            <Link href={`/product/${product.slug}`}>
-                <img className={`${styles.image} ${itemStock === 0 ? styles.noStockImg : ''}`} src={transformImage} />
-            </Link>
-            <div className={styles.info}>
-                <h1 className={styles.title}>{product.name}</h1>
-                <span className={styles.price}>${product.price}</span>
-                <div className={styles.allIcons}>
-
-                    {itemStock !== 0 &&
-                        <button className={styles.buttonOptions} onClick={addCartHandler}>
-                            <ShoppingBasketOutlined style={{ margin: 'auto' }} />
-                        </button>
-                    }
-                    <Link href={`/product/${product.slug}`}>
-                        <button className={styles.buttonOptions}>
-                            <SearchOutlined style={{ margin: 'auto' }} />
-                        </button>
-                    </Link>
-                    <button
-                        className={`${styles.buttonOptions} ${likeOrDislike ? styles.hasLike : ''} `}
-                        onClick={() => favButton(product._id)}
-                    >
-                        {loading ? <Loading light={true} /> : <FavoriteBorderOutlined style={{ margin: 'auto' }} />}
-                    </button>
-                </div>
-                {itemStock !== 0 && <button onClick={addCartHandler}>AGREGAR AL CARRITO</button>}
-                <button
-                    className={`${styles.fav} ${likeOrDislike ? styles.hasLike : ''} `}
-                    onClick={() => favButton(product.slug)}
-                >
-                    {loading ? <Loading light={true} /> : <FavoriteBorderOutlined style={{ margin: 'auto' }} />}
-                </button>
-                {error && <ErrorMessage />}
+            <div className={`${styles.imgContainer} ${itemStock === 0 ? styles.noStockImg : ''}`}>
+                <Link href={`/product/${product.slug}`} passHref><img src={formatImages(product.images[0])} /></Link>
+                {product.images.length > 1 && <Link href={`/product/${product.slug}`} passHref><img src={formatImages(product.images[1])} /></Link>}
+                {itemStock === 0 && <div className={styles.noStock}>Agotado</div>}
             </div>
+            <div className={styles.infoContainer}>
+                <h2>{product.category[0].name}</h2>
+                <Link href={`/product/${product.slug}`} passHref><h1>{product.name}</h1></Link>
+                <div className={styles.priceContainer}>
+                    {product.sale > 0 && <span className={styles.sale}>{formatCurrency(product.sale)} Oferta</span>}
+                    <span className={`${styles.price} ${product.sale === 0 ? styles.onlyPrice : ''}`}>{formatCurrency(product.price)} Normal</span>
+                </div>
+            </div>
+            <div className={styles.optionsContainer}>
+                <button onClick={addCartHandler}>
+                    Agregar <MdOutlineShoppingBasket className={styles.basket} />
+                </button>
+                <button
+                    className={likeOrDislike ? styles.hasLike : ''}
+                    onClick={() => favButton(product._id)}
+                >
+                    {loading ? <ClipLoader color='#f5f5f5' loading={loading} size={25} /> : <MdOutlineFavoriteBorder className={styles.heart} />}
+                </button>
+            </div>
+
         </div >
     )
 }

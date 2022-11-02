@@ -1,15 +1,13 @@
 import Layout from "@/components/public/layout/Layout";
 import Meta from "@/components/public/ui/Meta";
-import ProductContainer from "@/components/public/ui/products/ProductContainer";
+import ContainerProduct from "@/components/public/ui/products/ContainerProduct";
 
 const AllProducts = ({ data }) => {
-
-    const url = '/product/all?'
 
     return (
         <Layout>
             <Meta title='Productos' />
-            <ProductContainer data={data} title={'All Products'} url={url} />
+            <ContainerProduct data={data} title={'Todos los productos'} />
         </Layout>
     )
 }
@@ -22,7 +20,6 @@ export async function getServerSideProps({ query }) {
     const resp = await fetch(`${process.env.url}/product?page=${page}&limit=15&sort=${sort}`)
     const data = await resp.json()
     if (!data.ok) return { notFound: true }
-
     return {
         props: {
             data

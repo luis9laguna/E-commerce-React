@@ -2,9 +2,9 @@ import { useEffect, useReducer } from "react";
 import Cookies from 'js-cookie'
 import cartContext from "./cartContext";
 import cartReducer from "./cartReducer";
-import Swal from 'sweetalert2'
+import { toast } from 'react-toastify'
 
-import { ADD_CART, SUBTRACT_CART, REMOVE_CART, CLEAR_CART, CART_LOCAL } from "types";
+import { ADD_CART, SUBTRACT_CART, REMOVE_CART, CLEAR_CART, CART_LOCAL } from "utils/types";
 
 const initialState = {
     items: [],
@@ -15,17 +15,12 @@ const CartState = ({ children }) => {
 
     const [state, dispatch] = useReducer(cartReducer, initialState)
 
-    //GET COOKIE CART
     useEffect(() => { getCart() }, []);
-
-    //SET COOKIE CART
-    useEffect(() => {
-        Cookies.set('cart', JSON.stringify(state.items))
-    }, [state.items]);
+    useEffect(() => Cookies.set('cart', JSON.stringify(state.items)), [state]);
 
     const getCart = () => {
         try {
-            const cookiesProducts = Cookies.get('cart') ? JSON.parse(Cookies.get('cart')) : []
+            const cookiesProducts = JSON.parse(Cookies.get('cart')) || []
             dispatch({ type: CART_LOCAL, payload: cookiesProducts })
         } catch (error) {
             dispatch({ type: CART_LOCAL, payload: [] })
@@ -38,16 +33,7 @@ const CartState = ({ children }) => {
             payload: product
         });
         if (!product.cart) {
-            Swal.fire({
-                title: product.name,
-                text: `Han sido añadidos '${product.quantity}'`,
-                imageUrl: product.image,
-                imageWidth: 300,
-                imageHeight: 300,
-                imageAlt: product.name,
-                timer: 2000,
-                timerProgressBar: true
-            })
+            toast.success(`¡${product.name} ha sido agregado a tu carrito!`)
         }
     };
 
@@ -65,9 +51,7 @@ const CartState = ({ children }) => {
         });
     }
 
-    const clearCartHandler = () => {
-        dispatch({ type: CLEAR_CART })
-    }
+    const clearCartHandler = () => dispatch({ type: CLEAR_CART });
 
     return (
         <cartContext.Provider

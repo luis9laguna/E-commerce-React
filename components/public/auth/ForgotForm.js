@@ -11,7 +11,8 @@ import { MdArrowBack, MdEmail } from 'react-icons/md';
 const ForgotForm = ({ setAuthForm }) => {
 
     //FETCH CONFIGURATION
-    const { post, response, loading } = useFetch(`${process.env.REACT_APP_URL}`)
+    const options = { cachePolicy: 'no-cache', credentials: 'include' }
+    const { post, response, loading } = useFetch(`${process.env.url}`, options)
 
     const newClientSchema = Yup.object().shape({
         email: Yup.string()
@@ -29,7 +30,7 @@ const ForgotForm = ({ setAuthForm }) => {
                 if (response.ok) {
                     toast.success('Revisa tu email para continuar.')
                 } else {
-                    toast.error(response.data.message)
+                    toast.error('No se ha podido continuar, intente mas tarde')
                 }
                 resetForm()
             }}
@@ -41,21 +42,19 @@ const ForgotForm = ({ setAuthForm }) => {
                         <MdArrowBack onClick={() => setAuthForm('login')} />
                         <h1>Forgot Email</h1>
                         <Form className={styles.form}>
-                            <div>
-                                <div className={styles.containerInput}>
-                                    <MdEmail />
-                                    <Field
-                                        placeholder="Email*"
-                                        type="email"
-                                        name="email"
-                                        className={errors.email && touched.email ? styles.inputError : ''}
-                                    />
-                                </div>
+                            <div className={styles.containerInput}>
+                                <MdEmail />
+                                <Field
+                                    placeholder="Email*"
+                                    type="email"
+                                    name="email"
+                                    className={errors.email && touched.email ? styles.inputError : ''}
+                                />
                                 <ErrorMessage name="email" component="div" className={styles.error} />
                             </div>
                             <button type="submit" disabled={isSubmitting || !(isValid && dirty)}>
                                 {loading ?
-                                    <ClipLoader loading={loading} size={30} />
+                                    <ClipLoader color="#f5f5f5" loading={loading} size={30} />
                                     : 'Sent Email'}
                             </button>
                         </Form>

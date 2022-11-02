@@ -212,7 +212,6 @@ const FormAddress = ({ hideModal, addressUpdate, setReFetchAddress, setActionAdd
             addressname: e.target.addressname.value
         }
 
-        console.log(address)
 
         //SEND
         if (!editAddress) {

@@ -1,15 +1,18 @@
-import styles from './BarAddress.module.css'
+import styles from './BarAddress.module.scss'
+import { getAddressMap } from 'utils/utils'
 
-const BarAddress = ({ setActionAddress, addressUser }) => {
+const BarAddress = ({ addressesUser, addressNoUser, isLoggedIn }) => {
 
+
+    const selectedAddress = isLoggedIn ? addressesUser.find(address => address._id === address.user.address)?.address : addressNoUser?.address
 
     return (
         <div className={styles.barAddress}>
-            <h3>Seleccionar Dirección</h3>
-            <div> {addressUser !== '' ? `${addressUser.name}, ${addressUser.phone}, ${addressUser.id}, ${addressUser.state}, ${addressUser.city}
-            , ${addressUser.province}, ${addressUser.street}, ${addressUser.numstreet}, ${addressUser.apartment || ''}`
-                : 'No has seleccionado ninguna dirrecion por el momento'}</div>
-            <button onClick={() => setActionAddress(true)}>{addressUser ? 'Actualizar dirección' : 'Crear dirección'}</button>
+            <h2>Dirección seleccionada:</h2>
+            <p> {selectedAddress ? `${selectedAddress?.name}, ${getAddressMap(selectedAddress?.region)}, ${getAddressMap(selectedAddress?.provincia)},
+             ${getAddressMap(selectedAddress?.comuna)}, ${selectedAddress?.street}, ${selectedAddress?.numStreet}, ${selectedAddress?.infoHome}, ${selectedAddress?.rut},
+              ${selectedAddress?.phone}, ${selectedAddress?.extraInfo}`
+                : 'No has seleccionado ninguna dirección por el momento'}</p>
         </div>
     )
 }

@@ -1,7 +1,7 @@
 import Layout from "@/components/public/layout/Layout";
 import Meta from "@/components/public/ui/Meta";
 import { useRouter } from "next/router";
-import styles from '@/styles/404.module.css'
+import styles from '@/styles/pages/404.module.scss'
 
 const Error = () => {
 

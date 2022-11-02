@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { useAuth } from 'context/auth/authContext';
-import styles from '@/styles/user/UserLayout.module.css'
+import styles from '@/styles/user/UserLayout.module.scss'
 import { AddLocationOutlined, ArrowForwardIosOutlined, LockOutlined, PersonOutlined, ShoppingBasketOutlined } from '@material-ui/icons';
 
 const UserLayout = ({ children }) => {

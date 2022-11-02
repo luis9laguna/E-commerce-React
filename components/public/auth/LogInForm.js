@@ -40,35 +40,31 @@ const LoginForm = ({ setAuthForm }) => {
                     <div className={styles.formContainer}>
                         <h1>Ingresar</h1>
                         <Form>
-                            <div>
-                                <div className={styles.containerInput}>
-                                    <MdEmail />
-                                    <Field
-                                        placeholder="Email*"
-                                        type="email"
-                                        name="email"
-                                        className={errors.email && touched.email ? styles.inputError : ''}
-                                    />
-                                </div>
+                            <div className={styles.containerInput}>
+                                <MdEmail />
+                                <Field
+                                    placeholder="Email*"
+                                    type="email"
+                                    name="email"
+                                    className={errors.email && touched.email ? styles.inputError : ''}
+                                />
                                 <ErrorMessage name="email" component="div" className={styles.error} />
                             </div>
-                            <div>
-                                <div className={styles.containerInput}>
-                                    <MdLock />
-                                    <Field
-                                        placeholder="Contraseña*"
-                                        type="password"
-                                        name="password"
-                                        className={errors.password && touched.password ? styles.inputError : ''}
-                                    />
-                                </div>
+                            <div className={styles.containerInput}>
+                                <MdLock />
+                                <Field
+                                    placeholder="Contraseña*"
+                                    type="password"
+                                    name="password"
+                                    className={errors.password && touched.password ? styles.inputError : ''}
+                                />
                                 <ErrorMessage name="password" component="div" className={styles.error} />
                             </div>
                             <span onClick={() => setAuthForm('forgot')}>¿Olvidaste la contraseña?</span>
 
                             <button type="submit" disabled={isSubmitting || !(isValid && dirty)}>
                                 {fetchLoading ?
-                                    <ClipLoader loading={fetchLoading} size={30} />
+                                    <ClipLoader color='#f5f5f5' loading={fetchLoading} size={25} />
                                     : 'Ingresar'}
                             </button>
                         </Form>
@@ -77,9 +73,9 @@ const LoginForm = ({ setAuthForm }) => {
                         <GoogleLogin
                             clientId={process.env.REACT_APP_GOOGLE_ID}
                             render={renderProps => (
-                                <button onClick={renderProps.onClick} className={styles.google}>
+                                <button disabled={isSubmitting} onClick={renderProps.onClick} className={styles.google}>
                                     {fetchLoading ?
-                                        <ClipLoader loading={fetchLoading} size={30} />
+                                        <ClipLoader color='#f5f5f5' loading={fetchLoading} size={25} />
                                         : 'G'}
                                 </button>
                             )}

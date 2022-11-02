@@ -1,74 +1,73 @@
-import Swal from 'sweetalert2';
 import useFetch from 'use-http'
-import useInput from 'hooks/useInput';
-import styles from '@/styles/ui/Form.module.css';
-import Loading from './ui/Loading';
-import ErrorMessage from './ui/ErrorMessage';
+import styles from '@/styles/ui/FormCreation.module.scss';
+import { ErrorMessage, Field, Form, Formik } from 'formik';
+import { ClipLoader } from 'react-spinners';
+import * as Yup from 'yup'
+import Modal from './ui/Modal';
+import { toast } from 'react-toastify';
 
-const StatusOrderForm = ({ showModal, setDetailOrder }) => {
+const StatusOrderForm = ({ onClose, setDetailOrder }) => {
 
     //USEFETCH
-    const { post, response, loading, error } = useFetch(`${process.env.url}`)
+    const { post, response, loading } = useFetch(`${process.env.url}`)
 
-    const {
-        value: enteredCode,
-        isValid: enteredCodeIsValid,
-        hasError: codeInputHasError,
-        valueChangeHandler: codeChangedHandler,
-        inputBlurHandler: codeBlurHandler,
-        reset: resetCodeInput
-    } = useInput(value => value.trim().length >= 36);
 
-    //FORMVALID?
-    let formIsValid = false;
-    if (enteredCodeIsValid) formIsValid = true;
+
+    const newClientSchema = Yup.object().shape({
+        name: Yup.string()
+            .min(3, 'Nombre es muy corto.')
+            .max(30, 'Nombre es muy largo.')
+            .required('Nombre es requerido.')
+    })
+
 
     //FORMHANDLER
-    const formSubmissionHandler = async e => {
-        e.preventDefault();
+    const formSubmissionHandler = async values => {
 
-        //CHECK
-        if (!formIsValid) return;
+        await post('/order/code/status', values)
 
-        //VALUES
-        const code = e.target.code.value
-
-        //SEND
-        const getDetailOrder = await post(`/order/code/status`, { code })
         if (response.ok) {
-            //MODAL
-            setDetailOrder(getDetailOrder.order)
-            showModal()
+
+            console.log(response.data)
         } else {
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Ha ocurrido, un error intente mas tarde.'
-            })
+            toast.error('¡Ha ocurrido un error, intente mas tarde!')
         }
-        //RESET VALUES
-        resetCodeInput()
     }
 
     return (
-        <div className={styles.container} style={{ margin: '4rem 0' }}>
-            <h2 className={styles.title}>Estado de la orden</h2>
-            <form className={styles.form} style={{ width: '50%' }} onSubmit={formSubmissionHandler}>
-                <input
-                    placeholder="Codigo de la orden*"
-                    type="text"
-                    id="code"
-                    value={enteredCode}
-                    onChange={codeChangedHandler}
-                    onBlur={codeBlurHandler}
-                />
-                {codeInputHasError && <p className={styles.invalidText}>El codigo tiene que ser de 36 digitos</p>}
-                <button disabled={!formIsValid}>
-                    {loading ? <Loading light={true} /> : 'Mirar Estado'}
-                </button>
-                {error && <ErrorMessage />}
-            </form>
-        </div>
+        <Modal onClose={onClose}>
+            <Formik
+                initialValues={{
+                    code: ''
+                }}
+                onSubmit={async (values, { resetForm }) => {
+                    formSubmissionHandler(values)
+                    resetForm()
+                }}
+                validationSchema={newClientSchema}
+            >
+                {({ errors, touched, isSubmitting, isValid, dirty }) => {
+                    return (
+
+                        <Form className={styles.formContainer}>
+                            <h1>Estado de Paquete</h1>
+                            <div className={styles.containerInput}>
+                                <Field
+                                    placeholder="Código*"
+                                    name="code"
+                                    className={errors.code && touched.code ? styles.inputError : ''}
+                                />
+                                <ErrorMessage name="code" component="div" className={styles.error} />
+                            </div>
+                            <button type="submit" disabled={isSubmitting || !(isValid && dirty)}>
+                                {loading ? <ClipLoader color='#f5f5f5' loading={loading} size={25} />
+                                    : 'Revisar'}
+                            </button>
+                        </Form>
+                    )
+                }}
+            </Formik>
+        </ Modal>
     )
 }
 

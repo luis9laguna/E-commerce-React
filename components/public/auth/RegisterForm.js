@@ -58,80 +58,71 @@ const RegisterForm = ({ setAuthForm }) => {
           <div className={styles.formContainer}>
             <h1>Registrar</h1>
             <Form className={styles.form}>
-              <div>
-                <div className={styles.containerInput}>
-                  <MdPerson />
-                  <Field
-                    placeholder="Nombre*"
-                    type="text"
-                    name="name"
-                    className={errors.name && touched.name ? styles.inputError : ''}
-                  />
-                </div>
+              <div className={styles.containerInput}>
+                <MdPerson />
+                <Field
+                  placeholder="Nombre*"
+                  type="text"
+                  name="name"
+                  className={errors.name && touched.name ? styles.inputError : ''}
+                />
                 <ErrorMessage name="name" component="div" className={styles.error} />
               </div>
-              <div>
-                <div className={styles.containerInput}>
-                  <MdPeople />
-                  <Field
-                    placeholder="Apellido*"
-                    type="text"
-                    name="lastname"
-                    className={errors.lastname && touched.lastname ? styles.inputError : ''}
-                  />
-                </div>
+
+              <div className={styles.containerInput}>
+                <MdPeople />
+                <Field
+                  placeholder="Apellido*"
+                  type="text"
+                  name="lastname"
+                  className={errors.lastname && touched.lastname ? styles.inputError : ''}
+                />
                 <ErrorMessage name="lastname" component="div" className={styles.error} />
               </div>
-              <div>
-                <div className={styles.containerInput}>
-                  <MdEmail />
-                  <Field
-                    placeholder="Email*"
-                    type="email"
-                    name="email"
-                    className={errors.email && touched.email ? styles.inputError : ''}
-                  />
-                </div>
-                <ErrorMessage name="email" component="div" className={styles.error} />
 
+              <div className={styles.containerInput}>
+                <MdEmail />
+                <Field
+                  placeholder="Email*"
+                  type="email"
+                  name="email"
+                  className={errors.email && touched.email ? styles.inputError : ''}
+                />
+                <ErrorMessage name="email" component="div" className={styles.error} />
               </div>
-              <div>
-                <div className={styles.containerInput}>
-                  <MdLock />
-                  <Field
-                    placeholder="Contraseña*"
-                    type="password"
-                    name="password"
-                    className={errors.password && touched.password ? styles.inputError : ''}
-                  />
-                </div>
+
+              <div className={styles.containerInput}>
+                <MdLock />
+                <Field
+                  placeholder="Contraseña*"
+                  type="password"
+                  name="password"
+                  className={errors.password && touched.password ? styles.inputError : ''}
+                />
                 <ErrorMessage name="password" component="div" className={styles.error} />
               </div>
-              <div>
-                <div className={styles.containerInput}>
-                  <MdLockClock />
-                  <Field
-                    placeholder="Confirma Contraseña*"
-                    type="password"
-                    name="confirmpassword"
-                    className={errors.confirmpassword && touched.confirmpassword ? styles.inputError : ''}
-                  />
-                </div>
+
+              <div className={styles.containerInput}>
+                <MdLockClock />
+                <Field
+                  placeholder="Confirma Contraseña*"
+                  type="password"
+                  name="confirmpassword"
+                  className={errors.confirmpassword && touched.confirmpassword ? styles.inputError : ''}
+                />
                 <ErrorMessage name="confirmpassword" component="div" className={styles.error} />
               </div>
 
-              <div>
-                <div className={styles.acceptTerms}>
-                  <label htmlFor="acceptTerms" className="form-check-label">¿Aceptas Terminos y Condiciones?
-                    <Field type="checkbox" id="acceptTerms" name="acceptTerms" />
-                  </label>
-                </div>
+              <div className={styles.acceptTerms}>
+                <label htmlFor="acceptTerms" className="form-check-label">¿Aceptas Terminos y Condiciones?
+                  <Field type="checkbox" id="acceptTerms" name="acceptTerms" />
+                </label>
                 <ErrorMessage name="acceptTerms" component="div" className={styles.error} />
               </div>
 
               <button type="submit" disabled={isSubmitting || !(isValid && dirty)}>
                 {fetchLoading ?
-                  <ClipLoader loading={fetchLoading} size={30} />
+                  <ClipLoader color="#f5f5f5" loading={fetchLoading} size={30} />
                   : 'Registrar'}
               </button>
             </Form>

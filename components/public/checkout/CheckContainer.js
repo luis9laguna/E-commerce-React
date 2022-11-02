@@ -1,10 +1,10 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useRouter } from "next/router";
 import Cookies from 'js-cookie'
 import useFetch from 'use-http'
 import Swal from 'sweetalert2'
 import { useAuth } from 'context/auth/authContext'
-import { useCart } from 'context/cart/cartContext's
+import { useCart } from 'context/cart/cartContext'
 import BarAddress from './BarAddress'
 import AddressesInfo from '../ui/addresses/AddressesInfo'
 import FormAddress from '../ui/addresses/FormAddress'
@@ -30,18 +30,17 @@ const CheckContainer = () => {
     const handlerShowFormAddress = () => setModalFormAddress(!modalFormAddress);
 
     //USEFETCH
-    const storage = typeof localStorage !== 'undefined';
-    let token
-    if (storage) token = localStorage.getItem('token')
-    const options = { cachePolicy: 'no-cache', headers: { 'Authorization': token } }
+    const options = { cachePolicy: 'no-cache', credentials: 'include' }
     const { get, post, response, loading, error } = useFetch(`${process.env.url}`, options)
 
     //MODAL ADDRESS
     const [actionAddress, setActionAddress] = useState(false);
     const [addressUser, setAddressUser] = useState('');
     const [addressId, setAddressId] = useState('');
+    const [addressesUser, setAddressesUser] = useState([])
 
     useEffect(() => { if (addressId) getAddress() }, [addressId])
+    useEffect(() => { getAllAddresses() }, [getAllAddresses])
 
     useEffect(() => {
         const cookiesAddress = Cookies.get('awl')
@@ -53,6 +52,13 @@ const CheckContainer = () => {
         const addressResp = await get(`address/${addressId}`)
         if (response.ok) setAddressUser(addressResp.address)
     }
+
+    const getAllAddresses = useCallback(async () => {
+        await get(`/address`)
+        if (response.ok) {
+            setAddressesUser(response.data.addresses)
+        }
+    }, [get, response])
 
     const getUser = async () => {
         const userResp = await get(`/user`)
@@ -89,7 +95,7 @@ const CheckContainer = () => {
         <div className={styles.container}>
             {loading ? <Loading space={true} /> :
                 <>
-                    <BarAddress setActionAddress={setActionAddress} addressUser={addressUser} />
+                    <BarAddress addressesUser={addressesUser} />
                     <div>
                         <div className={styles.addresses}>
                             {

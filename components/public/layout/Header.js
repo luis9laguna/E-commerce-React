@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-import { Badge } from '@material-ui/core';
-import Modal from "@/components/public/ui/Modal"
+import { MdOutlineAccountCircle, MdOutlineFavoriteBorder, MdOutlineShoppingCart, MdSearch } from 'react-icons/md';
 import SideBar from './SideBar';
 import ContainerAuth from '../auth/ContainerAuth';
 import styles from '@/styles/layout/Header.module.scss';
 import { useCart } from 'context/cart/cartContext';
-import { FaSearch } from 'react-icons/fa';
-import { MdOutlineAccountCircle, MdOutlineFavoriteBorder, MdOutlineShoppingCart, MdSearch } from 'react-icons/md';
+import { useAuth } from 'context/auth/authContext';
+import { useCategory } from 'context/category/categoryContext';
+import Modal from "@/components/public/ui/Modal"
 
 const Header = () => {
 
@@ -19,10 +19,10 @@ const Header = () => {
     const [openCategories, setOpenCategories] = useState(false);
     const [authForm, setAuthForm] = useState(null)
 
-
     //CONTEXT
     const { totalQuantityCart } = useCart()
-
+    const { isLoggedIn, logOut, userName } = useAuth()
+    const { categories } = useCategory()
     const router = useRouter();
 
     // HANDLE SEARCH FORM
@@ -35,6 +35,7 @@ const Header = () => {
             query: { q: value }
         })
     }
+
 
     return (
         <>
@@ -52,23 +53,33 @@ const Header = () => {
                         </h1>
                     </div>
                     <form className={styles.searchContainer} onSubmit={searchForm}>
-                        <input name="search" placeholder="Buscar" />
+                        <input name="search" defaultValue='' placeholder="Buscar" />
                         <button type='submit'><MdSearch /></button>
                     </form>
                     <div className={styles.containerOptions}>
-                        <Link href='/wishList' passHref>
-                            <a><MdOutlineFavoriteBorder /></a>
-                        </Link>
+                        {isLoggedIn &&
+                            <Link href='/wishList' passHref>
+                                <a><MdOutlineFavoriteBorder /></a>
+                            </Link>
+                        }
                         <Link href='/cart' passHref>
-                            <a><Badge badgeContent={totalQuantityCart} color="secondary">
+                            <a className={styles.cart}>
+                                {totalQuantityCart !== 0 && <span>{totalQuantityCart}</span>}
                                 <MdOutlineShoppingCart />
-                            </Badge></a>
+                            </a>
                         </Link>
                         <button className={`${styles.accountCircle} ${userOpen ? styles.open : ''}`} onClick={() => setUseOpen(prev => !prev)}>
-                            <MdOutlineAccountCircle />
+                            {isLoggedIn ? <span>{userName}</span> : <MdOutlineAccountCircle />}
                             <ul>
-                                <li><a onClick={() => setAuthForm('login')}>Ingresar</a></li>
-                                <li><a onClick={() => setAuthForm('register')}>Registrar</a></li>
+                                {isLoggedIn ?
+                                    <>
+                                        <li><a onClick={() => router.push('/user')}>Mi perfil</a></li>
+                                        <li><a onClick={() => logOut()}>Salir</a></li>
+                                    </> :
+                                    <>
+                                        <li><a id="login" onClick={() => setAuthForm('login')}>Ingresar</a></li>
+                                        <li><a onClick={() => setAuthForm('register')}>Registrar</a></li>
+                                    </>}
                             </ul>
                         </button>
                     </div>
@@ -78,34 +89,31 @@ const Header = () => {
                     <div className={`${styles.category} ${openCategories ? styles.open : ''}`} onClick={() => setOpenCategories(prev => !prev)}>
                         <a href='#'>Categorias</a>
                         <ul>
-                            {/* {categories.map(category => (
-                            <li key={category._id}>
-                                <Link href={`/category/${category.slug}`}>
-                                    {category.name}
-                                </Link>
-                            </li>
-                        ))} */}
-
-
+                            {categories?.map(category => (
+                                <li key={category._id}>
+                                    <Link href={`/category/${category.slug}`}>
+                                        {category.name}
+                                    </Link>
+                                </li>
+                            ))}
                         </ul>
                     </div>
                     <div><Link href='/product/all'>Productos</Link></div>
                     <div><a href='#' onClick={() => setShowAboutUs(prev => !prev)}>Acerca</a></div>
                 </div >
-                <SideBar sideOpen={sideOpen} setSideOpen={setSideOpen} />
+                <SideBar categories={categories} sideOpen={sideOpen} setSideOpen={setSideOpen} />
             </div>
             {showAboutUs &&
                 <Modal onClose={() => setShowAboutUs(prev => !prev)}>
-                    <h1 style={{ textAlign: 'center' }}>OUR MISSION</h1>
-                    <p >
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna alinonostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolonostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolonostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolonostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure doloqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
-                    </p>
+                    <div className={styles.about}>
+                        <h1>OUR MISSION</h1>
+                        <p >
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna alinonostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolonostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolonostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolonostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure doloqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
+                        </p>
+                    </div>
                 </Modal>}
 
-            {authForm &&
-                <Modal onClose={() => setAuthForm(null)} bgNone={true}>
-                    <ContainerAuth authForm={authForm} setAuthForm={setAuthForm} />
-                </Modal>}
+            {authForm && <ContainerAuth authForm={authForm} setAuthForm={setAuthForm} />}
 
         </>
     )

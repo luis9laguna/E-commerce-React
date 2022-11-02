@@ -1,7 +1,9 @@
 import Zoom from 'react-medium-image-zoom'
 import 'react-medium-image-zoom/dist/styles.css'
 import { useCart } from 'context/cart/cartContext';
-import styles from "@/styles/ProductItem.module.css";
+import styles from "@/styles/pages/ProductItem.module.scss";
+import { formatCurrency, formatImages } from 'utils/utils'
+
 
 const ProductItem = ({ product }) => {
 
@@ -12,48 +14,45 @@ const ProductItem = ({ product }) => {
         const quantity = parseInt(e.target.amount.value)
         addItem({
             id: product._id,
-            slug: product.slug,
-            quantity,
             name: product.name,
             image: product.images[0],
-            price: product.price
+            price: product.price,
+            quantity
         })
     }
-    const transform = 'c_scale,w_900'
-    const imageArray = product.images[0].split('/')
-    imageArray.splice(6, 0, transform)
-    const transformImage = imageArray.join('/')
 
+    const formatImages = (image) => {
+        const imageArray = image.split('/')
+        imageArray.splice(6, 0, 'c_scale,w_350')
+        return imageArray.join('/')
+    }
 
     return (
         <div className={styles.productContainer}>
-            <div className={styles.imgContainer}>
+            <div >
                 <Zoom>
-                    <img className={styles.image} src={transformImage} />
+                    <img src={formatImages(product.images[0])} />
                 </Zoom>
             </div>
             <div className={styles.infoContainer}>
-                <div className={styles.info}>
-                    <h1 className={styles.title}>{product.name}</h1>
-                    <p className={styles.description}>
-                        {product.description}
-                    </p>
-                    <span className={styles.price}>$ {product.price}</span>
+                <div>
+                    <h1>{product.name}</h1>
+                    <p>{product.description}</p>
+                    <span>{formatCurrency(product.price)}</span>
                 </div>
                 {product.stock === 0 ? <div>No hay stock disponible</div>
                     : <div className={styles.addContainer}>
-                        <form className={styles.form} onSubmit={submitHandler}>
-                            <div className={styles.amountContainer}>
+                        <form onSubmit={submitHandler}>
+                            <div>
                                 <span>Cantidad</span>
                                 <input
-                                    className={styles.amount}
                                     id='amount'
                                     type='number'
                                     min='1'
                                     max='5'
                                     defaultValue='1' />
                             </div>
-                            <button className={styles.button}>AGREGAR AL CARRITO</button>
+                            <button>Agregar</button>
                         </form>
                     </div>}
             </div>

@@ -1,0 +1,253 @@
+.AdminContainer {
+  display: flex;
+  max-width: 100%;
+
+  .sidebar {
+    min-height: 100vh;
+    width: 5rem;
+    background: var(--primary);
+    padding: 6px 14px;
+    z-index: 10;
+    color: var(--secondary);
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+
+    &.open {
+      width: 15rem;
+
+      h3 {
+        display: block !important;
+      }
+
+      .tooltip {
+        display: none;
+      }
+
+      .linksName {
+        display: block;
+      }
+    }
+
+    .logoDetails {
+      display: flex;
+      height: 3.5rem;
+      justify-content: space-between;
+      align-items: center;
+
+      h3 {
+        color: var(--secondary);
+        font-size: var(--size-2);
+        font-weight: bold;
+        display: none;
+      }
+
+      .burguer {
+        cursor: pointer;
+        height: 40px;
+        width: 50px;
+      }
+    }
+
+    ul {
+      margin-top: 20px;
+
+      li {
+        margin: 8px 0;
+        list-style: none;
+        height: 60px;
+        position: relative;
+
+        &:hover .tooltip {
+          opacity: 1;
+          transition: all 0.4s ease-in-out;
+          pointer-events: auto;
+          top: 50%;
+          transform: translateY(-50%);
+        }
+
+        button {
+          display: flex;
+          width: 100%;
+          border: none;
+          height: 100%;
+          border-radius: 12px;
+          align-items: center;
+          transition: all 0.4s ease-in-out;
+          background: var(--primary);
+          cursor: pointer;
+
+          &:hover,
+          &.active {
+            background-color: var(--secondary);
+
+            svg,
+            .linksName {
+              color: var(--primary);
+            }
+          }
+
+          svg {
+            color: var(--secondary);
+            height: 35px;
+            min-width: 50px;
+            text-align: center;
+            border-radius: 12px;
+          }
+
+          .linksName {
+            display: none;
+            color: var(--secondary);
+            font-size: var(--size-1);
+            font-weight: bold;
+            margin-left: 1rem;
+          }
+        }
+
+        .tooltip {
+          position: absolute;
+          top: -20px;
+          left: calc(100% + 15px);
+          z-index: 3;
+          background: var(--secondary);
+          box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+          color: var(--primary);
+          padding: 6px 12px;
+          border-radius: 4px;
+          font-size: 15px;
+          font-weight: 400;
+          opacity: 0;
+          pointer-events: none;
+        }
+      }
+    }
+  }
+
+
+
+  .children {
+    width: calc(100% - 78px);
+
+    .HeaderAdmin {
+      display: flex;
+      background-color: var(--secondary);
+      padding: 1.3rem;
+      justify-content: flex-end;
+
+      &>button {
+        display: none;
+        border: none;
+        background-color: transparent;
+
+        svg {
+          cursor: pointer;
+          height: 35px;
+          width: 45px;
+        }
+      }
+
+      div {
+        display: flex;
+        align-items: center;
+
+        h3 {
+          font-size: var(--size-3);
+          margin-right: 1rem;
+
+          span {
+            text-transform: capitalize;
+          }
+        }
+
+        button {
+          border: 1px solid var(--primary);
+          box-sizing: content-box;
+          border-radius: 3px;
+          width: 32px;
+          height: 32px;
+          cursor: pointer;
+          transition: all 0.3s ease-in-out;
+
+          &:hover {
+            color: var(--secondary);
+            background-color: var(--primary);
+          }
+
+          svg {
+            font-size: var(--size-4);
+          }
+        }
+      }
+    }
+
+  }
+
+
+  @media (max-width: 768px) {
+    .sidebar {
+      display: none;
+
+      &.open {
+        display: block;
+        position: absolute;
+        max-width: 180px;
+      }
+
+      .logoDetails {
+        display: flex;
+        height: 3.5rem;
+        justify-content: space-between;
+        align-items: center;
+
+        h3 {
+          font-size: var(--size-1);
+        }
+
+        .burguer {
+          cursor: pointer;
+          height: 35px;
+          width: 45px;
+        }
+      }
+
+      .linksName {
+        margin: 0 !important;
+      }
+    }
+
+    .children {
+      width: 100%;
+
+      .bgAdmin {
+        top: 0;
+        right: 0;
+        position: fixed;
+        width: 100%;
+        z-index: 9;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.514);
+      }
+
+      .HeaderAdmin {
+        justify-content: space-between;
+
+        &>button {
+          display: block;
+        }
+
+        div h3 {
+          font-size: var(--size-2);
+        }
+      }
+    }
+  }
+}
+
+
+
+.spinner {
+  width: 100%;
+  height: 100vh;
+  background-color: #f5f5f5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

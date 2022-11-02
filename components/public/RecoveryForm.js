@@ -11,7 +11,7 @@ const RecoveryForm = () => {
     const { token } = router.query
 
     //USEFETCH
-    const { put, response, loading, error } = useFetch(`${process.env.url}`, options)
+    const { put, response, loading, error } = useFetch(`${process.env.url}`)
 
     //REGEX
     const regexPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import useFetch from 'use-http'
 import Layout from "@/components/public/layout/Layout";
 import UserLayout from "@/components/public/user/UserLayout"
-import UserDataForm from '@/components/public/user/userOptions/UserDataForm'
+import UserDataForm from '@/components/public/user/UserDataForm'
 import Meta from "@/components/public/ui/Meta";
 import Loading from "@/components/public/ui/Loading";
 import ErrorMessage from "@/components/public/ui/ErrorMessage";

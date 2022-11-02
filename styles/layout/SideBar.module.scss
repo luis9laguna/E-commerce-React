@@ -117,15 +117,11 @@
                     text-transform: capitalize;
                     padding: 0.7rem 2rem;
                     font-size: var(--size-2);
-                    justify-content: center;
                 }
             }
         }
 
     }
-
-
-
 
     .sideBG {
         z-index: 15;
@@ -136,4 +132,26 @@
         right: 0;
         background: rgba(0, 0, 0, 0.5);
     }
+
+}
+
+.aboutSide {
+    margin: auto;
+    background-color: var(--secondary);
+    width: 100%;
+    min-width: 300px;
+    height: auto;
+
+    h1 {
+        text-align: center;
+        padding: 2rem 0;
+        display: block;
+    }
+
+    p {
+        width: 85%;
+        margin: auto;
+        padding-bottom: 2rem;
+    }
+
 }

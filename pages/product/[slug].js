@@ -10,8 +10,7 @@ import ErrorMessage from "@/components/public/ui/ErrorMessage";
 const Product = ({ product }) => {
 
     const [relatedProducts, setRelatedProducts] = useState([])
-    const options = { cachePolicy: 'no-cache' }
-    const { get, response, loading, error } = useFetch(`${process.env.url}`, options)
+    const { get, response, loading, error } = useFetch(`${process.env.url}`, { cachePolicy: 'no-cache' })
 
     useEffect(async () => {
         const result = await get(`/category/${product.category.slug}`)
@@ -38,7 +37,6 @@ export async function getServerSideProps({ params }) {
     const data = await resp.json()
     if (!data.ok) return { notFound: true }
 
-    if (data.product.price === 130) return { notFound: true }
     return {
         props: {
             product: data.product,

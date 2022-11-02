@@ -69,9 +69,18 @@
         margin-bottom: 0.8rem;
         cursor: pointer;
         transition: all 0.5s ease-in-out;
+        font-weight: bold;
 
         &:hover {
           transform: scale(1.15);
+        }
+
+        button {
+          border: none;
+          background-color: transparent;
+          color: var(--secondary);
+          cursor: pointer;
+          font-weight: bold;
         }
       }
     }
@@ -120,17 +129,22 @@
       background-color: var(--secondary);
       color: var(--primary);
 
-      li {
-        width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+      ul {
 
-        a {
-          padding: 0.7rem 0;
-          width: 100%;
-          display: block;
-          font-weight: bold;
+        li {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          a,
+          button {
+            padding: 0.7rem 0;
+            width: 100%;
+            display: block;
+            font-weight: bold;
+            font: inherit;
+            color: inherit;
+          }
         }
       }
     }

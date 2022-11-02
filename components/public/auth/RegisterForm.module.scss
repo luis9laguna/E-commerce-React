@@ -16,66 +16,65 @@
         align-items: center;
         flex-wrap: wrap;
 
-        &>div {
+
+
+        .containerInput {
+            display: flex;
+            align-items: center;
             flex: 1 1 40%;
             margin: 1rem;
 
-
-            .containerInput {
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-
-                .inputError {
-                    background-color: rgba(255, 0, 0, 0.281) !important;
-                }
-
-                svg {
-                    margin-right: 0.5rem;
-                    font-size: var(--size-3);
-                }
+            .inputError {
+                background-color: rgba(255, 0, 0, 0.281) !important;
             }
 
-            .acceptTerms {
+            svg {
+                margin-right: 0.5rem;
+                font-size: var(--size-3);
+            }
+        }
+
+        .acceptTerms {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50%;
+
+            label {
+                font-size: 0.9rem;
                 display: flex;
-                align-items: center;
                 justify-content: center;
 
-                label {
-                    font-size: 0.9rem;
-                    display: flex;
-                    justify-content: center;
-
-                    input {
-                        margin-left: 0.5rem;
-                    }
-                }
-
-                &~div {
-                    margin: 0;
+                input {
+                    margin-left: 0.5rem;
                 }
             }
 
-            .containerInput>input,
-            .acceptTerms>input {
-                height: 2.5rem;
-                border: 1px solid rgb(184, 170, 170);
-                background-color: transparent;
-                font-size: var(--size-1);
-                padding-left: 15px;
-                width: 230px;
+            &~div {
+                margin: 0;
             }
+        }
 
-            .error {
-                overflow-wrap: break-word;
-                font-size: 0.8rem;
-                width: 230px;
-                position: absolute;
-                margin-left: 2.3rem;
-                color: red;
-                text-align: center;
+        .containerInput>input,
+        .acceptTerms>input {
+            height: 2.5rem;
+            border: 1px solid rgb(184, 170, 170);
+            background-color: transparent;
+            font-size: var(--size-1);
+            padding-left: 15px;
+            width: 230px;
+        }
 
-            }
+        .error {
+            overflow-wrap: break-word;
+            font-size: 0.8rem;
+            width: 230px;
+            position: absolute;
+            margin-top: 3.5rem;
+            margin-left: 2.3rem;
+            color: red;
+            text-align: center;
+
         }
 
         button {
@@ -104,6 +103,10 @@
                 color: var(--secondary);
                 cursor: not-allowed;
             }
+
+            span {
+                margin-top: 0.2rem;
+            }
         }
 
     }
@@ -130,10 +133,15 @@
             display: flex;
             flex-direction: column;
 
-            &>div {
+            .containerInput {
                 flex: initial;
             }
         }
     }
 
+}
+
+
+@media (max-height: 700px) {
+    .formContainer {}
 }

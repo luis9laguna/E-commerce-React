@@ -1,9 +1,8 @@
 import { useState, useRef } from 'react'
 import useFetch from 'use-http'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
-import styles from '@/styles/ui/Upload.module.css'
-import Loading from './Loading'
-import ErrorMessage from './ErrorMessage'
+import styles from '@/styles/ui/Upload.module.scss'
+import { ClipLoader } from 'react-spinners'
 
 const Upload = ({ images, setImages, limit }) => {
 
@@ -12,7 +11,7 @@ const Upload = ({ images, setImages, limit }) => {
     const [errorInput, setErrorInput] = useState('')
 
     //USEFETCH
-    const options = { cachePolicy: 'no-cache', headers: { 'Authorization': localStorage.getItem('token') } }
+    const options = { cachePolicy: 'no-cache', credentials: 'include' }
     const { post, response, loading, error } = useFetch(`${process.env.url}/upload`, options)
 
     const fileInputRef = useRef();
@@ -41,8 +40,8 @@ const Upload = ({ images, setImages, limit }) => {
         if (errorReturn) return
 
         //API CALL
-        const resp = await post(data)
-        if (response.ok) setImages(prev => prev.concat(resp.images))
+        await post(data)
+        if (response.ok) setImages(prev => prev.concat(response.data.images))
         setErrorInput('')
     }
 
@@ -55,7 +54,6 @@ const Upload = ({ images, setImages, limit }) => {
     const deleteSelected = async () => {
 
         await post('delete', { checkedImages })
-
         if (response.ok) {
             checkedImages.map(checkedImage => {
                 setImages(prev => prev.filter(image => image !== checkedImage))
@@ -78,14 +76,14 @@ const Upload = ({ images, setImages, limit }) => {
         <>
             <input ref={fileInputRef} hidden type='file' id="files" accept="image/png, image/jpeg" multiple onChange={imageHandlerChange} />
             <div className={styles.buttonInput} onClick={() => fileInputRef.current.click()}>
-                {loading ? <Loading /> : 'Seleccione Archivo'}
+                {loading ? <ClipLoader color='#f5f5f5' loading={loading} size={25} />
+                    : 'Seleccione Archivo'}
             </div>
-            {error && <ErrorMessage />}
-            {errorInput && errorInput}
+            {errorInput && <span className={styles.error}>{errorInput}</span>}
             <DragDropContext onDragEnd={handleOnDragEnd}>
                 <Droppable droppableId="images" direction="horizontal">
                     {(provided, snapshot) => (
-                        <ul className={`${styles.containerPrev} ${snapshot.isDraggingOver && styles.isDraggingOver}`}
+                        <ul className={`${styles.containerImage} ${snapshot.isDraggingOver && styles.isDraggingOver}`}
                             {...provided.droppableProps}
                             ref={provided.innerRef}>
 
@@ -97,9 +95,7 @@ const Upload = ({ images, setImages, limit }) => {
                                             {...provided.dragHandleProps}
                                             ref={provided.innerRef}
                                         >
-                                            <div className={styles.containerImg}>
-                                                <img src={image} className={styles.img} />
-                                            </div>
+                                            <img src={image} className={styles.img} />
                                             <div className={styles.containerCheckBox}>
                                                 <input type="checkbox" onChange={(e) => checkImage(e, image)} />
                                             </div>

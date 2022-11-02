@@ -1,19 +1,18 @@
+import Link from 'next/link';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper';
 import 'swiper/css';
 import 'swiper/css/bundle';
-import ItemCategory from "./ItemCategory";
+import styles from '@/styles/pages/home/ItemCategory.module.scss'
 
 
 const SliderCategory = ({ categories }) => {
 
-    const slides = categories.map((category) => {
-        return (
-            <SwiperSlide key={category._id}>
-                <ItemCategory category={category} />
-            </SwiperSlide>
-        )
-    })
+    const formatImages = (image) => {
+        const imageArray = image.split('/')
+        imageArray.splice(6, 0, 'c_scale,w_350')
+        return imageArray.join('/')
+    }
 
     return (
         <Swiper
@@ -34,7 +33,16 @@ const SliderCategory = ({ categories }) => {
                 }
             }}
         >
-            {slides}
+            {categories.map((category) => (
+                <SwiperSlide key={category._id}>
+                    <div className={styles.container}>
+                        <img src={formatImages(category.image)} />
+                        <Link href={`/category/${category.slug}`} passHref>
+                            <h1>{category.name}</h1>
+                        </Link>
+                    </div>
+                </SwiperSlide>
+            ))}
         </Swiper>
     )
 }

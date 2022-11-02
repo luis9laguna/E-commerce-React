@@ -1,0 +1,48 @@
+.productContainer {
+  margin: 2rem;
+
+
+  &>h2 {
+    margin: 2rem;
+    text-align: center;
+    font-size: var(--size-5);
+    text-transform: capitalize;
+  }
+
+  .sortContainer {
+    display: flex;
+    align-items: center;
+
+    span {
+      font-size: var(--size-3);
+      font-weight: 600;
+      margin-right: 1.5rem;
+    }
+
+    select {
+      padding: 0.8rem;
+      margin-right: 1.5rem;
+      border-radius: 25px;
+      background-color: var(--secondary);
+    }
+  }
+
+  .products {
+    display: flex;
+    padding: 1.3rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+}
+
+
+
+
+
+
+@media (max-width: 400px) {
+
+  .productContainer {
+    margin: 0;
+  }
+}

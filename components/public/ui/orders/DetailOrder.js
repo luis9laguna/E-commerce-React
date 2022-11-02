@@ -1,7 +1,7 @@
 import Modal from "@/components/public/ui/Modal"
 import styles from "@/styles/ui/orders/DetailOrder.module.css"
 
-const DetailOrder = ({ hideModal, detailOrder }) => {
+const DetailOrder = ({ onClose, detailOrder }) => {
 
     //DATE
     const date = new Date(detailOrder.updated)
@@ -14,7 +14,7 @@ const DetailOrder = ({ hideModal, detailOrder }) => {
     const address = detailOrder.address
 
     return (
-        <Modal onClose={hideModal}>
+        <Modal onClose={onClose}>
             <div className={styles.top}>
                 <span>Estado</span>
                 <span className={styles.status}>{detailOrder.status}</span>

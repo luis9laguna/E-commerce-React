@@ -2,8 +2,17 @@ import styles from '@/styles/layout/Footer.module.scss';
 import Link from "next/link";
 import { MdEmail } from 'react-icons/md';
 import { FaFacebook, FaInstagram, FaMap, FaPhone, FaTwitter, FaWhatsapp } from 'react-icons/fa';
+import { useState } from 'react';
+import StatusOrderForm from '../StatusOrderForm';
+import DetailOrder from '../ui/orders/DetailOrder';
 
 const Footer = () => {
+
+
+    const [showStatus, setShowStatus] = useState(false)
+    const [detailOrder, setDetailOrder] = useState(null)
+
+
     return (
         <div className={styles.container}>
             <div className={styles.left}>
@@ -35,7 +44,7 @@ const Footer = () => {
                     <li><Link href='/cart'>Carro</Link></li>
                     <li><Link href='/login#register'>Registrar</Link></li>
                     <li><Link href='/login#login'>Ingresar</Link></li>
-                    <li><Link href='/statusOrder'>Estado del envio</Link></li>
+                    <li><button onClick={() => setShowStatus(true)}>Estado de Paquete</button></li>
                 </ul>
             </div>
             <div className={styles.right}>
@@ -51,6 +60,9 @@ const Footer = () => {
                 </span>
                 <img className={styles.payment} src="https://i.ibb.co/Qfvn4z6/payment.png" />
             </div>
+            {showStatus && <StatusOrderForm onClose={() => setShowStatus(false)} setDetailOrder={setDetailOrder} />}
+            {detailOrder && <DetailOrder onClose={() => setShowStatus(false)} detailOrder={detailOrder} />}
+
         </div>
     )
 }

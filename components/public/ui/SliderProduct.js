@@ -17,7 +17,7 @@ const SliderProduct = ({ products, description, icon }) => {
         margin: '2.5rem 0'
     }
 
-    let svgIcon = ''
+    let svgIcon;
     if (icon === 'favs') svgIcon = <MdFavorite />
     else if (icon === 'news') svgIcon = <MdNewReleases />
 
@@ -34,19 +34,19 @@ const SliderProduct = ({ products, description, icon }) => {
                 loop={true}
                 breakpoints={{
                     750: {
-                        slidesPerView: 2,
+                        slidesPerView: 3,
                         spaceBetween: 10,
                     },
                     900: {
-                        slidesPerView: 2.3,
+                        slidesPerView: 3.3,
                         spaceBetween: 30,
                     },
                     1200: {
-                        slidesPerView: 3.3,
+                        slidesPerView: 4.3,
                         spaceBetween: 40,
                     },
                     1550: {
-                        slidesPerView: 4.3,
+                        slidesPerView: 5.3,
                         spaceBetween: 50,
                     }
                 }}

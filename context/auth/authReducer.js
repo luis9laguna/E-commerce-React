@@ -1,5 +1,5 @@
 import Cookies from 'js-cookie'
-import { USER_AUTH, FORM_AUTH, LOG_OUT, UPDATE_USER, NO_TOKEN } from "types";
+import { USER_AUTH, FORM_AUTH, LOG_OUT, UPDATE_USER, NO_TOKEN } from "utils/types";
 
 
 export default (state, action) => {
@@ -24,11 +24,6 @@ export default (state, action) => {
                 isLoggedIn: true,
                 isLoading: false
             }
-        case NO_TOKEN:
-            return {
-                ...state,
-                isLoading: false
-            }
         case UPDATE_USER:
             return {
                 ...state,
@@ -42,7 +37,8 @@ export default (state, action) => {
                 userName: null,
                 ref: null,
                 role: null,
-                isLoggedIn: false
+                isLoggedIn: false,
+                isLoading: false
             }
 
 
