@@ -5,7 +5,7 @@ module.exports = {
   },
   env: {
     // url: 'http://localhost:4000/api',
-    url: 'https://faisca.herokuapp.com/api',
+    url: 'https://faiscaapi.onrender.com/api',
     GOOGLE_ID: '724125726230-6vrmede4tequkfntp8goh6nblhsiqare.apps.googleusercontent.com',
     SECRET_DATA_KEY: 'HOUSESHOP102017'
   },
